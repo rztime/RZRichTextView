@@ -7,15 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5412F235AA00F391F44FB40F /* libPods-RZRichTextView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FA903FB9F3138292F93E87B /* libPods-RZRichTextView.a */; };
 		84D4735A21873BA300805439 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D4735921873BA300805439 /* AppDelegate.m */; };
 		84D4735D21873BA300805439 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D4735C21873BA300805439 /* ViewController.m */; };
 		84D4736021873BA300805439 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84D4735E21873BA300805439 /* Main.storyboard */; };
 		84D4736221873BA500805439 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84D4736121873BA500805439 /* Assets.xcassets */; };
 		84D4736521873BA500805439 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84D4736321873BA500805439 /* LaunchScreen.storyboard */; };
 		84D4736821873BA500805439 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D4736721873BA500805439 /* main.m */; };
+		84D4737121873FC600805439 /* RZRichTextConfigureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D4737021873FC600805439 /* RZRichTextConfigureView.m */; };
+		84EDDFEB21883D3000A0D325 /* RZRichTextViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDDFEA21883D3000A0D325 /* RZRichTextViewModel.m */; };
+		84EDDFEE21883D7F00A0D325 /* RZRichSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDDFED21883D7F00A0D325 /* RZRichSelectionCell.m */; };
+		84EDDFF1218840E300A0D325 /* RZRichText.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDDFF0218840E300A0D325 /* RZRichText.m */; };
+		84EDDFF72188489F00A0D325 /* RZRichSources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 84EDDFF62188489F00A0D325 /* RZRichSources.bundle */; };
+		84EDDFFA2188552800A0D325 /* RZRichInsertImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDDFF92188552800A0D325 /* RZRichInsertImageCell.m */; };
+		84EDDFFD2188554100A0D325 /* RZRichBoldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDDFFC2188554100A0D325 /* RZRichBoldCell.m */; };
+		84EDE0002188556800A0D325 /* RZRichItalicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDDFFF2188556800A0D325 /* RZRichItalicCell.m */; };
+		84EDE0032188557800A0D325 /* RZRichUnderLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE0022188557800A0D325 /* RZRichUnderLineCell.m */; };
+		84EDE0062188558700A0D325 /* RZRichStrikethroughCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE0052188558700A0D325 /* RZRichStrikethroughCell.m */; };
+		84EDE0092188559300A0D325 /* RZRichFontCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE0082188559300A0D325 /* RZRichFontCell.m */; };
+		84EDE00C218855B200A0D325 /* RZRichAlignCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE00B218855B200A0D325 /* RZRichAlignCell.m */; };
+		84EDE0142188638100A0D325 /* RZColoseKeyBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE0132188638100A0D325 /* RZColoseKeyBoardView.m */; };
+		84EDE01721887A2B00A0D325 /* NSObject+RZCategoryTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE01621887A2B00A0D325 /* NSObject+RZCategoryTools.m */; };
+		84EDE01A21887E0A00A0D325 /* RZRichTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE01921887E0A00A0D325 /* RZRichTextView.m */; };
+		84EDE01D218891DE00A0D325 /* RZFontConfigureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE01C218891DE00A0D325 /* RZFontConfigureViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3FA903FB9F3138292F93E87B /* libPods-RZRichTextView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RZRichTextView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E9A160EFD9F4C512CFAC8A0 /* Pods-RZRichTextView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView.release.xcconfig"; path = "Pods/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView.release.xcconfig"; sourceTree = "<group>"; };
 		84D4735521873BA300805439 /* RZRichTextView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RZRichTextView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D4735821873BA300805439 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		84D4735921873BA300805439 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -26,6 +45,39 @@
 		84D4736421873BA500805439 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84D4736621873BA500805439 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84D4736721873BA500805439 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		84D4736F21873FC600805439 /* RZRichTextConfigureView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextConfigureView.h; sourceTree = "<group>"; };
+		84D4737021873FC600805439 /* RZRichTextConfigureView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichTextConfigureView.m; sourceTree = "<group>"; };
+		84EDDFE921883D3000A0D325 /* RZRichTextViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextViewModel.h; sourceTree = "<group>"; };
+		84EDDFEA21883D3000A0D325 /* RZRichTextViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichTextViewModel.m; sourceTree = "<group>"; };
+		84EDDFEC21883D7F00A0D325 /* RZRichSelectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichSelectionCell.h; sourceTree = "<group>"; };
+		84EDDFED21883D7F00A0D325 /* RZRichSelectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichSelectionCell.m; sourceTree = "<group>"; };
+		84EDDFEF218840E300A0D325 /* RZRichText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichText.h; sourceTree = "<group>"; };
+		84EDDFF0218840E300A0D325 /* RZRichText.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichText.m; sourceTree = "<group>"; };
+		84EDDFF62188489F00A0D325 /* RZRichSources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = RZRichSources.bundle; sourceTree = "<group>"; };
+		84EDDFF82188552800A0D325 /* RZRichInsertImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichInsertImageCell.h; sourceTree = "<group>"; };
+		84EDDFF92188552800A0D325 /* RZRichInsertImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichInsertImageCell.m; sourceTree = "<group>"; };
+		84EDDFFB2188554100A0D325 /* RZRichBoldCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichBoldCell.h; sourceTree = "<group>"; };
+		84EDDFFC2188554100A0D325 /* RZRichBoldCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichBoldCell.m; sourceTree = "<group>"; };
+		84EDDFFE2188556800A0D325 /* RZRichItalicCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichItalicCell.h; sourceTree = "<group>"; };
+		84EDDFFF2188556800A0D325 /* RZRichItalicCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichItalicCell.m; sourceTree = "<group>"; };
+		84EDE0012188557800A0D325 /* RZRichUnderLineCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichUnderLineCell.h; sourceTree = "<group>"; };
+		84EDE0022188557800A0D325 /* RZRichUnderLineCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichUnderLineCell.m; sourceTree = "<group>"; };
+		84EDE0042188558700A0D325 /* RZRichStrikethroughCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichStrikethroughCell.h; sourceTree = "<group>"; };
+		84EDE0052188558700A0D325 /* RZRichStrikethroughCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichStrikethroughCell.m; sourceTree = "<group>"; };
+		84EDE0072188559300A0D325 /* RZRichFontCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichFontCell.h; sourceTree = "<group>"; };
+		84EDE0082188559300A0D325 /* RZRichFontCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichFontCell.m; sourceTree = "<group>"; };
+		84EDE00A218855B200A0D325 /* RZRichAlignCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichAlignCell.h; sourceTree = "<group>"; };
+		84EDE00B218855B200A0D325 /* RZRichAlignCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichAlignCell.m; sourceTree = "<group>"; };
+		84EDE011218859DF00A0D325 /* RZDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZDefine.h; sourceTree = "<group>"; };
+		84EDE0122188638100A0D325 /* RZColoseKeyBoardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZColoseKeyBoardView.h; sourceTree = "<group>"; };
+		84EDE0132188638100A0D325 /* RZColoseKeyBoardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZColoseKeyBoardView.m; sourceTree = "<group>"; };
+		84EDE01521887A2B00A0D325 /* NSObject+RZCategoryTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+RZCategoryTools.h"; sourceTree = "<group>"; };
+		84EDE01621887A2B00A0D325 /* NSObject+RZCategoryTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+RZCategoryTools.m"; sourceTree = "<group>"; };
+		84EDE01821887E0A00A0D325 /* RZRichTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextView.h; sourceTree = "<group>"; };
+		84EDE01921887E0A00A0D325 /* RZRichTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichTextView.m; sourceTree = "<group>"; };
+		84EDE01B218891DE00A0D325 /* RZFontConfigureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZFontConfigureViewController.h; sourceTree = "<group>"; };
+		84EDE01C218891DE00A0D325 /* RZFontConfigureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZFontConfigureViewController.m; sourceTree = "<group>"; };
+		A9EECE3015A01E789BE384DB /* Pods-RZRichTextView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +85,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5412F235AA00F391F44FB40F /* libPods-RZRichTextView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		61F79E6C34CB359E7485EBD1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3FA903FB9F3138292F93E87B /* libPods-RZRichTextView.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		772DC54971A023404DA70539 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A9EECE3015A01E789BE384DB /* Pods-RZRichTextView.debug.xcconfig */,
+				4E9A160EFD9F4C512CFAC8A0 /* Pods-RZRichTextView.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		84D4734C21873BA300805439 = {
 			isa = PBXGroup;
 			children = (
 				84D4735721873BA300805439 /* RZRichTextView */,
 				84D4735621873BA300805439 /* Products */,
+				772DC54971A023404DA70539 /* Pods */,
+				61F79E6C34CB359E7485EBD1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +130,7 @@
 		84D4735721873BA300805439 /* RZRichTextView */ = {
 			isa = PBXGroup;
 			children = (
+				84D4736E21873C3500805439 /* Core */,
 				84D4735821873BA300805439 /* AppDelegate.h */,
 				84D4735921873BA300805439 /* AppDelegate.m */,
 				84D4735B21873BA300805439 /* ViewController.h */,
@@ -71,6 +144,69 @@
 			path = RZRichTextView;
 			sourceTree = "<group>";
 		};
+		84D4736E21873C3500805439 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				84EDDFF52188488600A0D325 /* Sources */,
+				84EDDFE821883CED00A0D325 /* Model */,
+				84EDDFE721883CCC00A0D325 /* View */,
+				84D4736F21873FC600805439 /* RZRichTextConfigureView.h */,
+				84D4737021873FC600805439 /* RZRichTextConfigureView.m */,
+				84EDE011218859DF00A0D325 /* RZDefine.h */,
+				84EDE01821887E0A00A0D325 /* RZRichTextView.h */,
+				84EDE01921887E0A00A0D325 /* RZRichTextView.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		84EDDFE721883CCC00A0D325 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84EDDFEC21883D7F00A0D325 /* RZRichSelectionCell.h */,
+				84EDDFED21883D7F00A0D325 /* RZRichSelectionCell.m */,
+				84EDDFF82188552800A0D325 /* RZRichInsertImageCell.h */,
+				84EDDFF92188552800A0D325 /* RZRichInsertImageCell.m */,
+				84EDDFFB2188554100A0D325 /* RZRichBoldCell.h */,
+				84EDDFFC2188554100A0D325 /* RZRichBoldCell.m */,
+				84EDDFFE2188556800A0D325 /* RZRichItalicCell.h */,
+				84EDDFFF2188556800A0D325 /* RZRichItalicCell.m */,
+				84EDE0012188557800A0D325 /* RZRichUnderLineCell.h */,
+				84EDE0022188557800A0D325 /* RZRichUnderLineCell.m */,
+				84EDE0042188558700A0D325 /* RZRichStrikethroughCell.h */,
+				84EDE0052188558700A0D325 /* RZRichStrikethroughCell.m */,
+				84EDE0072188559300A0D325 /* RZRichFontCell.h */,
+				84EDE0082188559300A0D325 /* RZRichFontCell.m */,
+				84EDE00A218855B200A0D325 /* RZRichAlignCell.h */,
+				84EDE00B218855B200A0D325 /* RZRichAlignCell.m */,
+				84EDE0122188638100A0D325 /* RZColoseKeyBoardView.h */,
+				84EDE0132188638100A0D325 /* RZColoseKeyBoardView.m */,
+				84EDE01B218891DE00A0D325 /* RZFontConfigureViewController.h */,
+				84EDE01C218891DE00A0D325 /* RZFontConfigureViewController.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84EDDFE821883CED00A0D325 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				84EDDFE921883D3000A0D325 /* RZRichTextViewModel.h */,
+				84EDDFEA21883D3000A0D325 /* RZRichTextViewModel.m */,
+				84EDDFEF218840E300A0D325 /* RZRichText.h */,
+				84EDDFF0218840E300A0D325 /* RZRichText.m */,
+				84EDE01521887A2B00A0D325 /* NSObject+RZCategoryTools.h */,
+				84EDE01621887A2B00A0D325 /* NSObject+RZCategoryTools.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		84EDDFF52188488600A0D325 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				84EDDFF62188489F00A0D325 /* RZRichSources.bundle */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -78,9 +214,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84D4736B21873BA500805439 /* Build configuration list for PBXNativeTarget "RZRichTextView" */;
 			buildPhases = (
+				C0F612B51EB3433B40C5D993 /* [CP] Check Pods Manifest.lock */,
 				84D4735121873BA300805439 /* Sources */,
 				84D4735221873BA300805439 /* Frameworks */,
 				84D4735321873BA300805439 /* Resources */,
+				45CF82029BDBC8C2DEED9724 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -130,20 +268,77 @@
 			files = (
 				84D4736521873BA500805439 /* LaunchScreen.storyboard in Resources */,
 				84D4736221873BA500805439 /* Assets.xcassets in Resources */,
+				84EDDFF72188489F00A0D325 /* RZRichSources.bundle in Resources */,
 				84D4736021873BA300805439 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		45CF82029BDBC8C2DEED9724 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-resources.sh",
+				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
+				"${PODS_ROOT}/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TZImagePickerController.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C0F612B51EB3433B40C5D993 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RZRichTextView-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		84D4735121873BA300805439 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84EDE01D218891DE00A0D325 /* RZFontConfigureViewController.m in Sources */,
+				84D4737121873FC600805439 /* RZRichTextConfigureView.m in Sources */,
+				84EDE00C218855B200A0D325 /* RZRichAlignCell.m in Sources */,
+				84EDDFEB21883D3000A0D325 /* RZRichTextViewModel.m in Sources */,
+				84EDE01721887A2B00A0D325 /* NSObject+RZCategoryTools.m in Sources */,
+				84EDDFF1218840E300A0D325 /* RZRichText.m in Sources */,
+				84EDE0002188556800A0D325 /* RZRichItalicCell.m in Sources */,
+				84EDDFEE21883D7F00A0D325 /* RZRichSelectionCell.m in Sources */,
+				84EDE0062188558700A0D325 /* RZRichStrikethroughCell.m in Sources */,
+				84EDE01A21887E0A00A0D325 /* RZRichTextView.m in Sources */,
+				84EDE0092188559300A0D325 /* RZRichFontCell.m in Sources */,
+				84EDDFFA2188552800A0D325 /* RZRichInsertImageCell.m in Sources */,
 				84D4735D21873BA300805439 /* ViewController.m in Sources */,
+				84EDDFFD2188554100A0D325 /* RZRichBoldCell.m in Sources */,
+				84EDE0142188638100A0D325 /* RZColoseKeyBoardView.m in Sources */,
 				84D4736821873BA500805439 /* main.m in Sources */,
 				84D4735A21873BA300805439 /* AppDelegate.m in Sources */,
+				84EDE0032188557800A0D325 /* RZRichUnderLineCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,11 +476,13 @@
 		};
 		84D4736C21873BA500805439 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9EECE3015A01E789BE384DB /* Pods-RZRichTextView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LBSWTUGGNB;
 				INFOPLIST_FILE = RZRichTextView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -298,11 +495,13 @@
 		};
 		84D4736D21873BA500805439 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4E9A160EFD9F4C512CFAC8A0 /* Pods-RZRichTextView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LBSWTUGGNB;
 				INFOPLIST_FILE = RZRichTextView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
