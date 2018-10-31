@@ -59,7 +59,5 @@
     }
     return _textLabel;
 }
-
-
-
+  
 @end

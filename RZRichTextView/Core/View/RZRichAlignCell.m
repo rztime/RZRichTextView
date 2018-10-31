@@ -32,6 +32,11 @@
     
 }
 - (void)viewDidClicked {
+    UIWindow * window= [UIApplication sharedApplication].keyWindow;
+    CGRect selfRect= [self convertRect: self.bounds toView:window];
     
+    if (self.viewModel.rz_showAlignView) {
+        self.viewModel.rz_showAlignView(selfRect.origin.x, NO);
+    }
 }
 @end

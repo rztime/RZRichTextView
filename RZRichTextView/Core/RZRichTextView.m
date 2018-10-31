@@ -118,4 +118,18 @@
     self.selectedRange = selectedRange;
 }
 
+- (NSArray <UIImage *> *)rz_rictTextImages {
+    NSMutableArray *arrays = [NSMutableArray new];
+    [self.attributedText enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, self.attributedText.length) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        if ([value isKindOfClass:[NSTextAttachment class]]) {
+            NSTextAttachment *imageMent = value;
+            [arrays addObject:imageMent.image];
+        }
+    }];
+    return arrays.copy;
+}
+
+- (NSString *)rz_codingToHtmlWithImageURLS:(NSArray <NSString *> *)urls {
+    return [RZRichText rz_htmlFactoryByAttributedString:self.attributedText imageURLSIfHad:urls]; 
+}
 @end

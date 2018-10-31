@@ -12,10 +12,12 @@
 #import "RZColoseKeyBoardView.h"
 #import <Masonry/Masonry.h>
 
+#import "RZFontConfigureView.h"
+#import "RZAlignConfigureView.h"
+
 @interface RZRichTextConfigureView ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-
 
 @property (nonatomic, strong) RZColoseKeyBoardView *closeKeyboard;
 @end
@@ -38,19 +40,95 @@
             if (weakSelf.rz_insertImage) {
                 weakSelf.rz_insertImage(image);
             }
+            
+            UIView *view = [weakSelf viewWithTag:1024];
+            [view removeFromSuperview];
+            weakSelf.viewModel.hadShowFontView = NO;
+            
+            UIView *view1 = [weakSelf viewWithTag:2048];
+            [view1 removeFromSuperview];
+            weakSelf.viewModel.hadShowAlignView = NO;
+            return ;
         };
         _viewModel.rz_changeRich = ^(BOOL changed) {
             if (weakSelf.rz_changeRich) {
                 weakSelf.rz_changeRich(changed);
             }
             [weakSelf.collectionView reloadData];
+            
+            UIView *view = [weakSelf viewWithTag:1024];
+            [view removeFromSuperview];
+            weakSelf.viewModel.hadShowFontView = NO;
+            
+            UIView *view1 = [weakSelf viewWithTag:2048];
+            [view1 removeFromSuperview];
+            weakSelf.viewModel.hadShowAlignView = NO;
+            return ;
+        };
+        
+        _viewModel.rz_showFontView = ^(CGFloat starX, BOOL hide) {
+            if (hide) {
+                UIView *view = [weakSelf viewWithTag:1024];
+                [view removeFromSuperview];
+                weakSelf.viewModel.hadShowFontView = NO;
+                return ;
+            }
+            if (!weakSelf.viewModel.hadShowFontView) {
+                CGRect showViewFrame = [weakSelf convertRect:weakSelf.bounds toView:[UIApplication sharedApplication].keyWindow];
+                CGFloat height = CGRectGetMaxY(showViewFrame);
+                CGRect frame = CGRectMake(0, -height + 44, UIScreen.mainScreen.bounds.size.width, height);
+                RZFontConfigureView *view = [[RZFontConfigureView alloc] initWithFrame:frame viewModel:weakSelf.viewModel locationX:starX];
+                view.tag = 1024;
+                [weakSelf addSubview:view];
+            } else {
+                UIView *view = [weakSelf viewWithTag:1024];
+                [view removeFromSuperview];
+            }
+            weakSelf.viewModel.hadShowFontView = !weakSelf.viewModel.hadShowFontView; 
+        };
+        
+        _viewModel.rz_showAlignView = ^(CGFloat starX, BOOL hide) {
+            if (hide) {
+                UIView *view = [weakSelf viewWithTag:2048];
+                [view removeFromSuperview];
+                weakSelf.viewModel.hadShowAlignView = NO;
+                return ;
+            }
+            if (!weakSelf.viewModel.hadShowAlignView) {
+                CGRect showViewFrame = [weakSelf convertRect:weakSelf.bounds toView:[UIApplication sharedApplication].keyWindow];
+                CGFloat height = CGRectGetMaxY(showViewFrame);
+                CGRect frame = CGRectMake(0, -height + 44, UIScreen.mainScreen.bounds.size.width, height);
+                RZAlignConfigureView *view = [[RZAlignConfigureView alloc] initWithFrame:frame viewModel:weakSelf.viewModel locationX:starX];
+                view.tag = 2048;
+                [weakSelf addSubview:view];
+            } else {
+                UIView *view = [weakSelf viewWithTag:2048];
+                [view removeFromSuperview];
+            }
+            weakSelf.viewModel.hadShowAlignView = !weakSelf.viewModel.hadShowAlignView;
         };
     }
     return _viewModel;
 }
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *view = [super hitTest:point withEvent:event];
+    if (view == nil) {
+        for (UIView *subView in self.subviews) {
+            CGPoint myPoint = [subView convertPoint:point fromView:self];
+            if (CGRectContainsPoint(subView.bounds, myPoint)) {
+                return subView;
+            }
+        }
+    }
+    return view;
+}
 
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    return YES;
+}
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        self.layer.masksToBounds = NO;
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.itemSize = CGSizeMake(44, 44);
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;

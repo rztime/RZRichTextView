@@ -15,6 +15,7 @@
 		84D4736521873BA500805439 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84D4736321873BA500805439 /* LaunchScreen.storyboard */; };
 		84D4736821873BA500805439 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D4736721873BA500805439 /* main.m */; };
 		84D4737121873FC600805439 /* RZRichTextConfigureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D4737021873FC600805439 /* RZRichTextConfigureView.m */; };
+		84E1196421894D7F00AD0AD9 /* RZAlignConfigureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E1196321894D7F00AD0AD9 /* RZAlignConfigureView.m */; };
 		84EDDFEB21883D3000A0D325 /* RZRichTextViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDDFEA21883D3000A0D325 /* RZRichTextViewModel.m */; };
 		84EDDFEE21883D7F00A0D325 /* RZRichSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDDFED21883D7F00A0D325 /* RZRichSelectionCell.m */; };
 		84EDDFF1218840E300A0D325 /* RZRichText.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDDFF0218840E300A0D325 /* RZRichText.m */; };
@@ -29,7 +30,7 @@
 		84EDE0142188638100A0D325 /* RZColoseKeyBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE0132188638100A0D325 /* RZColoseKeyBoardView.m */; };
 		84EDE01721887A2B00A0D325 /* NSObject+RZCategoryTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE01621887A2B00A0D325 /* NSObject+RZCategoryTools.m */; };
 		84EDE01A21887E0A00A0D325 /* RZRichTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE01921887E0A00A0D325 /* RZRichTextView.m */; };
-		84EDE01D218891DE00A0D325 /* RZFontConfigureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE01C218891DE00A0D325 /* RZFontConfigureViewController.m */; };
+		84EDE0202188962E00A0D325 /* RZFontConfigureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDE01F2188962E00A0D325 /* RZFontConfigureView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,8 @@
 		84D4736721873BA500805439 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		84D4736F21873FC600805439 /* RZRichTextConfigureView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextConfigureView.h; sourceTree = "<group>"; };
 		84D4737021873FC600805439 /* RZRichTextConfigureView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichTextConfigureView.m; sourceTree = "<group>"; };
+		84E1196221894D7F00AD0AD9 /* RZAlignConfigureView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZAlignConfigureView.h; sourceTree = "<group>"; };
+		84E1196321894D7F00AD0AD9 /* RZAlignConfigureView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZAlignConfigureView.m; sourceTree = "<group>"; };
 		84EDDFE921883D3000A0D325 /* RZRichTextViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextViewModel.h; sourceTree = "<group>"; };
 		84EDDFEA21883D3000A0D325 /* RZRichTextViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichTextViewModel.m; sourceTree = "<group>"; };
 		84EDDFEC21883D7F00A0D325 /* RZRichSelectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichSelectionCell.h; sourceTree = "<group>"; };
@@ -75,8 +78,8 @@
 		84EDE01621887A2B00A0D325 /* NSObject+RZCategoryTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+RZCategoryTools.m"; sourceTree = "<group>"; };
 		84EDE01821887E0A00A0D325 /* RZRichTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextView.h; sourceTree = "<group>"; };
 		84EDE01921887E0A00A0D325 /* RZRichTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichTextView.m; sourceTree = "<group>"; };
-		84EDE01B218891DE00A0D325 /* RZFontConfigureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZFontConfigureViewController.h; sourceTree = "<group>"; };
-		84EDE01C218891DE00A0D325 /* RZFontConfigureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZFontConfigureViewController.m; sourceTree = "<group>"; };
+		84EDE01E2188962E00A0D325 /* RZFontConfigureView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZFontConfigureView.h; sourceTree = "<group>"; };
+		84EDE01F2188962E00A0D325 /* RZFontConfigureView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZFontConfigureView.m; sourceTree = "<group>"; };
 		A9EECE3015A01E789BE384DB /* Pods-RZRichTextView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,9 +153,6 @@
 				84EDDFF52188488600A0D325 /* Sources */,
 				84EDDFE821883CED00A0D325 /* Model */,
 				84EDDFE721883CCC00A0D325 /* View */,
-				84D4736F21873FC600805439 /* RZRichTextConfigureView.h */,
-				84D4737021873FC600805439 /* RZRichTextConfigureView.m */,
-				84EDE011218859DF00A0D325 /* RZDefine.h */,
 				84EDE01821887E0A00A0D325 /* RZRichTextView.h */,
 				84EDE01921887E0A00A0D325 /* RZRichTextView.m */,
 			);
@@ -180,8 +180,12 @@
 				84EDE00B218855B200A0D325 /* RZRichAlignCell.m */,
 				84EDE0122188638100A0D325 /* RZColoseKeyBoardView.h */,
 				84EDE0132188638100A0D325 /* RZColoseKeyBoardView.m */,
-				84EDE01B218891DE00A0D325 /* RZFontConfigureViewController.h */,
-				84EDE01C218891DE00A0D325 /* RZFontConfigureViewController.m */,
+				84EDE01E2188962E00A0D325 /* RZFontConfigureView.h */,
+				84EDE01F2188962E00A0D325 /* RZFontConfigureView.m */,
+				84E1196221894D7F00AD0AD9 /* RZAlignConfigureView.h */,
+				84E1196321894D7F00AD0AD9 /* RZAlignConfigureView.m */,
+				84D4736F21873FC600805439 /* RZRichTextConfigureView.h */,
+				84D4737021873FC600805439 /* RZRichTextConfigureView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -189,6 +193,7 @@
 		84EDDFE821883CED00A0D325 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				84EDE011218859DF00A0D325 /* RZDefine.h */,
 				84EDDFE921883D3000A0D325 /* RZRichTextViewModel.h */,
 				84EDDFEA21883D3000A0D325 /* RZRichTextViewModel.m */,
 				84EDDFEF218840E300A0D325 /* RZRichText.h */,
@@ -321,7 +326,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84EDE01D218891DE00A0D325 /* RZFontConfigureViewController.m in Sources */,
+				84E1196421894D7F00AD0AD9 /* RZAlignConfigureView.m in Sources */,
+				84EDE0202188962E00A0D325 /* RZFontConfigureView.m in Sources */,
 				84D4737121873FC600805439 /* RZRichTextConfigureView.m in Sources */,
 				84EDE00C218855B200A0D325 /* RZRichAlignCell.m in Sources */,
 				84EDDFEB21883D3000A0D325 /* RZRichTextViewModel.m in Sources */,
