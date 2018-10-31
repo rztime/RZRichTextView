@@ -1,63 +1,47 @@
-# RZFileManager
+# RZRichTextView
 
 
 可以直接添加
 
 ```objc
-pod 'RZFileManager'
+pod 'RZRichTextView'
 ```
 
-* 文件下载管理 RZFileDownloadManager
+* UITextView富文本编辑器
 
-* 1.初始化下载 
+* RZRichTextView 继承自UITextView
 
+* 暂时只做一个demo，提供部分功能
+
+    * 图片
+    * 粗体
+    * 斜体
+    * 下划线
+    * 删除线
+    * 字体大小
+    * 字体颜色
+    * 对齐方式
+    
+空了在继续优化吧
+
+* 插入图片到富文本之后，在转换成HTML标签之前，需要将图片上传至服务器得到URL，最后将URL替换图片之后，生成HTML标签
 ```objc
-- (instancetype)initWithDownloadURL:(NSString *)url progress:(RZDownloadProgress)progress complete:(RZDownloadComplete)complete;
-```
+/**
+获取输入框中的所有图片
 
-* 2.获取所有的已经存在过的下载的数据
+@return 按照图片插入顺序排列
+*/
+- (NSArray <UIImage *> *)rz_rictTextImages;
+```
 
 ```objc
 /**
-查询得到数据库中已经存在的下载的内容
+将富文本内容转换成HTML标签语言 urls需与图片顺序、数量一致（倒叙方式插入，缺失可能导致图片顺序不准确）
 
-@return <#return value description#>
+@param urls 图片的链接，如果有图片，则请将图片先上传至自己的服务器中，得到地址。然后在转换成HTML时，urls图片顺序将与[- (NSArray <UIImage *> *)rz_rictTextImages]方法得到的图片顺序一致
+@return HTML标签string。
 */
-+ (NSArray <RZFileDownloadManager *> *)rz_queryAllDownloadFiles;
-```
+- (NSString *)rz_codingToHtmlWithImageURLS:(NSArray <NSString *> *)urls;
 
-* 3.如果当中有未完成的下载，则可以直接调用
-
-```objc 
-/**
-下载
-*/
-- (void)downLoad;
-
-```
-
-重新下载
-
-
-此时若想得到进度以及完成后的回调
-可以使用属性
-
-```objc
-@property (nonatomic, copy) RZDownloadProgress preogress; // 进度
-
-@property (nonatomic, copy) RZDownloadComplete downloadComplete; // 完成之后的回调
-
-```
-
-* 删除数据库数据和文件
-
-```objc
-
-/**
-删除，从文件夹中删除文件，并删除数据库的数据
-
-@return <#return value description#>
-*/
-- (BOOL)deleteFromCache;
 ```
 
