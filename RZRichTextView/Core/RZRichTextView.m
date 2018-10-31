@@ -116,6 +116,10 @@
     self.attributedText = tempAttr;
 
     self.selectedRange = selectedRange;
+    
+    if (self.didChanegdText){
+        self.didChanegdText(self);
+    }
 }
 
 - (NSArray <UIImage *> *)rz_rictTextImages {

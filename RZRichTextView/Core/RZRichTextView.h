@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+  请勿对RZRichTextView的delegate替换赋值
+ */
 @interface RZRichTextView : UITextView
 
-
+/**
+ 文字改变之后的回调
+ */
+@property (nonatomic, copy) void(^didChanegdText)(RZRichTextView *textView);
 /**
  获取输入框中的所有图片
 
