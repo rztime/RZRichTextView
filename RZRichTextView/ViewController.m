@@ -32,7 +32,7 @@
 }
 
 - (void)getImages {
-    NSArray *array = [self.textView rz_rictTextImages];
+    NSArray *array = [self.textView rz_richTextImages];
     NSLog(@"ar:%@", array);
 }
 - (void)getHtml {

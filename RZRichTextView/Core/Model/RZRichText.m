@@ -40,6 +40,22 @@
     }];
     return attr.copy;
 }
+
+/**
+ 获取富文本中的的所有图片
+ 
+ @return 按照图片插入顺序排列
+ */
++ (NSArray <UIImage *> *)rz_richTextImagesFormAttributed:(NSAttributedString *)attr {
+    NSMutableArray *arrays = [NSMutableArray new];
+    [attr enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, attr.length) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        if ([value isKindOfClass:[NSTextAttachment class]]) {
+            NSTextAttachment *imageMent = value;
+            [arrays addObject:imageMent.image];
+        }
+    }];
+    return arrays.copy;
+}
 /**
  将富文本转成HTML标签
  

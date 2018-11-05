@@ -122,15 +122,8 @@
     }
 }
 
-- (NSArray <UIImage *> *)rz_rictTextImages {
-    NSMutableArray *arrays = [NSMutableArray new];
-    [self.attributedText enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, self.attributedText.length) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-        if ([value isKindOfClass:[NSTextAttachment class]]) {
-            NSTextAttachment *imageMent = value;
-            [arrays addObject:imageMent.image];
-        }
-    }];
-    return arrays.copy;
+- (NSArray <UIImage *> *)rz_richTextImages {
+    return [RZRichText rz_richTextImagesFormAttributed:self.attributedText];
 }
 
 - (NSString *)rz_codingToHtmlWithImageURLS:(NSArray <NSString *> *)urls {

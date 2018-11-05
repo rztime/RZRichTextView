@@ -25,7 +25,12 @@
 @end
 
 @interface RZRichText (HtmlHelper)
-
+/**
+ 获取富文本中的的所有图片
+ 
+ @return 按照图片插入顺序排列
+ */
++ (NSArray <UIImage *> *)rz_richTextImagesFormAttributed:(NSAttributedString *)attr;
 /**
  将富文本转成HTML标签
  

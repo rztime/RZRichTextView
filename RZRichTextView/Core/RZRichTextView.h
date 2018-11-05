@@ -22,7 +22,7 @@
 
  @return 按照图片插入顺序排列
  */
-- (NSArray <UIImage *> *)rz_rictTextImages;
+- (NSArray <UIImage *> *)rz_richTextImages;
 
 /**
  将富文本内容转换成HTML标签语言 urls需与图片顺序、数量一致（倒叙方式插入，缺失可能导致图片顺序不准确）
