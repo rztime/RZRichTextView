@@ -155,8 +155,6 @@
 				84EDDFE721883CCC00A0D325 /* View */,
 				84EDE01821887E0A00A0D325 /* RZRichTextView.h */,
 				84EDE01921887E0A00A0D325 /* RZRichTextView.m */,
-				84EDDFEF218840E300A0D325 /* RZRichText.h */,
-				84EDDFF0218840E300A0D325 /* RZRichText.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -195,6 +193,8 @@
 		84EDDFE821883CED00A0D325 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				84EDDFEF218840E300A0D325 /* RZRichText.h */,
+				84EDDFF0218840E300A0D325 /* RZRichText.m */,
 				84EDE011218859DF00A0D325 /* RZDefine.h */,
 				84EDDFE921883D3000A0D325 /* RZRichTextViewModel.h */,
 				84EDDFEA21883D3000A0D325 /* RZRichTextViewModel.m */,
