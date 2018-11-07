@@ -155,6 +155,8 @@
 				84EDDFE721883CCC00A0D325 /* View */,
 				84EDE01821887E0A00A0D325 /* RZRichTextView.h */,
 				84EDE01921887E0A00A0D325 /* RZRichTextView.m */,
+				84EDDFEF218840E300A0D325 /* RZRichText.h */,
+				84EDDFF0218840E300A0D325 /* RZRichText.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -196,8 +198,6 @@
 				84EDE011218859DF00A0D325 /* RZDefine.h */,
 				84EDDFE921883D3000A0D325 /* RZRichTextViewModel.h */,
 				84EDDFEA21883D3000A0D325 /* RZRichTextViewModel.m */,
-				84EDDFEF218840E300A0D325 /* RZRichText.h */,
-				84EDDFF0218840E300A0D325 /* RZRichText.m */,
 				84EDE01521887A2B00A0D325 /* NSObject+RZCategoryTools.h */,
 				84EDE01621887A2B00A0D325 /* NSObject+RZCategoryTools.m */,
 			);

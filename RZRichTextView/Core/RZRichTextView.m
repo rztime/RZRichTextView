@@ -104,19 +104,17 @@
 }
 
 - (void)textChanged:(NSRange)range text:(NSString *)text {
-    if (text.length == 0) {
-        return;
-    }
-    NSRange selectedRange = self.selectedRange;
-
-    NSAttributedString *attr = [self.richView.viewModel.textModel rz_factoryByString:text];
-    NSMutableAttributedString *tempAttr = self.attributedText.mutableCopy;
-    [tempAttr replaceCharactersInRange:NSMakeRange(range.location, text.length) withAttributedString:attr];
-
-    self.attributedText = tempAttr;
-
-    self.selectedRange = selectedRange;
-    
+    if (text.length != 0) {
+        NSRange selectedRange = self.selectedRange;
+        
+        NSAttributedString *attr = [self.richView.viewModel.textModel rz_factoryByString:text];
+        NSMutableAttributedString *tempAttr = self.attributedText.mutableCopy;
+        [tempAttr replaceCharactersInRange:NSMakeRange(range.location, text.length) withAttributedString:attr];
+        
+        self.attributedText = tempAttr;
+        
+        self.selectedRange = selectedRange;
+    } 
     if (self.didChanegdText){
         self.didChanegdText(self);
     }

@@ -68,7 +68,7 @@
     // 先转换url
     NSMutableArray *tempUrls = [NSMutableArray new];
     [urls enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSString *img = [NSString stringWithFormat:@"<p style='text-align:center;'> <img style='max-width:90%%;height:auto;' src='%@'> </p>", obj];
+        NSString *img = [NSString stringWithFormat:@"<p style=\"text-align:center;\"> <img style=\"max-width:90%%;height:auto;\" src=\"%@\"> </p>", obj];
         [tempUrls addObject:img];
     }];
     
@@ -77,7 +77,7 @@
         if ([value isKindOfClass:[NSTextAttachment class]]) {
             NSString *url = tempUrls.count > 0?[tempUrls lastObject]:nil;
             if (url.length == 0) {
-                url = @"<p style='text-align:center;'> <img alt='图片缺失'> </p>";
+                url = @"<p style=\"text-align:center;\"> <img alt=\"图片缺失\"> </p>";
             }
             [tempAttr replaceCharactersInRange:range withString:url];
             if (tempUrls.count > 0) {
@@ -124,7 +124,7 @@
             } else if (algin == NSTextAlignmentRight) {
                 alginText = @"right";
             }
-            [spanTexts addObject:[NSString stringWithFormat:@"<p style='text-align: %@;'>", alginText]];
+            [spanTexts addObject:[NSString stringWithFormat:@"<p style=\"text-align: %@;\">", alginText]];
         }
         [obj enumerateObjectsUsingBlock:^(RZRichText * _Nonnull textHelper, NSUInteger idx, BOOL * _Nonnull stop) {
             NSString *text = [textHelper richTextToHtml];
@@ -169,7 +169,7 @@
     UIColor *color = self.attrs[@"NSColor"];
     [color getRed:&r green:&g blue:&b alpha:&a];
     
-    NSString *html = [NSString stringWithFormat:@"<span  style='font-size: %.0fpx;font-weight: %@; color: rgba(%.0f, %.0f, %.0f, %.1f);'>%@</span>", font.pointSize, fontDes, r*255, g*255, b*255, a, tempText];
+    NSString *html = [NSString stringWithFormat:@"<span  style=\"font-size: %.0fpx;font-weight: %@; color: rgba(%.0f, %.0f, %.0f, %.1f);\">%@</span>", font.pointSize, fontDes, r*255, g*255, b*255, a, tempText];
     return html;
 }
 @end
