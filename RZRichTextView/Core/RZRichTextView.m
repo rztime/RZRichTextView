@@ -19,6 +19,8 @@
 @property (nonatomic, assign) NSRange willChangedRange;
 @property (nonatomic, copy) NSString * willChangedText;
 
+@property (nonatomic, copy) NSAttributedString *lastAttributedText;
+
 @end
 
 @implementation RZRichTextView
@@ -72,6 +74,7 @@
         confer.text(@"\n");
     }];
     [self becomeFirstResponder];
+    [self textChanged:NSMakeRange(0, 0) text:nil];
 }
 
 - (void)keyboardChangedRich:(BOOL)changed {
@@ -85,12 +88,6 @@
     }
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    self.willChangedRange = range;
-    self.willChangedText = text;
-    self.lastSelectRange = self.selectedRange;
-    return YES;
-}
 - (void)textViewDidchanged:(NSNotification *)obj {
     NSString *lang = [[UIApplication sharedApplication]textInputMode].primaryLanguage;
     if ([lang isEqualToString:@"zh-Hans"]) {
@@ -100,7 +97,44 @@
             return ;
         }
     }
-    [self textChanged:self.willChangedRange text:self.willChangedText];
+    // 光标位置
+    NSInteger cursorLocation = self.selectedRange.location;
+    // 尾部未修改内容
+    NSString *sufText = [self.attributedText.string substringFromIndex:cursorLocation];
+    NSLog(@"sufT:%@", sufText);
+    // 1. 找修改的光标起始
+    // 2. 找结束位置
+    // 3. 修改的内容
+    { //
+        NSString *lastText;
+        if ([self.lastAttributedText.string hasSuffix:sufText]) {
+            lastText = [self.lastAttributedText.string substringToIndex:self.lastAttributedText.string.length - sufText.length];
+        } else {
+            lastText = self.lastAttributedText.string;
+        }
+        NSString *cuText;
+        if ([self.attributedText.string hasSuffix:sufText]) {
+            cuText = [self.attributedText.string substringToIndex:self.attributedText.string.length - sufText.length];
+        } else {
+            cuText = self.attributedText.string;
+        }
+        
+        NSInteger star = 0;
+        NSInteger length = 0;
+        NSInteger idx = lastText.length > cuText.length? lastText.length:cuText.length;
+        for (NSInteger i = 0; i < idx; i++) {
+            NSString *lc = i >= lastText.length? @"" : [lastText substringWithRange:NSMakeRange(i, 1)];
+            NSString *cc = i >= cuText.length? @"" : [cuText substringWithRange:NSMakeRange(i, 1)];
+            if (![lc isEqualToString:cc]) {
+                star = i;
+                length = lastText.length - i;
+                self.willChangedText = [cuText substringFromIndex:i];
+                break;
+            }
+        }
+        self.willChangedRange = NSMakeRange(star, length);
+    }
+    [self textChanged:self.willChangedRange text:self.willChangedText]; 
 }
 
 - (void)textChanged:(NSRange)range text:(NSString *)text {
@@ -118,6 +152,7 @@
     if (self.didChanegdText){
         self.didChanegdText(self);
     }
+    self.lastAttributedText = self.attributedText;
 }
 
 - (NSArray <UIImage *> *)rz_richTextImages {
