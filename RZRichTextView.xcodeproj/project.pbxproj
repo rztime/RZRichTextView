@@ -150,11 +150,11 @@
 		84D4736E21873C3500805439 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				84EDE01821887E0A00A0D325 /* RZRichTextView.h */,
+				84EDE01921887E0A00A0D325 /* RZRichTextView.m */,
 				84EDDFF52188488600A0D325 /* Sources */,
 				84EDDFE821883CED00A0D325 /* Model */,
 				84EDDFE721883CCC00A0D325 /* View */,
-				84EDE01821887E0A00A0D325 /* RZRichTextView.h */,
-				84EDE01921887E0A00A0D325 /* RZRichTextView.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";

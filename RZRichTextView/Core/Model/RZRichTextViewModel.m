@@ -8,8 +8,6 @@
 
 #import "RZRichTextViewModel.h"
 
-
-
 @implementation RZRichTextViewModel
 
 - (RZRichText *)textModel {

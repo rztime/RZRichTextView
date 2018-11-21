@@ -67,11 +67,9 @@
         width = self.frame.size.width  - 20;
         height = height * width / image.size.width;
     }
-    
+    kWeakSelf;
     [self rz_colorfulConferInsetTo:rzConferInsertPositionCursor append:^(RZColorfulConferrer * _Nonnull confer) {
-        confer.text(@"\n");
-        confer.appendImage(image).bounds(CGRectMake(0, 0, width, height));
-        confer.text(@"\n");
+        confer.appendImage(image).bounds(CGRectMake(0, 0, width, height)).paragraphStyle.alignment(weakSelf.richView.viewModel.textModel.aligment);
     }];
     [self becomeFirstResponder];
     [self textChanged:NSMakeRange(0, 0) text:nil];
@@ -88,6 +86,11 @@
     }
 }
 
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    _lastAttributedText = self.attributedText;
+    return YES;
+}
+
 - (void)textViewDidchanged:(NSNotification *)obj {
     NSString *lang = [[UIApplication sharedApplication]textInputMode].primaryLanguage;
     if ([lang isEqualToString:@"zh-Hans"]) {
@@ -100,8 +103,7 @@
     // 光标位置
     NSInteger cursorLocation = self.selectedRange.location;
     // 尾部未修改内容
-    NSString *sufText = [self.attributedText.string substringFromIndex:cursorLocation];
-    NSLog(@"sufT:%@", sufText);
+    NSString *sufText = [self.attributedText.string substringFromIndex:cursorLocation]; 
     // 1. 找修改的光标起始
     // 2. 找结束位置
     // 3. 修改的内容
@@ -156,10 +158,10 @@
 }
 
 - (NSArray <UIImage *> *)rz_richTextImages {
-    return [RZRichText rz_richTextImagesFormAttributed:self.attributedText];
+    return [self.attributedText rz_images];
 }
 
 - (NSString *)rz_codingToHtmlWithImageURLS:(NSArray <NSString *> *)urls {
-    return [RZRichText rz_htmlFactoryByAttributedString:self.attributedText imageURLSIfHad:urls]; 
+    return [self.attributedText rz_codingToHtmlWithImagesURLSIfHad:urls]; 
 }
 @end
