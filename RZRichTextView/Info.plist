@@ -21,9 +21,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>富文本编辑需要拍照</string>
+	<string>富文本编辑器需要用到拍照功能</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>富文本键盘将需要获取照片</string>
+	<string>富文本编辑器需要用到相册功能</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

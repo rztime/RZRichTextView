@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RZRichTextView"
-  s.version      = "0.0.7"
+  s.version      = "0.0.8"
   s.summary      = "iOS 原生UITextView 富文本编辑器"
 
   s.description  = <<-DESC
@@ -19,10 +19,10 @@ Pod::Spec.new do |s|
 
 
   s.source_files  = "Core", "RZRichTextView/Core/*.{h,m}"
-  s.resources = "RZRichTextView/Core/Sources/*"
+  s.resources = "RZRichTextView/Core/Resource/*"
  
   s.subspec 'Code' do |ss|
-    ss.source_files = "RZRichTextView/Core/Model/*.{h,m}" , "RZRichTextView/Core/View/*.{h,m}" 
+    ss.source_files = "RZRichTextView/Core/Depend/*.{h,m}"
   end
 
   s.dependency 'RZColorful'
