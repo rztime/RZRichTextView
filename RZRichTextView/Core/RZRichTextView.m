@@ -11,7 +11,7 @@
 #import <RZColorful/RZColorful.h>
 #import "RZRichTextViewModel.h"
 
-@interface RZRichTextView ()<UITextViewDelegate>
+@interface RZRichTextView ()
 
 @property (nonatomic, assign) NSRange lastSelectRange;
 @property (nonatomic, assign) NSRange willChangedRange;
@@ -56,9 +56,9 @@
         self.font = [UIFont systemFontOfSize:17];
         self.firstResonseCount = 0;
         self.rz_maxrevoke = 20;
-        self.delegate = self;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidchanged:) name:UITextViewTextDidChangeNotification object:self];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidBeginEditing:) name:UITextViewTextDidBeginEditingNotification object:self];
     }
     return self;
 }
@@ -66,7 +66,8 @@
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UITextViewTextDidChangeNotification
-                                                  object:nil];
+                                                  object:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)insertImage:(UIImage *)image {
@@ -95,12 +96,8 @@
     }
 }
 
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-    _lastAttributedText = self.attributedText;
-    return YES;
-}
-
 - (void)textViewDidBeginEditing:(UITextView *)textView {
+    _lastAttributedText = self.attributedText;
     if (self.firstResonseCount == 0) {
         [self addDataToHistory];
     }

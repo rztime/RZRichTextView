@@ -7,24 +7,41 @@
 pod 'RZRichTextView'
 ```
 
-* UITextView富文本编辑器
+* UITextView 富文本编辑器
 
 * RZRichTextView 继承自UITextView
 
-* 对HTML和富文本之间，可以互相转换，支持图片，现提供部分功能
+* 富文本编辑器，支持html与文本相互转换，支持的功能如下
 
-    * 图片
+    * 插入图片
+    * 撤销
+    * 恢复
     * 粗体
     * 斜体
     * 下划线
     * 删除线
-    * 字体大小
-    * 字体颜色
+    * 字体大小、颜色、字体背景色设置
+    * 字间距
     * 对齐方式
+    * 上标
+    * 下标
+    * 文字描边 （画笔大小、颜色）
+    * 文字阴影 （画笔大小、偏移量、颜色）
+    * 文字拉伸
     
-空了在继续优化吧
 
 * 插入图片到富文本之后，在转换成HTML标签之前，需要将图片上传至服务器得到URL，最后将URL替换图片之后，生成HTML标签
+
+
+<p align="center" >
+<img src="image1.jpg" title="工具条">
+</p>
+<p align="center" >
+<img src="image2.jpg" title="功能设置">
+</p>
+<p align="center" >
+<img src="image3.jpg" title="功能设置">
+</p>
 
 ### 使用RZRichTextView文本框
 ```objc
