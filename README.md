@@ -34,13 +34,13 @@ pod 'RZRichTextView'
 
 
 <p align="center" >
-<img src="image1.jpg" title="工具条">
+<img src="image1.png" title="工具条">
 </p>
 <p align="center" >
-<img src="image2.jpg" title="功能设置">
+<img src="image2.png" title="功能设置">
 </p>
 <p align="center" >
-<img src="image3.jpg" title="功能设置">
+<img src="image3.png" title="功能设置">
 </p>
 
 ### 使用RZRichTextView文本框
