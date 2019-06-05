@@ -9,7 +9,7 @@
 #import "RZRTShadowView.h"
 #import "RZRTSliderView.h"
 #import "RZRTColorView.h"
-#import <Masonry.h>
+#import <Masonry/Masonry.h>
 #import "RZRichTextConstant.h"
 
 @interface RZRTShadowView ()

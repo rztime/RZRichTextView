@@ -7,7 +7,7 @@
 //
 
 #import "RZRTURLView.h"
-#import <Masonry.h>
+#import <Masonry/Masonry.h>
 #import "RZRichTextConstant.h"
 #import "RZRichTextConfigureManager.h"
 #import <TZImagePickerController/TZImagePickerController.h>
