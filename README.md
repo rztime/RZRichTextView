@@ -42,19 +42,19 @@ pod 'RZRichTextView'
 
 ### [** 如果开发者需要代码预填入内容，或将html标签解析成富文本重新写入到文本中，继续编辑，请参考RZColorful， **](https://github.com/rztime/RZColorful)
 <p align="center" >
-<img src="image5.png" title="工具条">
+<img src="image5.jpeg" title="工具条">
 </p>
 <p align="center" >
-<img src="image1.png" title="段落样式">
+<img src="image1.jpeg" title="段落样式">
 </p>
 <p align="center" >
-<img src="image2.png" title="描边">
+<img src="image2.jpeg" title="描边">
 </p>
 <p align="center" >
-<img src="image3.png" title="编辑链接">
+<img src="image3.jpeg" title="编辑链接">
 </p>
 <p align="center" >
-<img src="image4.png" title="编辑链接">
+<img src="image4.jpeg" title="编辑链接">
 </p>
 
 ### 使用RZRichTextView文本框
@@ -123,7 +123,7 @@ pod 'RZRichTextView'
 
 #### 自定义 工具条
 <p align="center" >
-<img src="image5.png" title="工具条">
+<img src="image5.jpeg" title="工具条">
 </p>
 
 * 工具条是一个UICollectionView，所以要自定义功能，需要实现以下四个方法 
