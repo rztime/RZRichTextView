@@ -32,6 +32,7 @@ pod 'RZRichTextView'
 
 * 插入图片到富文本之后，在转换成HTML标签之前，需要将图片上传至服务器得到URL，最后将URL替换图片之后，生成HTML标签
 
+[** 如果开发者需要代码预填入内容，或将html标签解析成富文本重新写入到文本中，继续编辑，请参考RZColorful， **](https://github.com/rztime/RZColorful)
 
 <p align="center" >
 <img src="image1.png" title="工具条">
