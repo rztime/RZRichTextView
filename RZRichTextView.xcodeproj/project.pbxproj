@@ -3,13 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8498728E21C89CA8002F0904 /* RZRichItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8498728D21C89CA8002F0904 /* RZRichItemCell.m */; };
+		760414182296424F0081F2BE /* RZRTColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 760414172296424F0081F2BE /* RZRTColorView.m */; };
+		7604141B22969A300081F2BE /* RZRTParagraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7604141A22969A300081F2BE /* RZRTParagraphView.m */; };
+		76054D3222942FED00585098 /* RZRichTextConfigureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76054D3122942FED00585098 /* RZRichTextConfigureManager.m */; };
+		76054D4522953E3000585098 /* RZRictAttributeSetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76054D4422953E3000585098 /* RZRictAttributeSetingViewController.m */; };
+		76054D492295403100585098 /* RZRTSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76054D482295403100585098 /* RZRTSliderView.m */; };
+		76110ABE22A4B2740089FB46 /* RZRichAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76110ABD22A4B2740089FB46 /* RZRichAlertViewController.m */; };
+		76110AC122A4B40B0089FB46 /* RZRichAlertViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76110AC022A4B40B0089FB46 /* RZRichAlertViewCell.m */; };
+		764FA044229E5AD100B06212 /* RZRTURLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 764FA043229E5AD100B06212 /* RZRTURLView.m */; };
+		76DC6131229EB54500D03082 /* RZRichTextInputAVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DC6128229EB54500D03082 /* RZRichTextInputAVCell.m */; };
+		76DC6132229EB54500D03082 /* RZRichTextInputFontColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DC6129229EB54500D03082 /* RZRichTextInputFontColorCell.m */; };
+		76DC6133229EB54500D03082 /* RZRichTextAttributeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DC612A229EB54500D03082 /* RZRichTextAttributeItem.m */; };
+		76DC6134229EB54500D03082 /* RZRichTextInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DC612C229EB54500D03082 /* RZRichTextInputAccessoryView.m */; };
+		76DC6135229EB54500D03082 /* RZRichTextInputFontBgColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DC612E229EB54500D03082 /* RZRichTextInputFontBgColorCell.m */; };
+		76DC6138229EC02600D03082 /* UITextView+RZRichText.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DC6137229EC02600D03082 /* UITextView+RZRichText.m */; };
+		76ED173A229B8B3900079D59 /* RZRTShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76ED1739229B8B3900079D59 /* RZRTShadowView.m */; };
 		8498729421C8ED6E002F0904 /* RZRichResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8498729321C8ED6E002F0904 /* RZRichResource.bundle */; };
-		8498729721CA36F9002F0904 /* RZRichItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8498729621CA36F8002F0904 /* RZRichItemView.m */; };
 		84A283BE21C39BDE00D6E278 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A283BD21C39BDE00D6E278 /* AppDelegate.m */; };
 		84A283C121C39BDE00D6E278 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A283C021C39BDE00D6E278 /* ViewController.m */; };
 		84A283C421C39BDE00D6E278 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A283C221C39BDE00D6E278 /* Main.storyboard */; };
@@ -17,10 +30,6 @@
 		84A283C921C39BE200D6E278 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A283C721C39BE200D6E278 /* LaunchScreen.storyboard */; };
 		84A283CC21C39BE200D6E278 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A283CB21C39BE200D6E278 /* main.m */; };
 		84A283D521C39DD200D6E278 /* RZRichTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A283D421C39DD200D6E278 /* RZRichTextView.m */; };
-		84A283D921C39E3800D6E278 /* RZRichTextEditBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A283D821C39E3800D6E278 /* RZRichTextEditBar.m */; };
-		84A283E021C3A12400D6E278 /* RZRichTextContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A283DF21C3A12400D6E278 /* RZRichTextContent.m */; };
-		84A283E321C3B3CD00D6E278 /* RZRichTextViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A283E221C3B3CD00D6E278 /* RZRichTextViewModel.m */; };
-		84D6185C21CB27C200109AFD /* RZRichItemConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D6185B21CB27C200109AFD /* RZRichItemConfigure.m */; };
 		84DD855C21CC8394008BFBCD /* UIView+RZFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DD855B21CC8394008BFBCD /* UIView+RZFrame.m */; };
 		E55FF6483E082D406CDF6A88 /* libPods-RZRichTextView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 296240F714171B63FF529D0D /* libPods-RZRichTextView.a */; };
 /* End PBXBuildFile section */
@@ -28,11 +37,39 @@
 /* Begin PBXFileReference section */
 		16B25C33ED09F0CED3330143 /* Pods-RZRichTextView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView.release.xcconfig"; path = "Pods/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView.release.xcconfig"; sourceTree = "<group>"; };
 		296240F714171B63FF529D0D /* libPods-RZRichTextView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RZRichTextView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8498728C21C89CA8002F0904 /* RZRichItemCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichItemCell.h; sourceTree = "<group>"; };
-		8498728D21C89CA8002F0904 /* RZRichItemCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichItemCell.m; sourceTree = "<group>"; };
+		760414162296424F0081F2BE /* RZRTColorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRTColorView.h; sourceTree = "<group>"; };
+		760414172296424F0081F2BE /* RZRTColorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRTColorView.m; sourceTree = "<group>"; };
+		7604141922969A300081F2BE /* RZRTParagraphView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRTParagraphView.h; sourceTree = "<group>"; };
+		7604141A22969A300081F2BE /* RZRTParagraphView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRTParagraphView.m; sourceTree = "<group>"; };
+		76054D3022942FED00585098 /* RZRichTextConfigureManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextConfigureManager.h; sourceTree = "<group>"; };
+		76054D3122942FED00585098 /* RZRichTextConfigureManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichTextConfigureManager.m; sourceTree = "<group>"; };
+		76054D362294344D00585098 /* RZRichTextConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextConstant.h; sourceTree = "<group>"; };
+		76054D4322953E3000585098 /* RZRictAttributeSetingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRictAttributeSetingViewController.h; sourceTree = "<group>"; };
+		76054D4422953E3000585098 /* RZRictAttributeSetingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRictAttributeSetingViewController.m; sourceTree = "<group>"; };
+		76054D472295403100585098 /* RZRTSliderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRTSliderView.h; sourceTree = "<group>"; };
+		76054D482295403100585098 /* RZRTSliderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRTSliderView.m; sourceTree = "<group>"; };
+		76110ABC22A4B2740089FB46 /* RZRichAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichAlertViewController.h; sourceTree = "<group>"; };
+		76110ABD22A4B2740089FB46 /* RZRichAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichAlertViewController.m; sourceTree = "<group>"; };
+		76110ABF22A4B40B0089FB46 /* RZRichAlertViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichAlertViewCell.h; sourceTree = "<group>"; };
+		76110AC022A4B40B0089FB46 /* RZRichAlertViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichAlertViewCell.m; sourceTree = "<group>"; };
+		764FA041229E25FA00B06212 /* RZRichTextProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextProtocol.h; sourceTree = "<group>"; };
+		764FA042229E5AD100B06212 /* RZRTURLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRTURLView.h; sourceTree = "<group>"; };
+		764FA043229E5AD100B06212 /* RZRTURLView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRTURLView.m; sourceTree = "<group>"; };
+		76DC6127229EB54500D03082 /* RZRichTextInputAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZRichTextInputAccessoryView.h; sourceTree = "<group>"; };
+		76DC6128229EB54500D03082 /* RZRichTextInputAVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZRichTextInputAVCell.m; sourceTree = "<group>"; };
+		76DC6129229EB54500D03082 /* RZRichTextInputFontColorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZRichTextInputFontColorCell.m; sourceTree = "<group>"; };
+		76DC612A229EB54500D03082 /* RZRichTextAttributeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZRichTextAttributeItem.m; sourceTree = "<group>"; };
+		76DC612B229EB54500D03082 /* RZRichTextInputFontBgColorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZRichTextInputFontBgColorCell.h; sourceTree = "<group>"; };
+		76DC612C229EB54500D03082 /* RZRichTextInputAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZRichTextInputAccessoryView.m; sourceTree = "<group>"; };
+		76DC612D229EB54500D03082 /* RZRichTextInputAVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZRichTextInputAVCell.h; sourceTree = "<group>"; };
+		76DC612E229EB54500D03082 /* RZRichTextInputFontBgColorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZRichTextInputFontBgColorCell.m; sourceTree = "<group>"; };
+		76DC612F229EB54500D03082 /* RZRichTextAttributeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZRichTextAttributeItem.h; sourceTree = "<group>"; };
+		76DC6130229EB54500D03082 /* RZRichTextInputFontColorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZRichTextInputFontColorCell.h; sourceTree = "<group>"; };
+		76DC6136229EC02600D03082 /* UITextView+RZRichText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+RZRichText.h"; sourceTree = "<group>"; };
+		76DC6137229EC02600D03082 /* UITextView+RZRichText.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+RZRichText.m"; sourceTree = "<group>"; };
+		76ED1738229B8B3900079D59 /* RZRTShadowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRTShadowView.h; sourceTree = "<group>"; };
+		76ED1739229B8B3900079D59 /* RZRTShadowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRTShadowView.m; sourceTree = "<group>"; };
 		8498729321C8ED6E002F0904 /* RZRichResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = RZRichResource.bundle; sourceTree = "<group>"; };
-		8498729521CA36F8002F0904 /* RZRichItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichItemView.h; sourceTree = "<group>"; };
-		8498729621CA36F8002F0904 /* RZRichItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichItemView.m; sourceTree = "<group>"; };
 		84A283B921C39BDE00D6E278 /* RZRichTextView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RZRichTextView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A283BC21C39BDE00D6E278 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		84A283BD21C39BDE00D6E278 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -45,14 +82,6 @@
 		84A283CB21C39BE200D6E278 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		84A283D321C39DD200D6E278 /* RZRichTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextView.h; sourceTree = "<group>"; };
 		84A283D421C39DD200D6E278 /* RZRichTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichTextView.m; sourceTree = "<group>"; };
-		84A283D721C39E3800D6E278 /* RZRichTextEditBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextEditBar.h; sourceTree = "<group>"; };
-		84A283D821C39E3800D6E278 /* RZRichTextEditBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichTextEditBar.m; sourceTree = "<group>"; };
-		84A283DE21C3A12400D6E278 /* RZRichTextContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextContent.h; sourceTree = "<group>"; };
-		84A283DF21C3A12400D6E278 /* RZRichTextContent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichTextContent.m; sourceTree = "<group>"; };
-		84A283E121C3B3CD00D6E278 /* RZRichTextViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichTextViewModel.h; sourceTree = "<group>"; };
-		84A283E221C3B3CD00D6E278 /* RZRichTextViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichTextViewModel.m; sourceTree = "<group>"; };
-		84D6185A21CB27C200109AFD /* RZRichItemConfigure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRichItemConfigure.h; sourceTree = "<group>"; };
-		84D6185B21CB27C200109AFD /* RZRichItemConfigure.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRichItemConfigure.m; sourceTree = "<group>"; };
 		84DD855A21CC8394008BFBCD /* UIView+RZFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+RZFrame.h"; sourceTree = "<group>"; };
 		84DD855B21CC8394008BFBCD /* UIView+RZFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+RZFrame.m"; sourceTree = "<group>"; };
 		B6A86C9E0383A49CA7C8DD60 /* Pods-RZRichTextView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView.debug.xcconfig"; sourceTree = "<group>"; };
@@ -70,6 +99,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		76054D462295400700585098 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				76054D472295403100585098 /* RZRTSliderView.h */,
+				76054D482295403100585098 /* RZRTSliderView.m */,
+				760414162296424F0081F2BE /* RZRTColorView.h */,
+				760414172296424F0081F2BE /* RZRTColorView.m */,
+				7604141922969A300081F2BE /* RZRTParagraphView.h */,
+				7604141A22969A300081F2BE /* RZRTParagraphView.m */,
+				76ED1738229B8B3900079D59 /* RZRTShadowView.h */,
+				76ED1739229B8B3900079D59 /* RZRTShadowView.m */,
+				764FA042229E5AD100B06212 /* RZRTURLView.h */,
+				764FA043229E5AD100B06212 /* RZRTURLView.m */,
+				76110ABF22A4B40B0089FB46 /* RZRichAlertViewCell.h */,
+				76110AC022A4B40B0089FB46 /* RZRichAlertViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		76DC6126229EB54500D03082 /* AttributeBarView */ = {
+			isa = PBXGroup;
+			children = (
+				76DC612D229EB54500D03082 /* RZRichTextInputAVCell.h */,
+				76DC6128229EB54500D03082 /* RZRichTextInputAVCell.m */,
+				76DC612F229EB54500D03082 /* RZRichTextAttributeItem.h */,
+				76DC612A229EB54500D03082 /* RZRichTextAttributeItem.m */,
+				76DC6127229EB54500D03082 /* RZRichTextInputAccessoryView.h */,
+				76DC612C229EB54500D03082 /* RZRichTextInputAccessoryView.m */,
+				76DC612B229EB54500D03082 /* RZRichTextInputFontBgColorCell.h */,
+				76DC612E229EB54500D03082 /* RZRichTextInputFontBgColorCell.m */,
+				76DC6130229EB54500D03082 /* RZRichTextInputFontColorCell.h */,
+				76DC6129229EB54500D03082 /* RZRichTextInputFontColorCell.m */,
+			);
+			path = AttributeBarView;
+			sourceTree = "<group>";
+		};
 		8498729221C8ED4D002F0904 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -104,10 +169,10 @@
 				84A283BD21C39BDE00D6E278 /* AppDelegate.m */,
 				84A283BF21C39BDE00D6E278 /* ViewController.h */,
 				84A283C021C39BDE00D6E278 /* ViewController.m */,
-				84A283C221C39BDE00D6E278 /* Main.storyboard */,
 				84A283C521C39BE200D6E278 /* Assets.xcassets */,
 				84A283C721C39BE200D6E278 /* LaunchScreen.storyboard */,
 				84A283CA21C39BE200D6E278 /* Info.plist */,
+				84A283C221C39BDE00D6E278 /* Main.storyboard */,
 				84A283CB21C39BE200D6E278 /* main.m */,
 			);
 			path = RZRichTextView;
@@ -116,10 +181,12 @@
 		84A283D221C39DC000D6E278 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				8498729221C8ED4D002F0904 /* Resource */,
-				84A283D621C39E2600D6E278 /* Depend */,
 				84A283D321C39DD200D6E278 /* RZRichTextView.h */,
 				84A283D421C39DD200D6E278 /* RZRichTextView.m */,
+				76054D3022942FED00585098 /* RZRichTextConfigureManager.h */,
+				76054D3122942FED00585098 /* RZRichTextConfigureManager.m */,
+				8498729221C8ED4D002F0904 /* Resource */,
+				84A283D621C39E2600D6E278 /* Depend */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -127,20 +194,18 @@
 		84A283D621C39E2600D6E278 /* Depend */ = {
 			isa = PBXGroup;
 			children = (
-				84A283D721C39E3800D6E278 /* RZRichTextEditBar.h */,
-				84A283D821C39E3800D6E278 /* RZRichTextEditBar.m */,
-				84A283DE21C3A12400D6E278 /* RZRichTextContent.h */,
-				84A283DF21C3A12400D6E278 /* RZRichTextContent.m */,
-				84A283E121C3B3CD00D6E278 /* RZRichTextViewModel.h */,
-				84A283E221C3B3CD00D6E278 /* RZRichTextViewModel.m */,
-				8498728C21C89CA8002F0904 /* RZRichItemCell.h */,
-				8498728D21C89CA8002F0904 /* RZRichItemCell.m */,
-				8498729521CA36F8002F0904 /* RZRichItemView.h */,
-				8498729621CA36F8002F0904 /* RZRichItemView.m */,
-				84D6185A21CB27C200109AFD /* RZRichItemConfigure.h */,
-				84D6185B21CB27C200109AFD /* RZRichItemConfigure.m */,
+				76DC6126229EB54500D03082 /* AttributeBarView */,
+				76054D362294344D00585098 /* RZRichTextConstant.h */,
+				764FA041229E25FA00B06212 /* RZRichTextProtocol.h */,
+				76054D462295400700585098 /* View */,
 				84DD855A21CC8394008BFBCD /* UIView+RZFrame.h */,
 				84DD855B21CC8394008BFBCD /* UIView+RZFrame.m */,
+				76054D4322953E3000585098 /* RZRictAttributeSetingViewController.h */,
+				76054D4422953E3000585098 /* RZRictAttributeSetingViewController.m */,
+				76DC6136229EC02600D03082 /* UITextView+RZRichText.h */,
+				76DC6137229EC02600D03082 /* UITextView+RZRichText.m */,
+				76110ABC22A4B2740089FB46 /* RZRichAlertViewController.h */,
+				76110ABD22A4B2740089FB46 /* RZRichAlertViewController.m */,
 			);
 			path = Depend;
 			sourceTree = "<group>";
@@ -254,19 +319,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-resources.sh",
-				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
-				"${PODS_ROOT}/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TZImagePickerController.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -276,17 +338,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76110ABE22A4B2740089FB46 /* RZRichAlertViewController.m in Sources */,
+				76DC6132229EB54500D03082 /* RZRichTextInputFontColorCell.m in Sources */,
+				76054D4522953E3000585098 /* RZRictAttributeSetingViewController.m in Sources */,
+				760414182296424F0081F2BE /* RZRTColorView.m in Sources */,
+				76DC6133229EB54500D03082 /* RZRichTextAttributeItem.m in Sources */,
+				76DC6138229EC02600D03082 /* UITextView+RZRichText.m in Sources */,
+				76054D3222942FED00585098 /* RZRichTextConfigureManager.m in Sources */,
+				764FA044229E5AD100B06212 /* RZRTURLView.m in Sources */,
 				84DD855C21CC8394008BFBCD /* UIView+RZFrame.m in Sources */,
+				76110AC122A4B40B0089FB46 /* RZRichAlertViewCell.m in Sources */,
+				76DC6134229EB54500D03082 /* RZRichTextInputAccessoryView.m in Sources */,
 				84A283C121C39BDE00D6E278 /* ViewController.m in Sources */,
 				84A283D521C39DD200D6E278 /* RZRichTextView.m in Sources */,
-				8498729721CA36F9002F0904 /* RZRichItemView.m in Sources */,
-				8498728E21C89CA8002F0904 /* RZRichItemCell.m in Sources */,
+				7604141B22969A300081F2BE /* RZRTParagraphView.m in Sources */,
+				76DC6135229EB54500D03082 /* RZRichTextInputFontBgColorCell.m in Sources */,
 				84A283CC21C39BE200D6E278 /* main.m in Sources */,
-				84A283E321C3B3CD00D6E278 /* RZRichTextViewModel.m in Sources */,
-				84D6185C21CB27C200109AFD /* RZRichItemConfigure.m in Sources */,
+				76054D492295403100585098 /* RZRTSliderView.m in Sources */,
 				84A283BE21C39BDE00D6E278 /* AppDelegate.m in Sources */,
-				84A283E021C3A12400D6E278 /* RZRichTextContent.m in Sources */,
-				84A283D921C39E3800D6E278 /* RZRichTextEditBar.m in Sources */,
+				76ED173A229B8B3900079D59 /* RZRTShadowView.m in Sources */,
+				76DC6131229EB54500D03082 /* RZRichTextInputAVCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,7 +508,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rztime.RZRichTextView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rztime.RZColorfulExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -456,7 +527,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rztime.RZRichTextView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rztime.RZColorfulExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

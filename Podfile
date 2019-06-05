@@ -11,5 +11,5 @@ target 'RZRichTextView' do
   pod 'IQKeyboardManager' 
   pod 'Masonry'
   pod 'TZImagePickerController'
-  pod 'BlocksKit'
+  #pod 'BlocksKit'
 end
