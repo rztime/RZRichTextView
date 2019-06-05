@@ -43,6 +43,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) NSUInteger rz_maxrevoke;
 
+
+/** 实现此block，可以对将要插入的图片进行处理 */
+@property (nonatomic, copy) UIImage * __nullable (^rz_shouldInserImage)(UIImage * __nullable image);
+
 /**
  手动插入图片
  */

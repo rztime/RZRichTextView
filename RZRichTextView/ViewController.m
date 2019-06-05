@@ -62,7 +62,10 @@
         }
         return nil;
     };
-    
+    // 全局的图片的处理
+    RZRichTextConfigureManager.manager.rz_shouldInserImage = ^UIImage * _Nullable(UIImage * _Nullable image) {
+        return image;
+    };
     // 富文本输入框
     RZRichTextView *view = [[RZRichTextView alloc] initWithFrame:CGRectMake(10, 100, 300, 300)];
     view.backgroundColor = [UIColor grayColor];

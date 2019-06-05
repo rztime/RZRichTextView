@@ -432,11 +432,14 @@
     TZImagePickerController *vc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:nil];
     vc.allowPickingVideo = NO;
     vc.allowTakeVideo = NO;
+    vc.allowCrop = NO;
     rz_weakObj(self);
     [vc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         if (photos.count > 0) {
             UIImage *image = photos[0];
-            if (RZRichTextConfigureManager.manager.rz_shouldInserImage) {
+            if (selfWeak.rz_shouldInserImage) {
+                image = selfWeak.rz_shouldInserImage(image);
+            } else if (RZRichTextConfigureManager.manager.rz_shouldInserImage) {
                 image = RZRichTextConfigureManager.manager.rz_shouldInserImage(image);
             }
             if (!image) {

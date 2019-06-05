@@ -13,9 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RZRTURLView : UIView <RZRTViewDelegate>
 
-//@property (nonatomic, strong) UIImage *image;
-//@property (nonatomic, copy) NSString *text;
-//@property (nonatomic, copy) NSString *url;
 @property (nonatomic, copy) NSAttributedString *urlString;
 
 @property (nonatomic, copy) void(^didURLEditComplete)(NSAttributedString *urlString);

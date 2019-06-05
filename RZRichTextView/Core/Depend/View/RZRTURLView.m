@@ -129,7 +129,7 @@
     TZImagePickerController *vc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:nil];
     vc.allowPickingVideo = NO;
     vc.allowTakeVideo = NO;
-    vc.allowCrop = YES;
+    vc.allowCrop = NO;
     rz_weakObj(self);
     [vc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         if (photos.count > 0) {

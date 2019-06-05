@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)manager;
 
 #pragma mark - 自定义键盘上的工具栏的cell相关信息
-/** 键盘上的工具条功能数组，可新增、也可以删除屏蔽部分功能
+/** 键盘上的工具条功能数组，可新增、删除、交换位置
     如果要添加自定义的功能，添加的RZRichTextAttributeType 请尽量从100以后添加，
  */
 @property (nonatomic, copy) NSMutableArray <RZRichTextAttributeItem *> *rz_attributeItems;
@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - 全局的对富文本将要插入的图片进行的处理的方法
 /** 实现此block，可以对将要插入的图片进行处理 */
-@property (nonatomic, copy) UIImage *(^rz_shouldInserImage)(UIImage *image);
+@property (nonatomic, copy) UIImage * __nullable (^rz_shouldInserImage)(UIImage * __nullable image);
 
 #pragma mark - 其他方法
 // 获取当前屏幕最顶层的viewcontroller

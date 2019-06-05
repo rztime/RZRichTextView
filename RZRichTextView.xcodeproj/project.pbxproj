@@ -170,9 +170,9 @@
 				84A283BF21C39BDE00D6E278 /* ViewController.h */,
 				84A283C021C39BDE00D6E278 /* ViewController.m */,
 				84A283C521C39BE200D6E278 /* Assets.xcassets */,
-				84A283C721C39BE200D6E278 /* LaunchScreen.storyboard */,
 				84A283CA21C39BE200D6E278 /* Info.plist */,
 				84A283C221C39BDE00D6E278 /* Main.storyboard */,
+				84A283C721C39BE200D6E278 /* LaunchScreen.storyboard */,
 				84A283CB21C39BE200D6E278 /* main.m */,
 			);
 			path = RZRichTextView;
