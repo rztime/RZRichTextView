@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RZRichTextView"
-  s.version      = "0.0.9"
+  s.version      = "0.1.0"
   s.summary      = "iOS 原生UITextView 富文本编辑器"
 
   s.description  = <<-DESC
