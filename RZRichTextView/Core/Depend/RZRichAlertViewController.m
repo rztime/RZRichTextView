@@ -78,7 +78,7 @@
             make.centerY.equalTo(self.collertionView);
             make.right.equalTo(self.collertionView);
         }];
-        self.rightImageView.image = [UIImage imageNamed:@"RZRichResource.bundle/rzActionSheetMore"];
+        self.rightImageView.image = k_rz_richImage(@"rzActionSheetMore");
     } else if (_type == RZRichAlertViewTypeList && _titles.count > 6) {
         self.downImageView = [[UIImageView alloc]init];
         [self.contentView addSubview:self.downImageView];
@@ -86,7 +86,7 @@
             make.centerX.equalTo(self.collertionView);
             make.bottom.equalTo(self.collertionView);
         }];
-        self.downImageView.image = [UIImage imageNamed:@"RZRichResource.bundle/rzActionSheetMoreD"];
+        self.downImageView.image = k_rz_richImage(@"rzActionSheetMoreD");
     }
 }
 

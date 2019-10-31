@@ -33,12 +33,12 @@ typedef NS_ENUM(NSInteger, RZRichTextAttributeType) {
 };
 
 typedef NS_ENUM(NSInteger, RZRichAlertViewType) {
-    
     RZRichAlertViewTypeList = 0, // 列表模式 （tableview样式）
     RZRichAlertViewTypeGrid = 1, // 格子样式 (collerctionview样式)
 };
+#import "UIImage+RZRichTextView.h"
 
-#define k_rz_richImage(name) [UIImage imageNamed:[NSString stringWithFormat:@"RZRichResource.bundle/%@", name]]
+#define k_rz_richImage(name) [UIImage rz_imageName:name]
 
 #define rz_rgba(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 #define rz_rgb(r, g, b) rz_rgba(r, g, b, 1)

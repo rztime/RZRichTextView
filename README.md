@@ -46,7 +46,6 @@ pod 'RZRichTextView'
 </br>所支持的工具条</br></br>
 </p>
 
-
 <p align="center" >
 <img src="image1.jpeg" title="段落样式">
 </br>段落样式设置</br></br>
@@ -190,6 +189,9 @@ pod 'RZRichTextView'
 ```
 
 
+###### 更新日志
 
+* 0.2.0  
+    修复在use_frameworks!下图片不显示的bug
 
 

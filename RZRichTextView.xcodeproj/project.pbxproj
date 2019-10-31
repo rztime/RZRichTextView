@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		061EA480236A8BDA0034252A /* UIImage+RZRichTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 061EA47F236A8BDA0034252A /* UIImage+RZRichTextView.m */; };
 		760414182296424F0081F2BE /* RZRTColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 760414172296424F0081F2BE /* RZRTColorView.m */; };
 		7604141B22969A300081F2BE /* RZRTParagraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7604141A22969A300081F2BE /* RZRTParagraphView.m */; };
 		76054D3222942FED00585098 /* RZRichTextConfigureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76054D3122942FED00585098 /* RZRichTextConfigureManager.m */; };
@@ -22,6 +23,7 @@
 		76DC6135229EB54500D03082 /* RZRichTextInputFontBgColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DC612E229EB54500D03082 /* RZRichTextInputFontBgColorCell.m */; };
 		76DC6138229EC02600D03082 /* UITextView+RZRichText.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DC6137229EC02600D03082 /* UITextView+RZRichText.m */; };
 		76ED173A229B8B3900079D59 /* RZRTShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76ED1739229B8B3900079D59 /* RZRTShadowView.m */; };
+		7A827551290FCAC926291F55 /* Pods_RZRichTextView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3567A300D576F4611DDE9A15 /* Pods_RZRichTextView.framework */; };
 		8498729421C8ED6E002F0904 /* RZRichResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8498729321C8ED6E002F0904 /* RZRichResource.bundle */; };
 		84A283BE21C39BDE00D6E278 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A283BD21C39BDE00D6E278 /* AppDelegate.m */; };
 		84A283C121C39BDE00D6E278 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A283C021C39BDE00D6E278 /* ViewController.m */; };
@@ -31,12 +33,13 @@
 		84A283CC21C39BE200D6E278 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A283CB21C39BE200D6E278 /* main.m */; };
 		84A283D521C39DD200D6E278 /* RZRichTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A283D421C39DD200D6E278 /* RZRichTextView.m */; };
 		84DD855C21CC8394008BFBCD /* UIView+RZFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DD855B21CC8394008BFBCD /* UIView+RZFrame.m */; };
-		E55FF6483E082D406CDF6A88 /* libPods-RZRichTextView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 296240F714171B63FF529D0D /* libPods-RZRichTextView.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		061EA47E236A8BDA0034252A /* UIImage+RZRichTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+RZRichTextView.h"; sourceTree = "<group>"; };
+		061EA47F236A8BDA0034252A /* UIImage+RZRichTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RZRichTextView.m"; sourceTree = "<group>"; };
 		16B25C33ED09F0CED3330143 /* Pods-RZRichTextView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView.release.xcconfig"; path = "Pods/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView.release.xcconfig"; sourceTree = "<group>"; };
-		296240F714171B63FF529D0D /* libPods-RZRichTextView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RZRichTextView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3567A300D576F4611DDE9A15 /* Pods_RZRichTextView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RZRichTextView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		760414162296424F0081F2BE /* RZRTColorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRTColorView.h; sourceTree = "<group>"; };
 		760414172296424F0081F2BE /* RZRTColorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZRTColorView.m; sourceTree = "<group>"; };
 		7604141922969A300081F2BE /* RZRTParagraphView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRTParagraphView.h; sourceTree = "<group>"; };
@@ -92,7 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E55FF6483E082D406CDF6A88 /* libPods-RZRichTextView.a in Frameworks */,
+				7A827551290FCAC926291F55 /* Pods_RZRichTextView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +197,8 @@
 		84A283D621C39E2600D6E278 /* Depend */ = {
 			isa = PBXGroup;
 			children = (
+				061EA47E236A8BDA0034252A /* UIImage+RZRichTextView.h */,
+				061EA47F236A8BDA0034252A /* UIImage+RZRichTextView.m */,
 				76DC6126229EB54500D03082 /* AttributeBarView */,
 				76054D362294344D00585098 /* RZRichTextConstant.h */,
 				764FA041229E25FA00B06212 /* RZRichTextProtocol.h */,
@@ -213,7 +218,7 @@
 		86C367FB56CBC0DB08924FA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				296240F714171B63FF529D0D /* libPods-RZRichTextView.a */,
+				3567A300D576F4611DDE9A15 /* Pods_RZRichTextView.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -238,7 +243,7 @@
 				84A283B521C39BDE00D6E278 /* Sources */,
 				84A283B621C39BDE00D6E278 /* Frameworks */,
 				84A283B721C39BDE00D6E278 /* Resources */,
-				BA859C3EE84A85305B50DF0D /* [CP] Copy Pods Resources */,
+				DFD486982AD9DA90B6B10472 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -314,21 +319,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BA859C3EE84A85305B50DF0D /* [CP] Copy Pods Resources */ = {
+		DFD486982AD9DA90B6B10472 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -358,6 +363,7 @@
 				84A283BE21C39BDE00D6E278 /* AppDelegate.m in Sources */,
 				76ED173A229B8B3900079D59 /* RZRTShadowView.m in Sources */,
 				76DC6131229EB54500D03082 /* RZRichTextInputAVCell.m in Sources */,
+				061EA480236A8BDA0034252A /* UIImage+RZRichTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
