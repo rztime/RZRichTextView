@@ -1,7 +1,7 @@
 # RZRichTextView
 
 
-###### [更新日志]((https://github.com/rztime/RZRichTextView/blob/master/UpdateLog.md))
+###### [更新日志](https://github.com/rztime/RZRichTextView/blob/master/UpdateLog.md)
 
 导入工程
 
