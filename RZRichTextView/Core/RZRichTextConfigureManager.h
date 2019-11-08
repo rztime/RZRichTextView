@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIColor *themeColor;  // 主题色
 @property (nonatomic, strong) UIImage *sliderImage;  // 滑块图片
+@property (nonatomic, strong) UIColor *keyboardColor; // 键盘默认颜色
+
+@property (nonatomic, assign) RZUserInterfaceStyle overrideUserInterfaceStyle;
 
 /** 单例  */
 + (instancetype)manager;

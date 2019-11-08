@@ -45,6 +45,10 @@
         self.textField.layer.borderColor = rz_rgb(238, 238, 238).CGColor;
         self.textField.layer.borderWidth = 1;
         [self.textField addTarget:self action:@selector(resetURLString) forControlEvents:UIControlEventEditingChanged];
+        self.textField.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
+        self.textField.attributedPlaceholder = [NSAttributedString rz_colorfulConfer:^(RZColorfulConferrer *confer) {
+            confer.text(@"请输入内容").textColor(UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor)).font([UIFont systemFontOfSize:16]);
+        }];//
         
         self.urlTextField = [[UITextField alloc] init];
         [self addSubview:self.urlTextField];
@@ -53,6 +57,10 @@
         self.urlTextField.layer.borderWidth = 1;
         [self.urlTextField addTarget:self action:@selector(resetURLString) forControlEvents:UIControlEventEditingChanged];
         self.urlTextField.keyboardType = UIKeyboardTypeURL;
+        self.urlTextField.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
+        self.urlTextField.attributedPlaceholder = [NSAttributedString rz_colorfulConfer:^(RZColorfulConferrer *confer) {
+                confer.text(@"请输入链接").textColor(UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor)).font([UIFont systemFontOfSize:16]);
+            }];//
         
         [self.imageBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self);
@@ -99,7 +107,11 @@
   
     NSRange range = NSMakeRange(0, 1);
     NSDictionary *attrDict = [urlString attributesAtIndex:0 effectiveRange:&range];
-    self.urlTextField.text = [(NSURL *)attrDict[NSLinkAttributeName] absoluteString];
+    NSString *urlText = attrDict[NSLinkAttributeName];
+    if ([urlText isKindOfClass:[NSURL class]]) {
+        urlText = [(NSURL *)urlText absoluteString];
+    }
+    self.urlTextField.text = urlText;
 }
 
 - (void)imageBtnClicked:(UIButton *)sender {
@@ -155,9 +167,9 @@
             CGFloat width = selfWeak.image.size.width;
             CGFloat height = selfWeak.image.size.height;
             
-            confer.appendImage(selfWeak.image).bounds(CGRectMake(0, 0, width , height)).url([NSURL URLWithString:selfWeak.urlTextField.text]);
+            confer.appendImage(selfWeak.image).bounds(CGRectMake(0, 0, width , height)).tapAction( selfWeak.urlTextField.text);
         }
-        confer.text(selfWeak.textField.text).url([NSURL URLWithString:selfWeak.urlTextField.text]);
+        confer.text(selfWeak.textField.text).tapAction(selfWeak.urlTextField.text);
     }];
     _urlString = attr.copy;
 }

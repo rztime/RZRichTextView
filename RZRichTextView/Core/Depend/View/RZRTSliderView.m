@@ -23,9 +23,11 @@
         
         self.minLabel = [[UILabel alloc] init];
         [self addSubview:self.minLabel];
+        self.minLabel.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
         
         self.maxLabel = [[UILabel alloc] init];
         [self addSubview:self.maxLabel];
+        self.maxLabel.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
         
         self.minLabel.textAlignment = NSTextAlignmentCenter;
         self.maxLabel.textAlignment = NSTextAlignmentCenter;

@@ -10,7 +10,7 @@
 #import "RZRichTextInputAccessoryView.h"
 #import "RZRictAttributeSetingViewController.h"
 #import "RZRichAlertViewController.h"
-
+#import <RZColorful/RZTapActionHelper.h>
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
@@ -62,9 +62,20 @@
         self.rz_maxrevoke = 20;
         self.delegate = self;
         self.rz_attributeItems = RZRichTextConfigureManager.manager.rz_attributeItems;
+        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
+        if (@available(iOS 13.0, *)) {
+            [self setOverrideUserInterfaceStyle:(UIUserInterfaceStyle)RZRichTextConfigureManager.manager.overrideUserInterfaceStyle];
+        }
+        #endif
     }
-    return self;
+    return self; 
 }
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
+- (void)setOverrideUserInterfaceStyle:(UIUserInterfaceStyle)overrideUserInterfaceStyle {
+    RZRichTextConfigureManager.manager.overrideUserInterfaceStyle = (RZUserInterfaceStyle)overrideUserInterfaceStyle;
+    super.overrideUserInterfaceStyle = overrideUserInterfaceStyle;
+}
+#endif
 
 - (RZRichTextInputAccessoryView *)kinputAccessoryView {
     if (!_kinputAccessoryView) {
@@ -80,10 +91,13 @@
     return _kinputAccessoryView;
 }
 
+#if DEBUG
 - (void)layoutSubviews {
     [super layoutSubviews];
-    NSAssert([self.delegate isEqual:self], @"请勿将富文本编辑器的delegate设置为自定义的，否则将不能正常使用,请使用block替代");
+    BOOL delegate = [self.delegate isEqual:self] || [self.delegate isKindOfClass:[RZTapActionHelper class]];
+    NSAssert(delegate, @"请勿将富文本编辑器的delegate设置为自定义的，否则将不能正常使用,如果需要用delegate的方法，请查询RZRichTextView的block方法，使用block替代");
 }
+#endif
 
 - (void)didClickedAttributeIndex:(NSInteger)index {
     RZRichTextAttributeItem *item = self.rz_attributeItems[index];
@@ -394,9 +408,10 @@
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction NS_AVAILABLE_IOS(10_0) {
     if(self.rz_shouldInteractWithURL) {
-        if(!self.rz_shouldInteractWithURL(self, URL, characterRange, interaction)) {
-            return NO;
-        }
+        return self.rz_shouldInteractWithURL(self, URL, characterRange, interaction);
+    }
+    if (self.editable) {
+        return NO;
     }
     return YES;
 }
@@ -411,9 +426,10 @@
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
     if(self.rz_shouldInteractWithURL_ios7) {
-        if(!self.rz_shouldInteractWithURL_ios7(self, URL, characterRange)) {
-            return NO;
-        }
+        return self.rz_shouldInteractWithURL_ios7(self, URL, characterRange);
+    }
+    if (self.editable) {
+        return NO;
     }
     return YES;
 }
@@ -469,7 +485,12 @@
     attchment.image = image;
     attchment.bounds = CGRectMake(0, 0, width, height);
     NSMutableAttributedString *imageString = [NSMutableAttributedString attributedStringWithAttachment:attchment].mutableCopy;
-    [imageString addAttributes:self.rz_attributedDictionays range:NSMakeRange(0, imageString.length)];
+    
+    NSMutableDictionary *tempAttrDict = [self rz_attributesAtSelectedRange].mutableCopy; // 只有在手动改变range时，才会去重置到当前的属性
+    tempAttrDict[NSAttachmentAttributeName] = nil;  // 如果有图片，则删除，否则图片会覆盖当前插入的图片
+    if (tempAttrDict) {
+        [imageString addAttributes:tempAttrDict range:NSMakeRange(0, imageString.length)];
+    }
     
     NSMutableAttributedString *attr = self.attributedText.mutableCopy;
     NSRange selectRaneg = self.selectedRange;
@@ -756,7 +777,7 @@
     RZRictAttributeSetingViewController *vc = [[RZRictAttributeSetingViewController alloc] init];
     
     [vc.displayLabel rz_colorfulConfer:^(RZColorfulConferrer * _Nonnull confer) {
-        confer.text([NSString stringWithFormat:@"设置拉伸属性:%@", @(type)]).font([UIFont systemFontOfSize:30]).expansion(@(type/10.f)).textColor([UIColor blackColor]);
+        confer.text([NSString stringWithFormat:@"设置拉伸属性:%@", @(type)]).font([UIFont systemFontOfSize:30]).expansion(@(type/10.f));
     }];
     rz_weakObj(self);
     rz_weakObj(vc);
@@ -848,8 +869,11 @@
         for (NSDictionary *dict in urlsString) {
             NSMutableDictionary *tempdict = [NSMutableDictionary dictionaryWithDictionary:dict];
             NSString *text = dict[@"text"];
-            NSURL *url = dict[@"url"];
-            tempdict[@"text"] = [NSString stringWithFormat:@"%@%@%@", text, (text.length> 0 && url.absoluteString.length > 0) ? @"\n":@"", url.absoluteString];
+            NSString *url = dict[@"url"];
+            if ([url isKindOfClass:[NSURL class]]) {
+                url = [(NSURL *)url absoluteString];
+            }
+            tempdict[@"text"] = [NSString stringWithFormat:@"%@%@%@", text, (text.length> 0 && url.length > 0) ? @"\n":@"", url];
             tempdict[@"image"] = [dict[@"image"] isKindOfClass:[UIImage class]]? dict[@"image"]: [UIImage new];
             [array addObject:tempdict];
         }

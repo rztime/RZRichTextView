@@ -29,7 +29,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
         [self closeBtn];
         [self collectionView];
         
@@ -103,7 +103,7 @@
         _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.showsVerticalScrollIndicator = NO;
         [self addSubview:_collectionView];
-        _collectionView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9];
+        _collectionView.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
     }
     return _collectionView;
 }

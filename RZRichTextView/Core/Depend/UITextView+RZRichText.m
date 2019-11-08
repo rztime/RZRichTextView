@@ -35,7 +35,7 @@
     }
     NSMutableArray *attris = [NSMutableArray new];
     [self.attributedText enumerateAttribute:NSLinkAttributeName inRange:NSMakeRange(0, self.attributedText.length) options:NSAttributedStringEnumerationReverse usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-        if ([value isKindOfClass:[NSURL class]] && value) {
+        if (([value isKindOfClass:[NSURL class]] || [value isKindOfClass:[NSString class]]) && value) {
             NSAttributedString *string = [self.attributedText attributedSubstringFromRange:range];
             NSArray *array = [string rz_images];
             NSString *text = string.string;

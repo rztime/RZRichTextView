@@ -37,6 +37,7 @@ typedef NS_ENUM(NSInteger, RZRichAlertViewType) {
     RZRichAlertViewTypeGrid = 1, // 格子样式 (collerctionview样式)
 };
 #import "UIImage+RZRichTextView.h"
+#import "UIColor+RZDarkMode.h"
 
 #define k_rz_richImage(name) [UIImage rz_imageName:name]
 

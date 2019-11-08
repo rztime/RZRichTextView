@@ -30,8 +30,14 @@
     if (self = [super init]) {
         _themeColor = rz_rgb(120, 100, 200); // 紫色
         self.sliderImage = k_rz_richImage(@"rz_lf_slider");
+        self.overrideUserInterfaceStyle = RZUserInterfaceStyleUnspecified;
     }
     return self;
+}
+
+- (void)setOverrideUserInterfaceStyle:(RZUserInterfaceStyle)overrideUserInterfaceStyle {
+    _overrideUserInterfaceStyle = overrideUserInterfaceStyle;
+    _keyboardColor = UIColor.rz_colorCreaterStyle(overrideUserInterfaceStyle, [UIColor colorWithWhite:1 alpha:1], rz_rgba(86, 87, 91, 1));
 }
 
 - (NSMutableArray<RZRichTextAttributeItem *> *)rz_attributeItems {

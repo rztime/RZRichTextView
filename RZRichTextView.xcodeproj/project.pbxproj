@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		061EA480236A8BDA0034252A /* UIImage+RZRichTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 061EA47F236A8BDA0034252A /* UIImage+RZRichTextView.m */; };
+		063E3C432373FA7300A148D7 /* UIColor+RZDarkMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 063E3C422373FA7300A148D7 /* UIColor+RZDarkMode.m */; };
 		760414182296424F0081F2BE /* RZRTColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 760414172296424F0081F2BE /* RZRTColorView.m */; };
 		7604141B22969A300081F2BE /* RZRTParagraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7604141A22969A300081F2BE /* RZRTParagraphView.m */; };
 		76054D3222942FED00585098 /* RZRichTextConfigureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76054D3122942FED00585098 /* RZRichTextConfigureManager.m */; };
@@ -38,6 +39,8 @@
 /* Begin PBXFileReference section */
 		061EA47E236A8BDA0034252A /* UIImage+RZRichTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+RZRichTextView.h"; sourceTree = "<group>"; };
 		061EA47F236A8BDA0034252A /* UIImage+RZRichTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RZRichTextView.m"; sourceTree = "<group>"; };
+		063E3C412373FA7300A148D7 /* UIColor+RZDarkMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+RZDarkMode.h"; sourceTree = "<group>"; };
+		063E3C422373FA7300A148D7 /* UIColor+RZDarkMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RZDarkMode.m"; sourceTree = "<group>"; };
 		16B25C33ED09F0CED3330143 /* Pods-RZRichTextView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView.release.xcconfig"; path = "Pods/Target Support Files/Pods-RZRichTextView/Pods-RZRichTextView.release.xcconfig"; sourceTree = "<group>"; };
 		3567A300D576F4611DDE9A15 /* Pods_RZRichTextView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RZRichTextView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		760414162296424F0081F2BE /* RZRTColorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZRTColorView.h; sourceTree = "<group>"; };
@@ -211,6 +214,8 @@
 				76DC6137229EC02600D03082 /* UITextView+RZRichText.m */,
 				76110ABC22A4B2740089FB46 /* RZRichAlertViewController.h */,
 				76110ABD22A4B2740089FB46 /* RZRichAlertViewController.m */,
+				063E3C412373FA7300A148D7 /* UIColor+RZDarkMode.h */,
+				063E3C422373FA7300A148D7 /* UIColor+RZDarkMode.m */,
 			);
 			path = Depend;
 			sourceTree = "<group>";
@@ -363,6 +368,7 @@
 				84A283BE21C39BDE00D6E278 /* AppDelegate.m in Sources */,
 				76ED173A229B8B3900079D59 /* RZRTShadowView.m in Sources */,
 				76DC6131229EB54500D03082 /* RZRichTextInputAVCell.m in Sources */,
+				063E3C432373FA7300A148D7 /* UIColor+RZDarkMode.m in Sources */,
 				061EA480236A8BDA0034252A /* UIImage+RZRichTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

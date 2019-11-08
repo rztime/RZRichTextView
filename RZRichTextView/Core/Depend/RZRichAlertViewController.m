@@ -92,8 +92,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self showCollectionView];
     [[UIApplication sharedApplication].keyWindow endEditing:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self showCollectionView];
+    });
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -124,10 +126,11 @@
     x = 0.7;
     rz_weakObj(self);
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:x initialSpringVelocity:4 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+        CGRect tempframe = [selfWeak.view convertRect:selfWeak.view.bounds toView:UIApplication.sharedApplication.keyWindow];    // 非全屏弹窗中，显示了此视图时，会有偏差
         selfWeak.contentView.frame = ({
             CGRect frame = selfWeak.contentView.frame;
             CGFloat bottomMargin = rz_iPhone_liuhai? rz_kSafeBottomMargin: 15;
-            frame.origin.y = rz_k_screen_height - bottomMargin - frame.size.height;
+            frame.origin.y = rz_k_screen_height - bottomMargin - frame.size.height - tempframe.origin.y;
             frame;
         });
     } completion:^(BOOL finished) {

@@ -17,8 +17,13 @@
 #import "RZRictAttributeSetingViewController.h"
 #import "RZRichTextInputFontColorCell.h"
 #import "RZRichTextInputFontBgColorCell.h"
+#import "UIColor+RZDarkMode.h"
+#import <objc/runtime.h>
 
-@interface ViewController ()
+@interface ViewController ()<UITextViewDelegate>
+
+/** ui */
+@property (nonatomic, strong) RZRichTextView *textView;;
 
 @end
 
@@ -26,6 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = UIColor.rz_colorCreaterStyle(0, UIColor.whiteColor, UIColor.blackColor);
     // Do any additional setup after loading the view, typically from a nib.
     
     // 全局的自定义功能实现 (点击工具栏上的功能将会调用的方法)
@@ -64,14 +70,22 @@
     };
     // 全局的图片的处理
     RZRichTextConfigureManager.manager.rz_shouldInserImage = ^UIImage * _Nullable(UIImage * _Nullable image) {
-        return image;
+        UIImage *imaget = [UIImage imageWithData:UIImageJPEGRepresentation(image, 0.4)];
+        return imaget;
     };
+//    RZRichTextConfigureManager.manager.overrideUserInterfaceStyle = RZUserInterfaceStyleDark;
     // 富文本输入框
-    RZRichTextView *view = [[RZRichTextView alloc] initWithFrame:CGRectMake(10, 100, 300, 300)];
-    view.backgroundColor = [UIColor grayColor];
-    view.font = [UIFont systemFontOfSize:17];
+    self.textView = [[RZRichTextView alloc] initWithFrame:CGRectMake(10, 100, 300, 300)];
+    self.textView.font = [UIFont systemFontOfSize:17];
+    self.textView.backgroundColor = UIColor.rz_colorCreaterStyle(0, [UIColor grayColor], [UIColor whiteColor]);
+//    if (@available(iOS 13.0, *)) {
+//        self.textView.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
+//    } else {
+//        // Fallback on earlier versions
+//    }
+
     // 只针对当前textView的功能点击的实现
-    view.didClickedCell = ^BOOL(RZRichTextView * _Nonnull textView, RZRichTextAttributeItem * _Nonnull item) {
+    self.textView.didClickedCell = ^BOOL(RZRichTextView * _Nonnull textView, RZRichTextAttributeItem * _Nonnull item) {
         if (item.type == RZRichTextAttributeTypeFontColor) {
             UIColor *color = [textView.rz_attributedDictionays[NSForegroundColorAttributeName] copy];
             rz_weakObj(textView);
@@ -91,7 +105,7 @@
         return NO;
     };
     // 只针对当前textView 的工具条cell的实现
-    view.cellForItemAtIndePath = ^UICollectionViewCell * _Nonnull(UICollectionView * _Nonnull collectionView, NSIndexPath * _Nonnull indexPath, RZRichTextAttributeItem * _Nonnull item) {
+    self.textView.cellForItemAtIndePath = ^UICollectionViewCell * _Nonnull(UICollectionView * _Nonnull collectionView, NSIndexPath * _Nonnull indexPath, RZRichTextAttributeItem * _Nonnull item) {
         if (item.type == RZRichTextAttributeTypeFontBackgroundColor) {
             RZRichTextInputFontBgColorCell  *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"def2Cell" forIndexPath:indexPath];
             cell.imageView.image = item.displayImage;
@@ -101,12 +115,35 @@
         }
         return nil;
     };
+    self.textView.rzDidTapTextView = ^(id  _Nullable tapObj) {
+        NSLog(@"tapObj:%@", tapObj);
+    };
+    [self.view addSubview:self.textView];
     
-    [self.view addSubview:view];
+    if (_html) {
+        [self.textView rz_colorfulConfer:^(RZColorfulConferrer * _Nonnull confer) {
+            confer.htmlText(self.html);
+        }];
+    }
+    NSLog(@"%@", NSHomeDirectory());
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:btn];
+    btn.frame = CGRectMake(0, 500, 300, 20);
+    btn.backgroundColor = UIColor.rz_colorCreaterStyle(0, [UIColor greenColor], [UIColor blueColor]);;
+    [btn addTarget:self action:@selector(btnClicked) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)changedValue:(UISlider *)slider {
     NSLog(@"slide:%f", slider.value);
+}
+
+- (void)btnClicked {
+    NSString *html = [self.textView rz_codingToHtmlWithImageURLS:nil];
+    
+    ViewController *view = [ViewController new];
+    view.html = html;
+    [self presentViewController:view animated:YES completion:nil];
 }
 
 @end

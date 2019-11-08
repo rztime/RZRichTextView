@@ -162,6 +162,7 @@
     [view addSubview:label];
     label.text = @"常规";
     label.font = [UIFont systemFontOfSize:15];
+    label.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
     
     self.aliginLeftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.aliginLeftBtn setImage:k_rz_richImage(@"rz_left") forState:UIControlStateNormal];
@@ -208,27 +209,37 @@
     [view addSubview:label];
     label.text = @"缩进";
     label.font = [UIFont systemFontOfSize:15];
+    label.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
     
     UILabel *label1 = [[UILabel alloc] init];
     [view addSubview:label1];
     label1.text = @"文本首行:";
     label1.font = [UIFont systemFontOfSize:15];
+    label1.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
+    
     self.sj_beforeTF = [[UITextField alloc] init];
     self.sj_beforeTF.keyboardType = UIKeyboardTypeNumberPad;
+    self.sj_beforeTF.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
     
     UILabel *label2 = [[UILabel alloc] init];
     [view addSubview:label2];
     label2.text = @"文本缩进:";
     label2.font = [UIFont systemFontOfSize:15];
+    label2.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
+    
     self.sj_TF = [[UITextField alloc] init];
     self.sj_TF.keyboardType = UIKeyboardTypeNumberPad;
+    self.sj_TF.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
     
     UILabel *label3 = [[UILabel alloc] init];
     [view addSubview:label3];
     label3.text = @"文本之后:";
     label3.font = [UIFont systemFontOfSize:15];
+    label3.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
+    
     self.sj_endTF = [[UITextField alloc] init];
     self.sj_endTF.keyboardType = UIKeyboardTypeNumberPad;
+    self.sj_endTF.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
     
     [view addSubview:self.sj_beforeTF];
     [view addSubview:self.sj_TF];
@@ -284,27 +295,36 @@
     [view addSubview:label];
     label.text = @"间距";
     label.font = [UIFont systemFontOfSize:15];
+    label.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
     
     UILabel *label1 = [[UILabel alloc] init];
     [view addSubview:label1];
     label1.text = @"段前距:";
     label1.font = [UIFont systemFontOfSize:15];
+    label1.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
+    
     self.jj_beforeTF = [[UITextField alloc] init];
     self.jj_beforeTF.keyboardType = UIKeyboardTypeNumberPad;
+    self.jj_beforeTF.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
     
     UILabel *label2 = [[UILabel alloc] init];
     [view addSubview:label2];
     label2.text = @"段间距:";
     label2.font = [UIFont systemFontOfSize:15];
+    label2.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
     self.jj_TF = [[UITextField alloc] init];
     self.jj_TF.keyboardType = UIKeyboardTypeNumberPad;
+    self.jj_TF.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
     
     UILabel *label3 = [[UILabel alloc] init];
     [view addSubview:label3];
     label3.text = @"段后距:";
     label3.font = [UIFont systemFontOfSize:15];
+    label3.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
+    
     self.jj_endTF = [[UITextField alloc] init];
     self.jj_endTF.keyboardType = UIKeyboardTypeNumberPad;
+    self.jj_endTF.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
     
     [view addSubview:self.jj_beforeTF];
     [view addSubview:self.jj_TF];
@@ -360,7 +380,7 @@
         make.left.bottom.right.equalTo(view);
         make.height.equalTo(@1);
     }];
-    line.backgroundColor = [UIColor blackColor];
+    line.backgroundColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, [UIColor blackColor], [UIColor whiteColor]);
 }
 
 

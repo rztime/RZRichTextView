@@ -11,6 +11,7 @@
 #import "RZRTColorView.h"
 #import <Masonry/Masonry.h>
 #import "RZRichTextConstant.h"
+#import "RZRichTextConfigureManager.h"
 
 @interface RZRTShadowView ()
 
@@ -55,9 +56,11 @@
         
         _xyLabel = [[UILabel alloc] init];
         [self addSubview:_xyLabel];
+        _xyLabel.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
         
         _rLabel = [[UILabel alloc] init];
         [self addSubview:_rLabel];
+        _rLabel.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
         
         _colorView = [[RZRTColorView alloc] init];
         [self addSubview:_colorView];

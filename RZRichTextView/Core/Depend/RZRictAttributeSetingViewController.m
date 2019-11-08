@@ -66,7 +66,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+    self.view.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
     
     self.contenView = [[UIView alloc] initWithFrame:self.view.bounds];
     self.contenView.x = self.view.frame.size.width;
@@ -259,8 +259,9 @@
     if (!_displayLabel) {
         _displayLabel = [[UILabel alloc] init];
         _displayLabel.textAlignment = NSTextAlignmentCenter;
-        _displayLabel.backgroundColor = [UIColor whiteColor];
+        _displayLabel.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
         _displayLabel.font = [UIFont systemFontOfSize:20];
+        _displayLabel.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
     }
     return _displayLabel;
 }
@@ -271,6 +272,7 @@
         _textView.editable = NO;
         _textView.scrollEnabled = NO;
         _textView.textContainerInset = UIEdgeInsetsZero;
+        _textView.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
     }
     return _textView;
 }
@@ -331,7 +333,7 @@
     if (!_slider) {
         _slider = [[RZRTSliderView alloc] init];
         _slider.frame = CGRectMake(0, 0, self.view.frame.size.width - 20, _slider.viewHeight);
-        _slider.backgroundColor = [UIColor whiteColor];
+        _slider.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
         _slider.slider.minimumValue = self.sliderMinValue;
         _slider.slider.maximumValue = self.sliderMaxValue;
         _slider.slider.value = self.sliderValue;

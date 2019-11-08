@@ -49,7 +49,7 @@
         layot.sectionInset = UIEdgeInsetsMake(4, 4, 4, 4);
         self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layot];
         [self addSubview:self.collectionView];
-        self.collectionView.backgroundColor = [UIColor whiteColor];
+        self.collectionView.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
         self.collectionView.delegate = self;
         self.collectionView.dataSource = self;
         [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
