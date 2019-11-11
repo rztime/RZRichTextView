@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RZRichTextAttributeItem.h"
+#import "UIColor+RZDarkMode.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

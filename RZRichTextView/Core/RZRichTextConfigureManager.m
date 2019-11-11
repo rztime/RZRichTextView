@@ -31,13 +31,18 @@
         _themeColor = rz_rgb(120, 100, 200); // 紫色
         self.sliderImage = k_rz_richImage(@"rz_lf_slider");
         self.overrideUserInterfaceStyle = RZUserInterfaceStyleUnspecified;
+        _keyboardColor = UIColor.rz_colorCreaterStyle(RZUserInterfaceStyleUnspecified, [UIColor colorWithWhite:1 alpha:1], rz_rgba(86, 87, 91, 1));
     }
     return self;
 }
 
+- (void)setKeyboardColor:(UIColor *)keyboardColor {
+    _keyboardColor = UIColor.rz_colorCreaterStyle(self.overrideUserInterfaceStyle, keyboardColor.rz_defColor, keyboardColor.rz_darkModeColor);
+}
+
 - (void)setOverrideUserInterfaceStyle:(RZUserInterfaceStyle)overrideUserInterfaceStyle {
     _overrideUserInterfaceStyle = overrideUserInterfaceStyle;
-    _keyboardColor = UIColor.rz_colorCreaterStyle(overrideUserInterfaceStyle, [UIColor colorWithWhite:1 alpha:1], rz_rgba(86, 87, 91, 1));
+    _keyboardColor = UIColor.rz_colorCreaterStyle(overrideUserInterfaceStyle, _keyboardColor.rz_defColor, _keyboardColor.rz_darkModeColor);
 }
 
 - (NSMutableArray<RZRichTextAttributeItem *> *)rz_attributeItems {

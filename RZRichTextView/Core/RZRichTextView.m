@@ -11,6 +11,8 @@
 #import "RZRictAttributeSetingViewController.h"
 #import "RZRichAlertViewController.h"
 #import <RZColorful/RZTapActionHelper.h>
+#import "NSString+RZCode.h"
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
@@ -62,11 +64,13 @@
         self.rz_maxrevoke = 20;
         self.delegate = self;
         self.rz_attributeItems = RZRichTextConfigureManager.manager.rz_attributeItems;
-        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
-        if (@available(iOS 13.0, *)) {
-            [self setOverrideUserInterfaceStyle:(UIUserInterfaceStyle)RZRichTextConfigureManager.manager.overrideUserInterfaceStyle];
-        }
-        #endif
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
+            if (@available(iOS 13.0, *)) {
+                [self setOverrideUserInterfaceStyle:(UIUserInterfaceStyle)RZRichTextConfigureManager.manager.overrideUserInterfaceStyle];
+            }
+            #endif
+        });
     }
     return self; 
 }
@@ -873,6 +877,7 @@
             if ([url isKindOfClass:[NSURL class]]) {
                 url = [(NSURL *)url absoluteString];
             }
+            url = url.rz_decodedString;
             tempdict[@"text"] = [NSString stringWithFormat:@"%@%@%@", text, (text.length> 0 && url.length > 0) ? @"\n":@"", url];
             tempdict[@"image"] = [dict[@"image"] isKindOfClass:[UIImage class]]? dict[@"image"]: [UIImage new];
             [array addObject:tempdict];

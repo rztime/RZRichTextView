@@ -18,8 +18,10 @@ typedef NS_ENUM(NSInteger, RZUserInterfaceStyle) {
 
 @interface UIColor (RZDarkMode)
 
-/** <#bref#> */
-//@property (nonatomic, copy) void(^rz_colorCreat)(UIColor *defColor, UIColor *darkModeColor);
+/* 默认颜色（light模式） */
+@property (nonatomic, strong) UIColor *rz_defColor;
+/** 暗黑颜色 */
+@property (nonatomic, strong) UIColor *rz_darkModeColor;
 
 + (UIColor * (^ __nullable)(UIColor * __nullable defColor, UIColor * __nullable darkModeColor))rz_colorCreater;
 

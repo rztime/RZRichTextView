@@ -12,6 +12,7 @@
 #import "RZRichTextConfigureManager.h"
 #import <TZImagePickerController/TZImagePickerController.h>
 #import <RZColorful/NSAttributedString+RZColorful.h>
+#import "NSString+RZCode.h"
 
 @interface RZRTURLView ()
 
@@ -111,7 +112,7 @@
     if ([urlText isKindOfClass:[NSURL class]]) {
         urlText = [(NSURL *)urlText absoluteString];
     }
-    self.urlTextField.text = urlText;
+    self.urlTextField.text = urlText.rz_decodedString;
 }
 
 - (void)imageBtnClicked:(UIButton *)sender {
@@ -167,9 +168,9 @@
             CGFloat width = selfWeak.image.size.width;
             CGFloat height = selfWeak.image.size.height;
             
-            confer.appendImage(selfWeak.image).bounds(CGRectMake(0, 0, width , height)).tapAction( selfWeak.urlTextField.text);
+            confer.appendImage(selfWeak.image).bounds(CGRectMake(0, 0, width , height)).tapAction( selfWeak.urlTextField.text.rz_encodedString);
         }
-        confer.text(selfWeak.textField.text).tapAction(selfWeak.urlTextField.text);
+        confer.text(selfWeak.textField.text).tapAction(selfWeak.urlTextField.text.rz_encodedString);
     }];
     _urlString = attr.copy;
 }

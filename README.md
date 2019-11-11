@@ -105,6 +105,7 @@ UITextView的overrideUserInterfaceStyle，跟随RZRichTextConfigureManager的ove
 如果设置 textView.overrideUserInterfaceStyle属性，将会修改RZRichTextConfigureManager的overrideUserInterfaceStyle，
 所以在textView使用完成之后，按需要去还原RZRichTextConfigureManager的overrideUserInterfaceStyle的默认属性
 ```
+
 ### 使用NSAttributedString
 包含文件
 ```objc

@@ -73,10 +73,14 @@
         UIImage *imaget = [UIImage imageWithData:UIImageJPEGRepresentation(image, 0.4)];
         return imaget;
     };
+//   设置键盘背景色
+//    RZRichTextConfigureManager.manager.keyboardColor = UIColor.rz_colorCreaterStyle(1, UIColor.greenColor, UIColor.blueColor);
+    // 设置键盘默认模式
 //    RZRichTextConfigureManager.manager.overrideUserInterfaceStyle = RZUserInterfaceStyleDark;
     // 富文本输入框
     self.textView = [[RZRichTextView alloc] initWithFrame:CGRectMake(10, 100, 300, 300)];
     self.textView.font = [UIFont systemFontOfSize:17];
+    
     self.textView.backgroundColor = UIColor.rz_colorCreaterStyle(0, [UIColor grayColor], [UIColor whiteColor]);
 //    if (@available(iOS 13.0, *)) {
 //        self.textView.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
@@ -117,33 +121,13 @@
     };
     self.textView.rzDidTapTextView = ^(id  _Nullable tapObj) {
         NSLog(@"tapObj:%@", tapObj);
+        return NO;
     };
     [self.view addSubview:self.textView];
-    
-    if (_html) {
-        [self.textView rz_colorfulConfer:^(RZColorfulConferrer * _Nonnull confer) {
-            confer.htmlText(self.html);
-        }];
-    }
-    NSLog(@"%@", NSHomeDirectory());
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.view addSubview:btn];
-    btn.frame = CGRectMake(0, 500, 300, 20);
-    btn.backgroundColor = UIColor.rz_colorCreaterStyle(0, [UIColor greenColor], [UIColor blueColor]);;
-    [btn addTarget:self action:@selector(btnClicked) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)changedValue:(UISlider *)slider {
     NSLog(@"slide:%f", slider.value);
-}
-
-- (void)btnClicked {
-    NSString *html = [self.textView rz_codingToHtmlWithImageURLS:nil];
-    
-    ViewController *view = [ViewController new];
-    view.html = html;
-    [self presentViewController:view animated:YES completion:nil];
 }
 
 @end

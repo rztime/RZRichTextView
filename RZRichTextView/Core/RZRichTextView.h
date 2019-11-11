@@ -12,6 +12,8 @@
 #import <RZColorful/RZColorful.h>
 #import <TZImagePickerController/TZImagePickerController.h>
 #import "RZRichTextConfigureManager.h"
+#import "UIColor+RZDarkMode.h"
+#import "NSString+RZCode.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
