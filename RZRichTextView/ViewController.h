@@ -10,5 +10,8 @@
 
 @interface ViewController : UIViewController
 
+/** <#bref#> */
+@property (nonatomic, copy) NSString *html;
+
 @end
 

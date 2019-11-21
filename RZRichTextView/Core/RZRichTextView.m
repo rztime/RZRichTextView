@@ -18,17 +18,16 @@
 
 @interface RZRichTextView ()<UITextViewDelegate>
 
-@property (nonatomic, assign) NSRange willChangedRange;
-@property (nonatomic, copy)   NSString *willChangedText;
-
 @property (nonatomic, assign) NSInteger firstResonseCount;
-
-@property (nonatomic, strong) RZRichTextInputAccessoryView *kinputAccessoryView;
-
+/** 是否是编辑中 */
 @property (nonatomic, assign) BOOL editing;
+@property (nonatomic, strong) RZRichTextInputAccessoryView *kinputAccessoryView;
 
 @property (nonatomic, strong) NSMutableArray *revokeArray;
 @property (nonatomic, strong) NSMutableArray *reStoreArray;
+
+/** 如果是选择状态，则不改变已选内容样式 */
+@property (nonatomic, assign) BOOL changingSelection;
 @end
 
 @implementation RZRichTextView
@@ -62,7 +61,7 @@
     if (self = [super initWithFrame:frame]) { 
         self.firstResonseCount = 0;
         self.rz_maxrevoke = 20;
-        self.delegate = self;
+        self.delegate = self; 
         self.rz_attributeItems = RZRichTextConfigureManager.manager.rz_attributeItems;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
@@ -296,6 +295,18 @@
         }
     }];
     [self.kinputAccessoryView reloadData];
+    
+    NSRange range = self.selectedRange;
+    if (range.length > 0 && !self.changingSelection) {
+        CGPoint offset = self.contentOffset;
+        NSMutableAttributedString *attr = self.attributedText.mutableCopy;
+        NSMutableAttributedString *changeAttr = [attr attributedSubstringFromRange:range].mutableCopy;
+        [changeAttr addAttributes:dict range:NSMakeRange(0, changeAttr.length)];
+        [attr replaceCharactersInRange:range withAttributedString:changeAttr];
+        self.attributedText = attr;
+        [self setSelectedRange:range];
+        [self setContentOffset:offset animated:NO];
+    }
 }
 
 -(void)dealloc{
@@ -320,28 +331,12 @@
             return ;
         }
     }
-    if (self.willChangedText.length != 0) {
-        self.editing = YES;
-        NSRange editSelectRange = self.selectedRange; 
-        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:self.willChangedText];
-        [attrString setAttributes:self.rz_attributedDictionays range:NSMakeRange(0, attrString.length)];
-        
-        NSMutableAttributedString *attr = self.attributedText.mutableCopy;
-        NSRange changedRange = NSMakeRange(self.willChangedRange.location, self.willChangedText.length);
-        if (changedRange.location + changedRange.length <= attr.length) {
-            [attr replaceCharactersInRange:changedRange withAttributedString:attrString];
-        }
-        [attr removeAttribute:@"NSOriginalFont" range:NSMakeRange(0, attr.length)];
-        self.attributedText = attr.copy;
-        
-        self.selectedRange = editSelectRange;
-    }
     self.editing = NO;
-    
+
     if (self.rz_textViewDidChange) {
         self.rz_textViewDidChange(self);
     }
-    
+
     if (self.rz_didChangedText){
         self.rz_didChangedText(self);
     }
@@ -357,11 +352,13 @@
         return;
     }
     // 只有在手动改变range时，才会去重置到当前的属性
-    NSMutableDictionary *dict = [self rz_attributesAtSelectedRange].mutableCopy;
+    NSMutableDictionary *dict = self.typingAttributes.mutableCopy;
     if (dict) {
         self.rz_attributedDictionays = dict;
     }
+    self.changingSelection = YES;
     [self rz_reloadAttributeData];
+    self.changingSelection = NO;
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if (self.rz_shouldChangeTextInRange) {
@@ -369,9 +366,8 @@
             return NO;
         }
     }
-    self.willChangedRange = range;
-    self.willChangedText = text;
     self.editing = YES;
+    self.typingAttributes = self.rz_attributedDictionays;
     return YES;
 }
 
@@ -497,15 +493,13 @@
     }
     
     NSMutableAttributedString *attr = self.attributedText.mutableCopy;
-    NSRange selectRaneg = self.selectedRange;
-    [attr replaceCharactersInRange:selectRaneg withAttributedString:imageString];
+    NSRange selectedRange = self.selectedRange;
+    [attr replaceCharactersInRange:selectedRange withAttributedString:imageString];
     self.attributedText = attr;
-    self.selectedRange = NSMakeRange(selectRaneg.location + imageString.length, 0);
+    self.selectedRange = NSMakeRange(selectedRange.location + imageString.length, 0);
     
     [self becomeFirstResponder];
-    [self addDataToHistory];
-    self.editing = NO;
-    [self rz_reloadAttributeData];
+    [self textViewDidChange:self];
 }
 #pragma mark - 增加历史记录
 - (void)addDataToHistory {
@@ -905,13 +899,18 @@
         NSMutableAttributedString *tempUrl = urlString.mutableCopy;
         [tempUrl addAttributes:selfWeak.rz_attributedDictionays range:NSMakeRange(0, urlString.length)];
         NSMutableAttributedString *text = selfWeak.attributedText.mutableCopy;
+        NSRange selectedRange = self.selectedRange;
+        NSRange endRange;
         if (dict) {
             NSRange range = [dict[@"range"] rangeValue];
             [text replaceCharactersInRange:range withAttributedString:tempUrl];
+            endRange = NSMakeRange(range.location + tempUrl.length, 0);
         } else {
-            [text appendAttributedString:tempUrl];
+            [text replaceCharactersInRange:selectedRange withAttributedString:tempUrl];
+            endRange = NSMakeRange(selectedRange.location + tempUrl.length, 0);
         }
         selfWeak.attributedText = text;
+        [selfWeak setSelectedRange:endRange];
     }];
     [RZRichTextConfigureManager presentViewController:vc animated:YES];
 }

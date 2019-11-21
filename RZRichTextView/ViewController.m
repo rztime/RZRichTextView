@@ -80,14 +80,12 @@
     // 富文本输入框
     self.textView = [[RZRichTextView alloc] initWithFrame:CGRectMake(10, 100, 300, 300)];
     self.textView.font = [UIFont systemFontOfSize:17];
-    
     self.textView.backgroundColor = UIColor.rz_colorCreaterStyle(0, [UIColor grayColor], [UIColor whiteColor]);
 //    if (@available(iOS 13.0, *)) {
 //        self.textView.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
 //    } else {
 //        // Fallback on earlier versions
 //    }
-
     // 只针对当前textView的功能点击的实现
     self.textView.didClickedCell = ^BOOL(RZRichTextView * _Nonnull textView, RZRichTextAttributeItem * _Nonnull item) {
         if (item.type == RZRichTextAttributeTypeFontColor) {
@@ -119,15 +117,11 @@
         }
         return nil;
     };
-    self.textView.rzDidTapTextView = ^(id  _Nullable tapObj) {
-        NSLog(@"tapObj:%@", tapObj);
+    self.textView.rzDidTapTextView = ^BOOL(id  _Nullable tapObj) {
+        NSLog(@"%@", tapObj);
         return NO;
     };
     [self.view addSubview:self.textView];
-}
-
-- (void)changedValue:(UISlider *)slider {
-    NSLog(@"slide:%f", slider.value);
 }
 
 @end
