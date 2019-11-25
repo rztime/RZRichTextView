@@ -34,6 +34,23 @@ pod 'RZRichTextView'
 
 ### 插入图片到富文本之后，在转换成HTML标签之前，需要将图片上传至服务器得到URL，最后将URL替换图片之后，生成HTML标签
 
+#### 如果要保存草稿，暂不上传至服务器，则可以先将图片保存到本地沙盒，使用相对路径，再缓存，恢复时，替换还原html
+
+```
+// 保存草稿箱
+NSAttributedString *attr = ...
+NSString *url = @"file://xxx/Documents/imageName.png";
+NSString *html = [attr rz_codingToHtmlWithImagesURLSIfHad:@[url]];
+// 缓存 html
+```
+```
+// 还原
+NSString *html = ...;
+html = [html stringByReplacingOccurrencesOfString:@"xxx" withString:NSHomeDirectory()];
+textLabel.attributedText = [NSAttributedString htmlString:html];
+```
+
+
 * 如果要对插入的图片进行处理，请实现
 
 ```objc
