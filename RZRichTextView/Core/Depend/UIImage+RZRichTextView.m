@@ -36,3 +36,19 @@
 }
 
 @end
+BOOL rz_iPhone_liuhai_adj(void) {
+    if (@available(iOS 11.0, *)) {
+        CGFloat height = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bottom;
+        return (height > 0);
+    } else {
+        return NO;
+    }
+}
+
+CGFloat rz_kSafeBottomMargin_adj(void) {
+    if (@available(iOS 11.0, *)) {
+        return [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bottom;
+    } else {
+        return 0;
+    }
+}

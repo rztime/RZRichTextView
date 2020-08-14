@@ -10,10 +10,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface RZCustomerLabel : UILabel
+@property (nonatomic, assign) UIEdgeInsets edgeInsets;
+@end
+
 @interface RZRictAttributeSetingViewController : UIViewController
 
 @property (nonatomic, strong) UITextView *textView;
-@property (nonatomic, strong) UILabel *displayLabel;
+@property (nonatomic, strong) RZCustomerLabel *displayLabel;
 
 - (void)sliderValue:(CGFloat)value min:(CGFloat)min max:(CGFloat)max didSliderValueChanged:(void(^)(CGFloat value))changed complete:(void(^)(CGFloat value))complete;
 
@@ -25,5 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)urlString:(NSAttributedString * __nullable)urlString didEditComplete:(void(^)(NSAttributedString *urlString))complete;
 @end
+
 
 NS_ASSUME_NONNULL_END

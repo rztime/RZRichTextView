@@ -39,6 +39,8 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        self.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
+        self.layer.cornerRadius = 5;
         UIView *cgView = self.cgView;
         UIView *sjView = self.sjView;
         UIView *jjView = self.jjView;

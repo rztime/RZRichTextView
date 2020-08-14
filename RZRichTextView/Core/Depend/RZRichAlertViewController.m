@@ -129,7 +129,7 @@
         CGRect tempframe = [selfWeak.view convertRect:selfWeak.view.bounds toView:UIApplication.sharedApplication.keyWindow];    // 非全屏弹窗中，显示了此视图时，会有偏差
         selfWeak.contentView.frame = ({
             CGRect frame = selfWeak.contentView.frame;
-            CGFloat bottomMargin = rz_iPhone_liuhai? rz_kSafeBottomMargin: 15;
+            CGFloat bottomMargin = rz_iPhone_liuhai ? rz_kSafeBottomMargin : 15;
             frame.origin.y = rz_k_screen_height - bottomMargin - frame.size.height - tempframe.origin.y;
             frame;
         });
@@ -301,15 +301,6 @@
     //    }
 }
 
-#pragma mark ----------------------------- 其他方法 ------------------------------
-
-#pragma mark ----------------------------- 公用方法 ------------------------------
-
-#pragma mark ----------------------------- 网络请求 ------------------------------
-
-#pragma mark ----------------------------- 代理方法 ------------------------------
-
-#pragma mark --------------------------- setter&getter -------------------------
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.titles.count;
 }

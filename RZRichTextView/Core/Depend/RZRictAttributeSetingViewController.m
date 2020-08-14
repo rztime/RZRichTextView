@@ -65,14 +65,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.view.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
+    // Do any additional setup after loading the view. 
+    self.view.bounds = CGRectMake(0, -rz_k_screen_height, rz_k_screen_width, rz_k_screen_height);
+    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
+    
+    UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [closeBtn addTarget:self action:@selector(cancelBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:closeBtn];
+    [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
     
     self.contenView = [[UIView alloc] initWithFrame:self.view.bounds];
-    self.contenView.x = self.view.frame.size.width;
     [self.view addSubview:self.contenView];
+    self.contenView.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
+    self.contenView.layer.cornerRadius = 10;
+    [self.contenView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.greaterThanOrEqualTo(self.view).offset(44);
+        make.bottom.equalTo(self.view).offset(10);
+        make.height.equalTo(@0);
+    }];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.contenView addSubview:self.tableView];
@@ -98,36 +113,33 @@
         [_viewsDataSource addObject:self.urlView];
     }
     
-    __block CGFloat height = 150;
+    __block CGFloat height = 175;
     [_viewsDataSource enumerateObjectsUsingBlock:^(UIView <RZRTViewDelegate> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         height += obj.viewHeight;
     }];
     self.tableViewHeight = height;
-    
+    [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.contenView).insets(UIEdgeInsetsMake(20, 10, 34, 10));
+    }];
     [self setTableViewHeight];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceChangeOrientation:) name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)deviceChangeOrientation:(id)sender {
-    CGRect frame = self.contenView.frame;
-    frame.size = self.view.size;
-    self.contenView.frame = frame;
-    
+    [self.view setNeedsLayout];
+    self.view.bounds = CGRectMake(0, 0, rz_k_screen_width, rz_k_screen_height);
     [self setTableViewHeight];
+    [self.tableView reloadData];
 }
 
 - (void)setTableViewHeight {
-    CGFloat height = self.tableViewHeight;
-    if (height > self.view.frame.size.height - (rz_iPhone_liuhai? 74:0)) {
-        height = self.view.frame.size.height - (rz_iPhone_liuhai? 74:0);
+    CGFloat height = self.tableViewHeight + 54 + 10;
+    if (height > self.view.frame.size.height - 78) {
+        height = self.view.frame.size.height - 78;
     }
-    
-    [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self.contenView);
-        make.width.equalTo(self.contenView).offset(-20);
+    [self.contenView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(height));
     }];
 }
@@ -167,9 +179,9 @@
     [super viewWillAppear:animated];
     
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        self.contenView.x = 0;
+        self.view.bounds = UIScreen.mainScreen.bounds;
     } completion:^(BOOL finished) {
-        self.tableView.scrollEnabled = self.tableView.contentSize.height > self.tableView.frame.size.height ? YES:NO;
+
     }];
 }
 
@@ -179,7 +191,7 @@
         return ;
     }
     [UIView animateWithDuration:0.6 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.contenView.y = self.view.frame.size.height;
+        self.view.bounds = CGRectMake(0, -rz_k_screen_height, rz_k_screen_width, rz_k_screen_height);
         self.view.alpha = 0.4;
     } completion:^(BOOL finished) {
         
@@ -225,16 +237,21 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:idf];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell.contentView addSubview:self.viewsDataSource[indexPath.row]];
+        
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
+        UIView *view = self.viewsDataSource[indexPath.row];
+        [cell.contentView addSubview:view];
+        [view mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(cell.contentView);
+        }];
     }
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (_displayLabel) {
-        return 55;
+        return 75;
     }
     if (_textView) {
         return 100;
@@ -255,13 +272,16 @@
 }
 
 
-- (UILabel *)displayLabel {
+- (RZCustomerLabel *)displayLabel {
     if (!_displayLabel) {
-        _displayLabel = [[UILabel alloc] init];
+        _displayLabel = [[RZCustomerLabel alloc] init];
+        _displayLabel.edgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         _displayLabel.textAlignment = NSTextAlignmentCenter;
         _displayLabel.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
         _displayLabel.font = [UIFont systemFontOfSize:20];
         _displayLabel.textColor = UIColor.rz_colorCreaterStyle(RZRichTextConfigureManager.manager.overrideUserInterfaceStyle, UIColor.blackColor, UIColor.whiteColor);
+        _displayLabel.layer.cornerRadius = 5;
+        _displayLabel.layer.masksToBounds = true;
     }
     return _displayLabel;
 }
@@ -273,6 +293,7 @@
         _textView.scrollEnabled = NO;
         _textView.textContainerInset = UIEdgeInsetsZero;
         _textView.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
+        _textView.layer.cornerRadius = 5;
     }
     return _textView;
 }
@@ -304,7 +325,7 @@
 
 - (UIView *)bottomView {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
-
+    view.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
     self.confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [view addSubview:self.confirmBtn];
     [self.confirmBtn setBackgroundImage:k_rz_richImage(@"rz_qr_btn") forState:UIControlStateNormal];
@@ -407,6 +428,25 @@
         };
     }
     return _urlView;
+}
+
+@end
+@implementation RZCustomerLabel
+
+- (CGRect)textRectForBounds:(CGRect)bounds limitedToNumberOfLines:(NSInteger)numberOfLines {
+    UIEdgeInsets insets = self.edgeInsets;
+    CGRect rect = [super textRectForBounds:UIEdgeInsetsInsetRect(bounds, insets)
+                    limitedToNumberOfLines:numberOfLines];
+    rect.origin.x    -= insets.left;
+    rect.origin.y    -= insets.top;
+    rect.size.width  += (insets.left + insets.right);
+    rect.size.height += (insets.top + insets.bottom);
+    
+    return rect;
+}
+
+- (void)drawTextInRect:(CGRect)rect {
+    [super drawTextInRect:UIEdgeInsetsInsetRect(rect, self.edgeInsets)];
 }
 
 @end

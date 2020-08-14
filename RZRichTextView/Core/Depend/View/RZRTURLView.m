@@ -26,19 +26,16 @@
 
 @implementation RZRTURLView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        self.backgroundColor = RZRichTextConfigureManager.manager.keyboardColor;
+        self.layer.cornerRadius = 5;
         self.imageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [self addSubview:self.imageBtn];
         [self.imageBtn setImage:k_rz_richImage(@"rz_url_btn") forState:UIControlStateNormal];
+        self.imageBtn.imageView.layer.masksToBounds = YES;
+        self.imageBtn.imageView.layer.cornerRadius = 3;
+        self.imageBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
         
         self.textField = [[UITextField alloc] init];
         [self addSubview:self.textField];
@@ -129,6 +126,7 @@
     UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         selfWeak.image = nil;
         [selfWeak.imageBtn setImage:k_rz_richImage(@"rz_url_btn") forState:UIControlStateNormal];
+        [selfWeak resetURLString];
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         

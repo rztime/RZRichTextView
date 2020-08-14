@@ -1,3 +1,15 @@
+* 0.4.0
+	* 优化了一下界面
+	* 修复了编辑链接时，删除图片无效的bug
+	* 如果要NSAttributedString 与 html 互相转换
+		* 请参考 [RZColorful](https://github.com/rztime/RZColorful)
+			[NSAttributedString+RZHtml.m](https://github.com/rztime/RZColorful/blob/master/RZColorfulExample/RZColorful/AttributeCore/NSAttributedString%2BRZHtml.m)
+```objc
+ - (NSString *)rz_codingToCompleteHtmlByWeb;
+```
+		系统方法转换时，会丢失部分属性，所以取巧，用这种方法来加上style，供借鉴和学习，如果有更好的方法，可以一起交流
+
+
 * 0.3.1
 	* 优化文本属性配置功能，解决在输入文字时，动态修改当前输入文本的属性，会跳动的问题
 	* 新增在选择模式下，配置文本属性，可对当前选择的文本属性直接进行修改

@@ -112,6 +112,16 @@ textLabel.attributedText = [NSAttributedString htmlString:html];
 
 ```
 
+### NSAttributedString 与 html 互相转换
+* 请参考 [RZColorful](https://github.com/rztime/RZColorful)
+[NSAttributedString+RZHtml.m](https://github.com/rztime/RZColorful/blob/master/RZColorfulExample/RZColorful/AttributeCore/NSAttributedString%2BRZHtml.m)
+```objc
+ - (NSString *)rz_codingToCompleteHtmlByWeb;
+```
+系统方法转换时，会丢失部分属性，所以取巧，用这种方法来加上style，供借鉴和学习，如果有更好的方法，可以一起交流
+
+
+
 在iOS 13中，Light/Dark模式适配
 
 ```objc

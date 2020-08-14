@@ -20,4 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+BOOL rz_iPhone_liuhai_adj(void);
+CGFloat rz_kSafeBottomMargin_adj(void);
+
 NS_ASSUME_NONNULL_END

@@ -67,7 +67,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray <UIImage *> *)rz_richTextImages;
 
 /**
- 将富文本内容转换成HTML标签语言
+ 将富文本内容转换成HTML标签语言   （部分样式转换成html之后，会丢失， 如果有必要，查看NSAttributedString+RZHtml.h ，转换为web的html方法，可以实现样式）
+ 
+ 
  @param urls 图片的链接，如果有图片，则请将图片先上传至自己的服务器中，得到地址。然后在转换成HTML时，urls图片顺序将与[- (NSArray <UIImage *> *)rz_rictTextImages]方法得到的图片顺序一致 倒叙方式插入，缺失可能导致图片顺序不准确）
  @return HTML标签string。
  */

@@ -11,6 +11,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface  RZRTColorCell : UICollectionViewCell
+
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIButton    *borderView;
+
+@end
+
 @interface RZRTColorView : UIView <RZRTViewDelegate>
 
 @property (nonatomic, strong) UIColor *color;

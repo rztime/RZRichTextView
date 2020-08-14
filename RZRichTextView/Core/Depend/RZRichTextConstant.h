@@ -51,13 +51,8 @@ typedef NS_ENUM(NSInteger, RZRichAlertViewType) {
 #define rz_font(size) [UIFont systemFontOfSize:size]
 #define rz_fontBold(size) [UIFont boldSystemFontOfSize:size]
 
-// 是否是iPhone X
-#define rz_iPhoneX (CGSizeEqualToSize(CGSizeMake(375.f, 812.f), [UIScreen mainScreen].bounds.size) || CGSizeEqualToSize(CGSizeMake(812.f, 375.f), [UIScreen mainScreen].bounds.size))
-// 是否是iPhone XR
-#define rz_iPhoneXR (CGSizeEqualToSize(CGSizeMake(414.f, 896.f), [UIScreen mainScreen].bounds.size) || CGSizeEqualToSize(CGSizeMake(896.f, 414.f), [UIScreen mainScreen].bounds.size))
-// 是否有刘海屏
-#define rz_iPhone_liuhai (rz_iPhoneX || rz_iPhoneXR)
+#define rz_iPhone_liuhai rz_iPhone_liuhai_adj()
 // 底部安全边距
-#define rz_kSafeBottomMargin (rz_iPhone_liuhai ? 34.f: 0.f)
-
+#define rz_kSafeBottomMargin rz_kSafeBottomMargin_adj()
 #endif /* RZRichTextConstant_h */
+

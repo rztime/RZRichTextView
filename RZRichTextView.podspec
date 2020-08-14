@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RZRichTextView"
-  s.version      = "0.3.1"
+  s.version      = "0.4.0"
   s.summary      = "iOS 原生UITextView 富文本编辑器"
 
   s.description  = <<-DESC
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
 
   s.author       = { "rztime" => "rztime@vip.qq.com" }
 
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "7.0"
 
   s.source       = { :git => "https://github.com/rztime/RZRichTextView.git", :tag => "#{s.version}" }
 

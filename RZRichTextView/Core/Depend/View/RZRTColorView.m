@@ -10,7 +10,7 @@
 #import <Masonry/Masonry.h> 
 #import "RZRichTextConstant.h"
 #import "RZRichTextConfigureManager.h"
-
+ 
 @interface RZRTColorView ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -58,7 +58,8 @@
             make.height.equalTo(@(self.width * self.section + 4 * (self.section + 1)));
             make.bottom.equalTo(self).offset(-10);
         }];
-        [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+        [self.collectionView registerClass:[RZRTColorCell class] forCellWithReuseIdentifier:@"cell"];
+        self.collectionView.layer.cornerRadius = 5;
         
         self.noColorBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [self addSubview:self.noColorBtn];
@@ -68,7 +69,7 @@
             make.centerX.equalTo(self);
             make.bottom.equalTo(self.collectionView.mas_top).offset(-10);
             make.width.equalTo(self.collectionView).offset(-8);
-            make.height.equalTo(@44);
+            make.height.equalTo(@30);
         }];
         self.noColorBtn.layer.borderWidth = 1;
         self.noColorBtn.layer.masksToBounds = YES;
@@ -88,18 +89,14 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    RZRTColorCell *cell = (RZRTColorCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     UIColor *color = [self colorByIndex:indexPath.row];
-    cell.contentView.backgroundColor = color;
-    
-    
+    cell.imageView.backgroundColor = color;
     BOOL equal = CGColorEqualToColor(self.color.CGColor, color.CGColor);
     if (equal) {
-        cell.contentView.layer.borderWidth = 1.5;
-        cell.contentView.layer.borderColor = RZRichTextConfigureManager.manager.themeColor.CGColor;
+        cell.borderView.layer.borderWidth = 3;
     } else {
-        cell.contentView.layer.borderWidth = 0.5;
-        cell.contentView.layer.borderColor = rz_rgba(0, 0, 0, 0.2).CGColor;
+        cell.borderView.layer.borderWidth = 0;
     }
     return cell;
 }
@@ -130,7 +127,48 @@
 }
 
 - (CGFloat)viewHeight {
-    return self.width * self.section + 4 * (self.section + 1) + 20 + 44 + 20;
+    return self.width * self.section + 4 * (self.section + 1) + 20 + 30 + 20;
 }
 
 @end
+
+
+@implementation RZRTColorCell
+
+- (UIImageView *)imageView {
+    if (!_imageView) {
+        _imageView = [[UIImageView alloc] init];
+        [self.contentView addSubview:_imageView];
+        [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(self.contentView);
+            make.edges.equalTo(self.contentView);
+        }];
+        _imageView.layer.masksToBounds = true;
+        _imageView.layer.borderWidth = 0.5;
+        _imageView.layer.borderColor = rz_rgba(0, 0, 0, 0.2).CGColor;
+    }
+    return _imageView;
+}
+
+- (UIButton *)borderView {
+    if (!_borderView) {
+        _borderView = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.contentView addSubview:_borderView];
+        [_borderView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(self.contentView);
+            make.edges.equalTo(self.contentView).inset(3);
+        }];
+        _borderView.userInteractionEnabled = NO;
+        _borderView.layer.masksToBounds = true;
+        _borderView.layer.borderWidth = 0;
+        _borderView.layer.borderColor = UIColor.whiteColor.CGColor;
+    }
+    return _borderView;
+}
+
+-(void)layoutSubviews {
+    _imageView.layer.cornerRadius = self.contentView.bounds.size.width / 2.0;
+    _borderView.layer.cornerRadius = (self.contentView.bounds.size.width -6 )/ 2.0;
+}
+@end
+
