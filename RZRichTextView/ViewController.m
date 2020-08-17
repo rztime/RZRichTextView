@@ -24,7 +24,8 @@
 
 /** ui */
 @property (nonatomic, strong) RZRichTextView *textView;;
-
+/** ui */
+@property (nonatomic, strong) UIWebView *webView;
 @end
 
 @implementation ViewController
@@ -33,7 +34,6 @@
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.rz_colorCreaterStyle(0, UIColor.whiteColor, UIColor.blackColor);
     // Do any additional setup after loading the view, typically from a nib.
-    
     // 全局的自定义功能实现 (点击工具栏上的功能将会调用的方法)
     RZRichTextConfigureManager.manager.didClickedCell = ^BOOL(RZRichTextView * _Nonnull textView, RZRichTextAttributeItem * _Nonnull item) {
         if (item.type == RZRichTextAttributeTypeFontSize) {
@@ -78,7 +78,7 @@
     // 设置键盘默认模式
 //    RZRichTextConfigureManager.manager.overrideUserInterfaceStyle = RZUserInterfaceStyleDark;
     // 富文本输入框
-    self.textView = [[RZRichTextView alloc] initWithFrame:CGRectMake(10, 100, 300, 300)];
+    self.textView = [[RZRichTextView alloc] initWithFrame:CGRectMake(10, 100, rz_k_screen_width-20, 300)];
     self.textView.font = [UIFont systemFontOfSize:17];
     self.textView.backgroundColor = UIColor.rz_colorCreaterStyle(0, [UIColor grayColor], [UIColor whiteColor]);
 //    if (@available(iOS 13.0, *)) {
@@ -122,6 +122,61 @@
         return NO;
     };
     [self.view addSubview:self.textView];
+    
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"存草稿" style:UIBarButtonItemStyleDone target:self action:@selector(save:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取草稿" style:UIBarButtonItemStyleDone target:self action:@selector(getCache:)];
+    
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(10, 420, rz_k_screen_width-20, 300)];
+    [self.view addSubview:self.webView];
+}
+// 保存草稿，仅做参考
+- (void)save:(id)sender {
+    NSAttributedString *attr = self.textView.attributedText;
+    NSArray *images = attr.rz_images;
+    NSMutableArray *imageUrls = NSMutableArray.new;
+    
+    [images enumerateObjectsUsingBlock:^(UIImage *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *time = [NSString stringWithFormat:@"%@", NSDate.new];
+        NSString *path = [NSHomeDirectory() stringByAppendingPathComponent: [NSString stringWithFormat:@"Documents/%@.png",time]];
+        [UIImagePNGRepresentation(obj) writeToFile:path atomically:true];
+        // 需要将“xxx_自定义_xxx” 替换为自己的 NSHomeDirectory()   拼接其相对路径
+        [imageUrls addObject:[NSString stringWithFormat:@"file://xxx_自定义_xxx/Documents/%@.png", time]];
+    }];
+    // 一种是系统方法，此方法在转换之后会丢失部分属性
+//    NSString *html = [attr rz_codingToHtmlWithImagesURLSIfHad:imageUrls];
+    // 自定义转换为web的方法，将系统方法转换后丢失的属性，代码注入style，转换
+    NSString *html = [attr rz_codingToHtmlByWebWithImagesURLSIfHad:imageUrls];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:html forKey:@"htmlcache"];
 }
 
+- (void)getCache:(id)sender {
+    // 取缓存
+    NSString *html = [[NSUserDefaults standardUserDefaults] objectForKey:@"htmlcache"];
+    html = [html stringByReplacingOccurrencesOfString:@"xxx_自定义_xxx" withString:NSHomeDirectory()];
+    NSMutableAttributedString *attr = [NSAttributedString htmlString:html].mutableCopy;
+
+    // 图片的尺寸，在转换保存的时候，是保存的图片本身的size（px），在转换为富文本的时候，并没有转为pt，所以会有可能变大并别裁剪，这里做一个尺寸适配
+    NSArray <RZAttributedStringInfo *> *array = [attr rz_attributedStringByAttributeName:NSAttachmentAttributeName];
+    [array enumerateObjectsUsingBlock:^(RZAttributedStringInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSTextAttachment *att = obj.value;
+        UIImage *image = att.image;
+        if (image == nil) {
+            image = [UIImage imageWithData:att.fileWrapper.regularFileContents];
+        }
+        CGFloat width = MIN(image.size.width, self.textView.frame.size.width - 20);
+        CGFloat height = MIN(image.size.height, image.size.height * width / image.size.width);
+        CGRect bounds = att.bounds;
+        bounds.size = CGSizeMake(width, height);
+        NSAttributedString *temp = [NSAttributedString rz_colorfulConfer:^(RZColorfulConferrer *confer) {
+            confer.image(image).bounds(bounds);
+        }];
+        [attr replaceCharactersInRange:obj.range withAttributedString:temp];
+    }];
+    
+    self.textView.attributedText = attr;
+    
+    [self.webView loadHTMLString:html baseURL:nil];
+}
 @end
