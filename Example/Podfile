@@ -1,0 +1,13 @@
+use_frameworks!
+source 'https://cdn.cocoapods.org/‘
+platform :ios, '9.0'
+
+target 'RZRichTextView_Example' do
+  pod 'RZRichTextView', :path => '../'
+
+  target 'RZRichTextView_Tests' do
+    inherit! :search_paths
+
+    pod 'FBSnapshotTestCase'
+  end
+end
