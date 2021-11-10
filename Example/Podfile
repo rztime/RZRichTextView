@@ -1,13 +1,17 @@
-use_frameworks!
-source 'https://cdn.cocoapods.org/‘
+#use_frameworks!
+
 platform :ios, '9.0'
 
 target 'RZRichTextView_Example' do
   pod 'RZRichTextView', :path => '../'
-
+  pod 'RZColorfulSwift'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'TZImagePickerController'
+  
   target 'RZRichTextView_Tests' do
     inherit! :search_paths
 
-    pod 'FBSnapshotTestCase'
+    pod 'FBSnapshotTestCase' , '~> 2.1.4'
   end
 end

@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RZRichTextView'
-  s.version          = '0.5.0'
-  s.summary          = 'iOS 原生UITextView 富文本编辑器'
+  s.version          = '1.0.0'
+  s.summary          = 'RZRichTextView. 原生UITextView，支持富文本输入（图片，视频，列表序号，文本颜色大小各种样式等等）'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-  对原生UITextView支持富文本编辑
+TODO: Add long description of the pod here.
                        DESC
 
   s.homepage         = 'https://github.com/rztime/RZRichTextView'
@@ -28,22 +28,23 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/rztime/RZRichTextView.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '7.0'
-
-  s.source_files = 'RZRichTextView/Classes/**/*'
-  
-   s.resource_bundles = {
-     'RZRichTextView' => ['RZRichTextView/Assets/*']
-   }
-   s.prefix_header_contents = <<-EOS
- #import <UIKit/UIKit.h>
- #import <Foundation/Foundation.h>
-    EOS
+  s.ios.deployment_target = '9.0'
+  s.swift_version = ["4.2", "5.0"]
+  s.subspec 'core' do |s|
+      s.source_files = 'RZRichTextView/Classes/**/*'
+      s.dependency 'SnapKit'
+      s.resource_bundles = {
+        'RZRichTextView' => ['RZRichTextView/Assets/*']
+      }
+  end
+#  s.subspec 'image' do |s|
+##      s.dependency 'TZImagePickerController'
+#      s.xcconfig = {
+#        "SWIFT_ACTIVE_COMPILATION_CONDITIONS" => 'TZImage'
+#      }
+#  end
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
-  
-  s.dependency 'RZColorful'
-  s.dependency 'Masonry'
-  s.dependency 'TZImagePickerController'
+#  s.default_subspecs = 'core', 'image'
 end
