@@ -1,12 +1,12 @@
 * v1.0.0
     
-    * 重构了一下，现在使用的是Swift，如果要在OC中使用，可以使用桥接引入，所有的属性和方法都是公开的，如果要自定义或者替换，都是可以的
+    * 整体重构，现在使用的是Swift，如果要在OC中使用，可以使用桥接引入，所有的属性和方法都是公开的，如果要自定义或者替换，都是可以的
     
     *** 
     
-    * . 支持插入**图片、视频**，并且在NSAttachment中添加rzrt：可以设置相关的图片、视频信息，以及maskView遮罩，可以在maskView上添加删除，进度等自定义UI。maskView相当于是添加在UITextView上的覆盖NSAttachment并且和图片一样大小的遮罩。
+    * . 支持插入**图片、视频**，并且在NSAttachment中添加rzrt：可以设置相关的图片、视频信息，以及maskView遮罩，可以在maskView上添加删除，进度等自定义UI。maskView相当于是添加在UITextView上的覆盖在NSAttachment上与图片一样大小的遮罩。
     * . **重新设置了滑动控件**的UI
-    * . **粗体、斜体、下划线、删除线**：因为中文不支持斜体，所以需要找第三方支持中文斜体字的字体才行，之前是设置obliqueness，这是相当于倾斜文字，这在于html互转时，无法实现，但是可以参考[RZColorfulSwift](https://www.github.com/RZColorfulSwift) `codingToCompleteHtmlByWeb` 这个方法来旋转字体。下划线删除线默认和文本颜色一致
+    * . **粗体、斜体、下划线、删除线**
     * . 支持**列表** 也就是<ul, ol>
     ***
  
