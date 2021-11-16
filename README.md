@@ -43,7 +43,7 @@ RZRichTextView继承UITextView，实现富文本编辑功能。使用Swift完成
     . 阴影
     . 拉伸
     . 段落样式（对齐方式、行距、缩进）
-    . 插入url链接：插入的方式很多，可以参考demo  
+    . 插入url链接：插入的方式很多，可以参考demo。 url进行了一次转码`text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)`，否则输入中文，点击会崩溃，所以这里设置、取用需注意转码解码
 
 # 功能说明
 
