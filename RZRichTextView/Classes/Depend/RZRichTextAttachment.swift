@@ -26,13 +26,12 @@ open class RZRichAttachmentObj: NSObject {
         maskView.backgroundColor = .clear
     }
 }
-
+ 
 public extension NSTextAttachment {
     struct RZTextAttachmentPerpotyName {
         public static var rzinfo = "rzinfo"
     }
-    
-    class func creatWith(image: UIImage, asset: PHAsset? = nil) -> NSTextAttachment {
+    class func rtCreatWith(image: UIImage, asset: PHAsset? = nil) -> NSTextAttachment {
         let attach = NSTextAttachment.init()
         attach.image = image
         let obj = RZRichAttachmentObj.init()
@@ -40,10 +39,10 @@ public extension NSTextAttachment {
         obj.image = image
         obj.type = asset?.mediaType == .video ? .video : .image
         obj.identifier = asset?.localIdentifier ?? "\(image.description)"
-        attach.rzrt = obj
+        attach.rtInfo = obj
         return attach
     }
-    var rzrt: RZRichAttachmentObj {
+    var rtInfo: RZRichAttachmentObj {
         set {
             objc_setAssociatedObject(self, &RZTextAttachmentPerpotyName.rzinfo, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }

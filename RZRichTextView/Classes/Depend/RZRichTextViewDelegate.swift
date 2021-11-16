@@ -52,9 +52,6 @@ open class RZRichTextViewDelegate: NSObject, UITextViewDelegate {
         target?.textViewDidEndEditing?(textView)
     }
     open func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        var typingAttributes = textView.typingAttributes
-        typingAttributes[NSAttributedString.Key.link] = nil
-        textView.typingAttributes = typingAttributes
         if let target = target {
             if !(target.textView?(textView, shouldChangeTextIn: range, replacementText: text) ?? true) {
                 return false

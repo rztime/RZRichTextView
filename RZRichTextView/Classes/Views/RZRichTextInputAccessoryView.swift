@@ -14,8 +14,8 @@ open class RZRichTextInputAccessoryView: UIView, UICollectionViewDataSource, UIC
     
     open var rightToolBar: UIStackView = .init()
     open var closeBtn = UIButton.init(type: .custom)
-    open var leftBtn = UIButton.init(type: .custom)
-    open var rightBtn = UIButton.init(type: .custom)
+    open var leftBtn = RZRTButton.init(type: .custom)
+    open var rightBtn = RZRTButton.init(type: .custom)
     
     open var collectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: .init())
 
@@ -23,6 +23,7 @@ open class RZRichTextInputAccessoryView: UIView, UICollectionViewDataSource, UIC
     public init(frame: CGRect, options: RZRichTextViewOptions) {
         self.options = options
         super.init(frame: frame)
+        self.backgroundColor = .white
         self.addSubview(rightToolBar)
         self.addSubview(collectionView)
         
@@ -58,15 +59,22 @@ open class RZRichTextInputAccessoryView: UIView, UICollectionViewDataSource, UIC
         
         [leftBtn, rightBtn, closeBtn].forEach { btn in
             btn.snp.makeConstraints { make in
-                make.width.equalTo(30)
+                make.width.equalTo(44)
                 make.height.equalTo(44)
             }
         }
-        
-        leftBtn.setImage(self.options.icon_revoke, for: .normal)
-        leftBtn.setImage(self.options.icon_revokeEnable, for: .selected)
-        rightBtn.setImage(self.options.icon_restore, for: .normal)
-        rightBtn.setImage(self.options.icon_restoreEnable, for: .selected)
+        if let image = self.options.icon_revoke {
+            leftBtn.setImage(image, for: .normal)
+        }
+        if let image = self.options.icon_revokeEnable {
+            leftBtn.setImage(image, for: .selected)
+        }
+        if let image = self.options.icon_restore {
+            rightBtn.setImage(image, for: .normal)
+        }
+        if let image = self.options.icon_restoreEnable {
+            rightBtn.setImage(image, for: .selected)
+        }
     }
     
     required public init?(coder: NSCoder) {
@@ -130,5 +138,20 @@ open class RZRichTextAccessoryViewCell: UICollectionViewCell {
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+@objcMembers
+open class RZRTButton: UIButton {
+    open var noSelectedAlpha = 0.4
+    open override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                self.alpha = 1
+            } else {
+                self.alpha = noSelectedAlpha
+            }
+        }
     }
 }

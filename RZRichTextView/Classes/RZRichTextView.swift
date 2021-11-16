@@ -42,12 +42,12 @@ open class RZRichTextView: UITextView, UITextViewDelegate {
         }
         get {
             var type = super.typingAttributes
-            type.removeValue(forKey: .originfontName) // 需要修正移除NSOriginalFont
+            type.removeValue(forKey: .rt.originfontName) // 需要修正移除NSOriginalFont
             let range = self.selectedRange
-            let tab = self.attributedText.tabStyleFor(range)
-            if tab != type.rztabStyle(), tab == .none, self.options.enableTabStyle { // 换行的时候，取到的光标属性，是上一行的属性，这里就需删掉列表属性
+            let tab = self.attributedText.rt.tabStyleFor(range)
+            if tab != type.rt.tabStyle(), tab == .none, self.options.enableTabStyle { // 换行的时候，取到的光标属性，是上一行的属性，这里就需删掉列表属性
                 if let p = type[.paragraphStyle] as? NSParagraphStyle {
-                    let newp = p.rz_transParagraphTo(tab)
+                    let newp = p.rt.transParagraphTo(tab)
                     type[.paragraphStyle] = newp
                 }
             }
@@ -105,7 +105,7 @@ public extension UITextView {
         var attachments: [NSTextAttachment] = []
         self.attributedText.enumerateAttribute(.attachment, in: .init(location: 0, length: attributedText.length), options: .longestEffectiveRangeNotRequired) { value, range, _ in
             if let value = value as? NSTextAttachment {
-                value.rzrt.range = range
+                value.rtInfo.range = range
                 attachments.append(value)
             }
         }

@@ -14,6 +14,8 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		B20439572741FFB5001D8614 /* CustomerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20439562741FFB5001D8614 /* CustomerTextView.swift */; };
+		B204395927420779001D8614 /* CRichTextFontStyleOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B204395827420779001D8614 /* CRichTextFontStyleOptionsView.swift */; };
 		B21BC2692730D5ED0051ADB1 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21BC2682730D5ED0051ADB1 /* CustomCell.swift */; };
 		B21BC26B273112800051ADB1 /* OrderdTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21BC26A273112800051ADB1 /* OrderdTextViewController.swift */; };
 		B22B618B272821EB00E3F68A /* TextViewContrller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B618A272821EB00E3F68A /* TextViewContrller.swift */; };
@@ -50,6 +52,8 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		67BA4762C3656B6325489C4D /* RZRichTextView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = RZRichTextView.podspec; path = ../RZRichTextView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9402DB31A4D8FF59AB92B081 /* Pods-RZRichTextView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView_Tests.debug.xcconfig"; path = "Target Support Files/Pods-RZRichTextView_Tests/Pods-RZRichTextView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		B20439562741FFB5001D8614 /* CustomerTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerTextView.swift; sourceTree = "<group>"; };
+		B204395827420779001D8614 /* CRichTextFontStyleOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRichTextFontStyleOptionsView.swift; sourceTree = "<group>"; };
 		B21BC2682730D5ED0051ADB1 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		B21BC26A273112800051ADB1 /* OrderdTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderdTextViewController.swift; sourceTree = "<group>"; };
 		B22B618A272821EB00E3F68A /* TextViewContrller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewContrller.swift; sourceTree = "<group>"; };
@@ -176,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				B21BC2682730D5ED0051ADB1 /* CustomCell.swift */,
+				B204395827420779001D8614 /* CRichTextFontStyleOptionsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -188,6 +193,7 @@
 				B25DD05E2728E7AF007AE34A /* CustomToolBarViewController.swift */,
 				B21BC26A273112800051ADB1 /* OrderdTextViewController.swift */,
 				B2EB98C3273B742E008B4C88 /* AddAttachmentViewController.swift */,
+				B20439562741FFB5001D8614 /* CustomerTextView.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -383,6 +389,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B22B618B272821EB00E3F68A /* TextViewContrller.swift in Sources */,
+				B20439572741FFB5001D8614 /* CustomerTextView.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				B21BC2692730D5ED0051ADB1 /* CustomCell.swift in Sources */,
 				B21BC26B273112800051ADB1 /* OrderdTextViewController.swift in Sources */,
@@ -390,6 +397,7 @@
 				B25DD05F2728E7AF007AE34A /* CustomToolBarViewController.swift in Sources */,
 				B2EB98C8273BBBA9008B4C88 /* TestViewController.m in Sources */,
 				B2EB98C4273B742E008B4C88 /* AddAttachmentViewController.swift in Sources */,
+				B204395927420779001D8614 /* CRichTextFontStyleOptionsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

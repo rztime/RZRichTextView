@@ -7,20 +7,21 @@
 
 import UIKit
 
-public extension Dictionary {
-    func rztabStyle() -> RZTextTabStyle {
-        if let attr = self as? [NSAttributedString.Key: Any], let p = attr[.paragraphStyle] as? NSParagraphStyle {
-            return p.tabStyle()
+public extension RZRichTextBase where T == Dictionary<NSAttributedString.Key, Any> {
+    func tabStyle() -> RZTextTabStyle {
+        if let p = self.rt[.paragraphStyle] as? NSParagraphStyle {
+            return p.rt.tabStyle()
         }
         return .none
     }
     
-    func rzTransParagraphTo(_ tab: RZTextTabStyle) -> [NSAttributedString.Key: Any] {
-        if var attr = self as? [NSAttributedString.Key: Any], let p = attr[.paragraphStyle] as? NSParagraphStyle {
-            let newp = p.rz_transParagraphTo(tab)
+    func transParagraphTo(_ tab: RZTextTabStyle) -> [NSAttributedString.Key: Any] {
+        var attr = self.rt
+        if let p = attr[.paragraphStyle] as? NSParagraphStyle {
+            let newp = p.rt.transParagraphTo(tab)
             attr[.paragraphStyle] = newp
             return attr
         }
-        return (self as? [NSAttributedString.Key : Any]) ?? [:]
+        return attr
     }
 }

@@ -64,7 +64,9 @@ open class RZRichTextViewOptions: NSObject {
     /// 是否支持(有序、无序)列表功能，当支持时，在changeRaneg, text改变时，将会在列表文本处理一些复杂任务，比如增删序号
     /// 如果为false，需要移除toolbarItems里的RZTextViewToolbarItem.tabStyle的item
     open var enableTabStyle = true
-    
+    /// 在输入的时候，是否删除textView.typingAttributes里的link属性，默认为true, 输入时无link属性
+    /// false时，光标在link之外的地方，或者范围过界，则无link，也就是可以直接修改link的文本
+    open var shouldRemoveLinkWhenEditing = true
     ///  rgba 设定可选颜色 
     open var colors: [RZRichColor] = [
         .init(0, 0, 0, 0),

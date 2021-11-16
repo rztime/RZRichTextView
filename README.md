@@ -43,7 +43,7 @@ RZRichTextView继承UITextView，实现富文本编辑功能。使用Swift完成
     . 阴影
     . 拉伸
     . 段落样式（对齐方式、行距、缩进）
-    . 插入url链接
+    . 插入url链接：插入的方式很多，可以参考demo  
 
 # 功能说明
 
@@ -96,11 +96,12 @@ NSTextList在MacOS上支持，在iOS中并未公开，仅做私有属性，所�
 
 #### 1.RZRichTextViewOptions
     RZRichTextViewOptions配置文件，包含了常规设置
-    字体，
-    颜色，
-    工具条图片，
-    工具条item分类，
-    各种事件的回调
+    字体，  
+    颜色，  
+    工具条图片，  
+    工具条item分类，  
+    各种事件的回调，  
+    url  
 
 需要实现`openPhotoLibrary`方法，打开相册选择图片或者视频，完成后调用complete（image, PHAsset）,将图片视频插入到textView中
 

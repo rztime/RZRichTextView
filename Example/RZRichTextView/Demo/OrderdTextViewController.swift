@@ -43,14 +43,14 @@ class OrderdTextViewController: UIViewController {
             confer.text("哈哈哈")?.font(.systemFont(ofSize: 17)).textColor(.black).paragraphStyle?.addTab(.ol)
         } ?? .init()
         // 如果通过addTab的方式加了列表序号， 需要resetTabOrderNumber 才会排序
-        textView.attributedText = ori.resetTabOrderNumber()
+        textView.attributedText = ori.rt.resetTabOrderNumber()
     }
     @objc func transformTohtml() {
         let html = self.textView.attributedText.rz.codingToHtmlWithImagesURLSIfHad(urls: ["http://www.baidu.com"]) ?? ""
         print("\(html)")
         if let attr = self.textView.attributedText {
             let newattr = NSMutableAttributedString.init(attributedString: attr)
-            newattr.removeAttribute(.originfontName, range: .init(location: 0, length: newattr.length))
+            newattr.removeAttribute(.rt.originfontName, range: .init(location: 0, length: newattr.length))
             self.textView.attributedText = newattr
         }
     }
@@ -62,7 +62,7 @@ class OrderdTextViewController: UIViewController {
 extension ParagraphStyleRZ {
     @discardableResult
     public func addTab(_ tab: RZTextTabStyle) -> Self {
-        let p = paragraph.rz_transParagraphTo(tab)
+        let p = paragraph.rt.transParagraphTo(tab)
         paragraph.setParagraphStyle(p)
         return self
     }

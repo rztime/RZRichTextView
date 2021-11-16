@@ -33,7 +33,7 @@ class TextViewContrller: UIViewController {
 //            attahcment.image
 //            attahcment.asset
             // 这是图片上的蒙层，可以添加一些进度控件、删除控件等等
-            attahcment.rzrt.maskView.backgroundColor = UIColor.init(red: 1, green: 0, blue: 0, alpha: 0.3)
+            attahcment.rtInfo.maskView.backgroundColor = UIColor.init(red: 1, green: 0, blue: 0, alpha: 0.3)
             // 也可以根据需要绑定上传
         }
         /// 移除了附件

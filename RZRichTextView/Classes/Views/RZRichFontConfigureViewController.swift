@@ -479,15 +479,15 @@ open class RZRichFontConfigureViewController: UIViewController {
                 case .none:
                     attr.append(NSAttributedString.init(string: "列表\n列表"))
                 case .ul:
-                    if let string = NSAttributedString.rzrh_htmlString("<ul><li>列表</li><li>列表</li></ul>") {
+                    if let string = NSAttributedString.rt.htmlString("<ul><li>列表</li><li>列表</li></ul>") {
                         attr.append(string)
                     }
                 case .ol:
-                    if let string = NSAttributedString.rzrh_htmlString("<ol><li>列表</li><li>列表</li></ol>") {
+                    if let string = NSAttributedString.rt.htmlString("<ol><li>列表</li><li>列表</li></ol>") {
                         attr.append(string)
                     }
                 }
-                self.typingAttributes[NSAttributedString.Key.tabStyle] = type
+                self.typingAttributes[NSAttributedString.Key.rt.tabStyle] = type
                 attr.addAttributes(self.typingAttributes, range: .init(location: 0, length: attr.length))
                 self.displayTextLabel.attributedText = attr
             }

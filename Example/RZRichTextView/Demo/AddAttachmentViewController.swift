@@ -62,29 +62,29 @@ class AddAttachmentViewController: UIViewController {
         // 插入了附件，这里需要对遮罩上绑定的自定义view，进行防止重复加载处理，因为在实际编写过程中，可能会出现删除，撤销操作，导致此方法重新调用
         option.didInsetAttachment = { [weak self] attach in
             // 存在重复添加的情况，比如通过撤销操作，还原了已输入的图片，这时候就需要重新布局，重新绑定上传状态等等
-            let view = attach.rzrt.maskView.viewWithTag(100) as? RZUploadStatusView ?? .init()
-            attach.rzrt.maskView.addSubview(view)
+            let view = attach.rtInfo.maskView.viewWithTag(100) as? RZUploadStatusView ?? .init()
+            attach.rtInfo.maskView.addSubview(view)
             view.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
-            view.playBtn.isHidden = attach.rzrt.type != .video
+            view.playBtn.isHidden = attach.rtInfo.type != .video
             view.closeBtn.rz.tap { [weak attach, weak self] _ in
                 guard let attach = attach else { return }
-                print("删除attach:\(attach.rzrt.range)")
-                self?.textView?.deleteText(for: attach.rzrt.range)
+                print("删除attach:\(attach.rtInfo.range)")
+                self?.textView?.deleteText(for: attach.rtInfo.range)
             }
             
             view.playBtn.rz.tap { [weak attach, weak self] _ in
-                self?.preVideo(phasset: attach?.rzrt.asset)
+                self?.preVideo(phasset: attach?.rtInfo.asset)
             }
             /// 这里禁掉，主要是方便直接预览图片和视频，实际看个人需要
             view.playBtn.isUserInteractionEnabled = false
             // 预览
             view.rz.tap { [weak self, weak attach] _ in
-                self?.preVideo(phasset: attach?.rzrt.asset)
+                self?.preVideo(phasset: attach?.rtInfo.asset)
             }
             
-            var item: RZUploadStatusItem? = self?.viewModel.items.first(where: { $0.attach.rzrt.identifier == attach.rzrt.identifier})
+            var item: RZUploadStatusItem? = self?.viewModel.items.first(where: { $0.attach.rtInfo.identifier == attach.rtInfo.identifier})
             if item == nil {
                 item = .init(attach: attach)
                 self?.viewModel.items.append(item!)

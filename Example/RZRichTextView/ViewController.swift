@@ -18,10 +18,12 @@ class ViewController: UIViewController {
         ("自定义(增删改)工具条", CustomToolBarViewController.self),
         ("有序无序文本", OrderdTextViewController.self),
         ("插入附件", AddAttachmentViewController.self),
+        ("深度自定义", CustomerTextView.self),
         
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view, typically from a nib.
         self.title = "富文本"
         self.view.backgroundColor = .white

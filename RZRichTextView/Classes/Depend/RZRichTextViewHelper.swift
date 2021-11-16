@@ -66,7 +66,7 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
                 guard let self = self, let textView = self.textView else { return }
                 textView.typingAttributes = typingAttributes
                 if item?.type == RZTextViewToolbarItem.tabStyle.rawValue {  // 制表列表，需要单独处理
-                    if let style = textView.typingAttributes[NSAttributedString.Key.tabStyle] as? RZTextTabStyle {
+                    if let style = textView.typingAttributes[NSAttributedString.Key.rt.tabStyle] as? RZTextTabStyle {
                         self.insetOrDeleteTabStyle(style)
                     }
                 } else {
@@ -108,9 +108,9 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
                 tempImage = insert(image)
             }
             if let tempImage = tempImage {
-                let attach = NSTextAttachment.creatWith(image: tempImage, asset: asset)
+                let attach = NSTextAttachment.rtCreatWith(image: tempImage, asset: asset)
                 attach.bounds = self.tempImageCover(image: tempImage)
-                textView.addSubview(attach.rzrt.maskView)
+                textView.addSubview(attach.rtInfo.maskView)
                 let attr = NSAttributedString.init(attachment: attach)
                 tempAttr.append(attr)
                 attachment = attach
@@ -133,7 +133,7 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
             range.length = 0
         } else { // 无文字输入时，修改所选内容属性
             let attr = NSMutableAttributedString.init(attributedString: textAttributedstring.attributedSubstring(from: range))
-            let newAttr = attr.rzrh_replaceAttributes(textView.typingAttributes, range: .init(location: 0, length: attr.length))
+            let newAttr = attr.rt.replaceAttributes(textView.typingAttributes, range: .init(location: 0, length: attr.length))
             textAttributedstring.replaceCharacters(in: range, with: newAttr)
             if replaceRange != nil {
                 range.length = 0
@@ -141,10 +141,11 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         }
         let typing = textView.typingAttributes
         if changeParagraph {
-            let tempRange = textAttributedstring.parapraghRange(for: range)
-            textAttributedstring.addAttributes(textView.typingAttributes, range: tempRange)
+            let tempRange = textAttributedstring.rt.parapraghRange(for: range)
+            let p = typing[.paragraphStyle] as? NSParagraphStyle ?? .init()
+            textAttributedstring.addAttributes([.paragraphStyle: p], range: tempRange)
         }
-        textView.attributedText = self.options.enableTabStyle ? textAttributedstring.resetTabOrderNumber() : textAttributedstring
+        textView.attributedText = self.options.enableTabStyle ? textAttributedstring.rt.resetTabOrderNumber() : textAttributedstring
         textView.selectedRange = range
         if changeParagraph {
             textView.typingAttributes = typing
@@ -226,8 +227,8 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         let attachments: [NSTextAttachment]? = textView.richTextAttachments()
         attachments?.forEach { [weak self] attach in
             guard let self = self, let textView = self.textView else { return }
-            let view = attach.rzrt.maskView
-            let rect = textView.rectFor(range: attach.rzrt.range)
+            let view = attach.rtInfo.maskView
+            let rect = textView.rectFor(range: attach.rtInfo.range)
             view.frame = rect
             if view.superview != textView {
                 textView.addSubview(view)
@@ -241,7 +242,7 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
             return true
         }
         removed.forEach { attach in
-            attach.rzrt.maskView.removeFromSuperview()
+            attach.rtInfo.maskView.removeFromSuperview()
         }
         self.attachments = attachments ?? []
         if removed.count > 0 {
@@ -259,12 +260,12 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         }
         let selectedRange = textView.selectedRange
         // 得到range所在的所有行
-        let ranges = attributedText.paragraphRanges(for: selectedRange)
+        let ranges = attributedText.rt.paragraphRanges(for: selectedRange)
         var rangesAttrs : [NSMutableAttributedString] = []
         ranges.forEach { range in
             // 转换
-            let tempAttr : NSMutableAttributedString = attributedText.attributedSubstring(from: range).removeHeadTabString().mutableCopy() as? NSMutableAttributedString ?? .init()
-            tempAttr.rz_mutableTransParagraphTo(style)
+            let tempAttr : NSMutableAttributedString = attributedText.attributedSubstring(from: range).rt.removeHeadTabString().mutableCopy() as? NSMutableAttributedString ?? .init()
+            tempAttr.rt.mutableTransParagraphTo(style)
             rangesAttrs.append(tempAttr)
         }
         // 倒叙的方式替换
@@ -272,7 +273,7 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
             let attr = rangesAttrs[i]
             attributedText.replaceCharacters(in: range, with: attr)
         }
-        let new = attributedText.resetTabOrderNumber()
+        let new = attributedText.rt.resetTabOrderNumber()
         let newRange = RZRichTextViewUtils.newRangeFor(origin: textView.attributedText, range: selectedRange, new: new)
         textView.attributedText = new
         DispatchQueue.main.async {
@@ -290,17 +291,32 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         if !self.options.enableTabStyle {
             return true
         }
+        func removeLink() {
+            var typingAttributes = textView.typingAttributes
+            typingAttributes[NSAttributedString.Key.link] = nil
+            textView.typingAttributes = typingAttributes
+        }
+        // 是否需要移除超链接输入，如果不需要移除，那么需要自己实现开头和结尾移除超链接
+        if self.options.shouldRemoveLinkWhenEditing {
+            removeLink()
+        } else {
+            if let _ = textView.typingAttributes[.link], let pr = textView.attributedText.rt.rangeFor(attrName: .link, with: range) {
+                if range.location < pr.location || range.location >= pr.rt.maxLength() || (range.location == pr.location && range.rt.maxLength() > pr.rt.maxLength()) {
+                    removeLink()
+                }
+            }
+        }
         var range = range
-        let tab = textView.attributedText.tabStyleFor(range)
+        let tab = textView.attributedText.rt.tabStyleFor(range)
         if tab == .none {
             return true
         }
         // 删除制表符
         func deleteTab() -> Bool {
             if let p = textView.typingAttributes[.paragraphStyle] as? NSParagraphStyle {
-                let newp = p.rz_transParagraphTo(.none)
+                let newp = p.rt.transParagraphTo(.none)
                 textView.typingAttributes[.paragraphStyle] = newp
-                let headLength = textView.attributedText.tabStyleLengthFor(range) - 1
+                let headLength = textView.attributedText.rt.tabStyleLengthFor(range) - 1
                 self.insert(text: "", changeParagraph: true, replaceRange: .init(location: range.location - headLength, length: range.length + headLength))
                 return false
             }
@@ -311,8 +327,8 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
             let text = textView.attributedText.attributedSubstring(from: range)
             if text.string.hasPrefix("\t") {
                 // 如果是删除制表符，判断\t是否切是段落开头，制表符所占range之内，则删除
-                let pr = textView.attributedText.parapraghRange(for: range)
-                let headLength = textView.attributedText.tabStyleLengthFor(range)
+                let pr = textView.attributedText.rt.parapraghRange(for: range)
+                let headLength = textView.attributedText.rt.tabStyleLengthFor(range)
                 if range.location >= pr.location + headLength {
                     return true
                 }
@@ -325,7 +341,7 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
             return true
         }
         if text == "\n", range.length == 0 {
-            let p = textView.attributedText.paragraphAttributedSubString(form: range).removeHeadTabString()
+            let p = textView.attributedText.rt.paragraphAttributedSubString(form: range).rt.removeHeadTabString()
             if p.length == 1, p.string == "\n" { // 未输入文本，回车的话，就去掉制表符
                 range.location -= 1
                 range.length += 1
@@ -344,23 +360,23 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         }
         let selectedRange = textView.selectedRange
         let textString = (textView.text as NSString)
-        if selectedRange.maxLength() >= textString.length {
-            if textString.hasSuffix("\n"), textView.attributedText.tabStyleFor(selectedRange) != .none { // 当最后一个字符为"\n"，计算所有行时，是无法得到最后的光标所在行，所以这里-1，不让光标在\n后
+        if selectedRange.rt.maxLength() >= textString.length {
+            if textString.hasSuffix("\n"), textView.attributedText.rt.tabStyleFor(selectedRange) != .none { // 当最后一个字符为"\n"，计算所有行时，是无法得到最后的光标所在行，所以这里-1，不让光标在\n后
                 textView.selectedRange = .init(location: selectedRange.location, length: selectedRange.length - 1)
             }
             return
         }
-        let tab = textView.attributedText.tabStyleFor(selectedRange)
+        let tab = textView.attributedText.rt.tabStyleFor(selectedRange)
         if tab == .none {
             return
         }
-        let rg = textView.attributedText.parapraghRange(for: selectedRange)
-        let headLength = textView.attributedText.tabStyleLengthFor(selectedRange)
+        let rg = textView.attributedText.rt.parapraghRange(for: selectedRange)
+        let headLength = textView.attributedText.rt.tabStyleLengthFor(selectedRange)
         if selectedRange.location - rg.location >= headLength {
             return
         }
         // 让光标，无法选中或移动到制表符上
-        let end = selectedRange.maxLength()
+        let end = selectedRange.rt.maxLength()
         let star = rg.location + headLength
         textView.selectedRange = NSRange.init(location: star, length: end - star)
     }

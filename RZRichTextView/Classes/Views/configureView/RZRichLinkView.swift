@@ -141,7 +141,7 @@ open class RZRichLinkView: UIView {
     }
     
     open func linkString() -> String? {
-        return linkTextField.text
+        return linkTextField.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
     }
     open func textString() -> String? {
         return textField.text
