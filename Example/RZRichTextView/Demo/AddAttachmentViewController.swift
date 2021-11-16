@@ -71,7 +71,7 @@ class AddAttachmentViewController: UIViewController {
             view.closeBtn.rz.tap { [weak attach, weak self] _ in
                 guard let attach = attach else { return }
                 print("删除attach:\(attach.rtInfo.range)")
-                self?.textView?.deleteText(for: attach.rtInfo.range)
+                self?.textView?.rt.deleteText(for: attach.rtInfo.range)
             }
             
             view.playBtn.rz.tap { [weak attach, weak self] _ in

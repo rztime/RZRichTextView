@@ -41,7 +41,7 @@ open class RZRichTextView: UITextView, UITextViewDelegate {
             super.typingAttributes = newValue
         }
         get {
-            var type = super.typingAttributes
+            var type: [NSAttributedString.Key : Any] = super.typingAttributes
             type.removeValue(forKey: .rt.originfontName) // 需要修正移除NSOriginalFont
             let range = self.selectedRange
             let tab = self.attributedText.rt.tabStyleFor(range)
@@ -73,37 +73,39 @@ open class RZRichTextView: UITextView, UITextViewDelegate {
     }
 }
 
-public extension UITextView {
+public extension RZRichTextBase where T : UITextView {
     /// 获取range对应的frame
     func rectFor(range: NSRange?) -> CGRect {
         guard let range = range else {
             return .zero
         }
-        let beginning = self.beginningOfDocument
-        guard let star = self.position(from: beginning, offset: range.location) else { return .zero }
-        guard let end = self.position(from: star, offset: range.length) else { return .zero}
-        guard let textRange = self.textRange(from: star, to: end) else { return .zero}
-        return self.firstRect(for: textRange)
+        let textView = self.rt
+        let beginning = textView.beginningOfDocument
+        guard let star = textView.position(from: beginning, offset: range.location) else { return .zero }
+        guard let end = textView.position(from: star, offset: range.length) else { return .zero}
+        guard let textRange = textView.textRange(from: star, to: end) else { return .zero}
+        return textView.firstRect(for: textRange)
     }
     func deleteText(for range: NSRange?) {
         if let textrange = self.textRange(for: range) {
-            self.replace(textrange, withText: "")
+            self.rt.replace(textrange, withText: "")
         }
     }
     func textRange(for range: NSRange?) -> UITextRange?{
         guard let range = range else {
             return nil
         }
-        let beginning = self.beginningOfDocument
-        guard let star = self.position(from: beginning, offset: range.location) else { return nil }
-        guard let end = self.position(from: star, offset: range.length) else { return nil }
-        guard let textRange = self.textRange(from: star, to: end) else { return nil }
+        let textView = self.rt
+        let beginning = textView.beginningOfDocument
+        guard let star = textView.position(from: beginning, offset: range.location) else { return nil }
+        guard let end = textView.position(from: star, offset: range.length) else { return nil }
+        guard let textRange = textView.textRange(from: star, to: end) else { return nil }
         return textRange
     }
     /// 获取附件文本
-    @objc func richTextAttachments() -> [NSTextAttachment] {
+    func richTextAttachments() -> [NSTextAttachment] {
         var attachments: [NSTextAttachment] = []
-        self.attributedText.enumerateAttribute(.attachment, in: .init(location: 0, length: attributedText.length), options: .longestEffectiveRangeNotRequired) { value, range, _ in
+        self.rt.attributedText.enumerateAttribute(.attachment, in: .init(location: 0, length: self.rt.attributedText.length), options: .longestEffectiveRangeNotRequired) { value, range, _ in
             if let value = value as? NSTextAttachment {
                 value.rtInfo.range = range
                 attachments.append(value)

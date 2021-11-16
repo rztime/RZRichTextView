@@ -57,7 +57,7 @@ class TextViewContrller: UIViewController {
         guard let textView = textView else {
             return
         }
-        let allAttach = textView.richTextAttachments()
+        let allAttach = textView.rt.richTextAttachments()
         // 得到所有的图片(没有视频)
         let attachments = textView.attributedText.rz.images()
         /// 在RZColorfulSwift 中提供几种转换成html的方式，如果有视频，可能需要参照codingToHtmlWithImagesURLSIfHad来实现视频的标签

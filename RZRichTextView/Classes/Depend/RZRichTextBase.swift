@@ -35,3 +35,4 @@ extension NSRange                   : RZRichTextProtocol {}
 extension NSAttributedString        : RZRichTextProtocol {}
 extension NSParagraphStyle          : RZRichTextProtocol {}
 extension String                    : RZRichTextProtocol {}
+extension UITextView                : RZRichTextProtocol {}

@@ -224,11 +224,11 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         // 放在主线程，保证在插入图片之后，先在textView中绘制完成，然后才能拿到正确的图片位置
         self.textView?.setNeedsLayout()
         guard let textView = self.textView else { return }
-        let attachments: [NSTextAttachment]? = textView.richTextAttachments()
+        let attachments: [NSTextAttachment]? = textView.rt.richTextAttachments()
         attachments?.forEach { [weak self] attach in
             guard let self = self, let textView = self.textView else { return }
             let view = attach.rtInfo.maskView
-            let rect = textView.rectFor(range: attach.rtInfo.range)
+            let rect = textView.rt.rectFor(range: attach.rtInfo.range)
             view.frame = rect
             if view.superview != textView {
                 textView.addSubview(view)
