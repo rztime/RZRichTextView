@@ -21,9 +21,13 @@ open class RZRichAttachmentObj: NSObject {
     open var image: UIImage?
     open var asset: PHAsset?
     open var type: TextAttachmentType = .image
-    public override init() {
+    public init(image: UIImage?, asset: PHAsset?) {
         super.init()
         maskView.backgroundColor = .clear
+        self.image = image
+        self.asset = asset
+        self.type = asset?.mediaType == .video ? .video : .image
+        self.identifier = asset?.localIdentifier ?? "\(image?.description ?? "")"
     }
 }
  
@@ -34,11 +38,7 @@ public extension NSTextAttachment {
     class func rtCreatWith(image: UIImage, asset: PHAsset? = nil) -> NSTextAttachment {
         let attach = NSTextAttachment.init()
         attach.image = image
-        let obj = RZRichAttachmentObj.init()
-        obj.asset = asset
-        obj.image = image
-        obj.type = asset?.mediaType == .video ? .video : .image
-        obj.identifier = asset?.localIdentifier ?? "\(image.description)"
+        let obj = RZRichAttachmentObj.init(image: image, asset: asset)
         attach.rtInfo = obj
         return attach
     }
@@ -47,7 +47,18 @@ public extension NSTextAttachment {
             objc_setAssociatedObject(self, &RZTextAttachmentPerpotyName.rzinfo, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         get {
-            return (objc_getAssociatedObject(self, &RZTextAttachmentPerpotyName.rzinfo)) as! RZRichAttachmentObj
+            if let obj = (objc_getAssociatedObject(self, &RZTextAttachmentPerpotyName.rzinfo)) as? RZRichAttachmentObj {
+                return obj
+            }
+            var img: UIImage?
+            if let image = self.image {
+                img = image
+            } else if let data = self.fileWrapper?.regularFileContents, let image = UIImage.init(data: data) {
+                img = image
+            }
+            let obj = RZRichAttachmentObj.init(image: img, asset: nil)
+            self.rtInfo = obj
+            return obj
         }
     }
 }
