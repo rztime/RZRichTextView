@@ -33,6 +33,8 @@ RZRichTextView is available under the MIT license. See the LICENSE file for more
 
 RZRichTextView继承UITextView，实现富文本编辑功能。使用Swift完成，基本所有的方法和属性都是公开的，方便继承或自定义修改，如果OC项目使用，可以使用桥接。
 
+如果需要使用，就直接下载源码，改改UI自行设置一下吧，因为UI太难统一了，所以自己处理一下吧
+
 #### 支持的功能
 
     . 插入图片、视频
@@ -44,6 +46,7 @@ RZRichTextView继承UITextView，实现富文本编辑功能。使用Swift完成
     . 拉伸
     . 段落样式（对齐方式、行距、缩进）
     . 插入url链接：插入的方式很多，可以参考demo。 url进行了一次转码`text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)`，否则输入中文，点击会崩溃，所以这里设置、取用需注意转码解码
+    . 新增引用，目前和列表存在一点点冲突，需要优化
 
 # 功能说明
 

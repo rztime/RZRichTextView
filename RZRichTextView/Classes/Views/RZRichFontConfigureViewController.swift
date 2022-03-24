@@ -468,6 +468,7 @@ open class RZRichFontConfigureViewController: UIViewController {
             self.attributeContentView.contentView.addArrangedSubview(view)
         }
     }
+    // MARK: - 列表
     open func tabStyleConfigure() {
         let items = self.item.items ?? [] 
         if items.contains(RZTextViewFontStyle.tabStyle.rawValue) {

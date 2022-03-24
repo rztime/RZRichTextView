@@ -148,7 +148,7 @@ class CRichTextFontStyleOptionsView: UIView {
         colorView?.highlightIndex(index)
         
         let aligin: [NSTextAlignment] = [.natural, .left, .center, .right]
-        let p = typingAttributes[.paragraphStyle] as? NSParagraphStyle ?? .init()
+        let p = (typingAttributes[.paragraphStyle] as? NSParagraphStyle) ?? .init()
         let aliginindex = aligin.firstIndex(where: {$0 == p.alignment}) ?? 0
         aliginView?.highlightIndex(aliginindex)
          

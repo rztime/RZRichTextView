@@ -18,7 +18,8 @@ class TextViewContrller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "完成", style: .plain, target: self, action: #selector(finish))
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.init(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+        
         /// 自定义一个option，也可以用init, 用init，可自己实现一些自定义的配置
         let options = RZRichTextViewOptions.shared
         /// 因为大部分字体不支持中文斜体，所以如果要让斜体生效，就自己选一个支持中文斜体的字体
@@ -48,7 +49,7 @@ class TextViewContrller: UIViewController {
             make.top.equalToSuperview().inset(100)
             make.height.equalTo(300)
         }
-        textView.backgroundColor = .lightGray
+        textView.backgroundColor = .white
         self.textView = textView
     }
     // 完成
@@ -65,6 +66,31 @@ class TextViewContrller: UIViewController {
         let html2 = textView.attributedText.rz.codingToCompleteHtmlByWeb()
         let html3 = textView.attributedText.rz.codingToHtmlWithImagesURLSIfHad(urls: [])
         let html4 = textView.attributedText.rz.codingToHtmlByWebWithImagesURLSIfHad(urls: [])
+        
+        
+        guard let attr = textView.attributedText else {
+            return
+        }
+        var finalAttr = NSMutableAttributedString.init(attributedString: attr)
+
+        let tempxxxattr = textView.attributedText.rt.resetTabOrderNumber()
+        tempxxxattr.enumerateAttribute(.paragraphStyle, in: .init(location: 0, length: tempxxxattr.length), options: .reverse) { value, range, _ in
+            if let p = value as? NSParagraphStyle, p.hadquote {
+                let newP = NSMutableParagraphStyle.init()
+                newP.setParagraphStyle(p)
+                newP.headIndent = 0
+                newP.firstLineHeadIndent = 0
+                let tempAttr = NSMutableAttributedString.init(attributedString: attr.attributedSubstring(from: range))
+                tempAttr.insert(.init(string: "[-blockquote-]"), at: 0)
+                tempAttr.append(.init(string: "[/-blockquote-]"))
+                tempAttr.addAttribute(.paragraphStyle, value: newP, range: .init(location: 0, length: tempAttr.length))
+                finalAttr.replaceCharacters(in: range, with: tempAttr)
+            }
+        }
+        var html5 = finalAttr.rz.codingToCompleteHtml() ?? ""
+        html5 = html5.replacingOccurrences(of: "[-blockquote-]", with: "<blockquote style='border-left: 3px solid #eee; padding-left: 0.5em; margin:0'>")
+        html5 = html5.replacingOccurrences(of: "[/-blockquote-]", with: "</blockquote>")
+        print("html:\n\(html5)")
     }
 }
 

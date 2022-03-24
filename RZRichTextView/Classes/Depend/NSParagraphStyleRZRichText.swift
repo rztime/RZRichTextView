@@ -28,6 +28,11 @@ public extension NSParagraphStyle {
         }
         return p
     }()
+    private static var quoteKey = "rz_blockquoteKey"
+    
+    var hadquote: Bool {
+        return self.headIndent == 10 && self.firstLineHeadIndent == 10
+    }
 }
  
 public extension RZRichTextBase where T : NSParagraphStyle {
@@ -40,20 +45,29 @@ public extension RZRichTextBase where T : NSParagraphStyle {
     // 将段落转换到有序、无序列表，或者清除列表
     func transParagraphTo(_ style: RZTextTabStyle) -> NSParagraphStyle {
         let p = NSMutableParagraphStyle.init()
+        let origin = self.rt
+        p.firstLineHeadIndent               = origin.firstLineHeadIndent
+        p.headIndent                        = origin.headIndent
         switch style {
         case .none:
             break
         case .ul:
             p.setParagraphStyle(NSParagraphStyle.ulParagraphStyle) // 设置为无序列表
+            if origin.hadquote {
+                p.firstLineHeadIndent = 0
+                p.headIndent = 0
+            }
         case .ol:
             p.setParagraphStyle(NSParagraphStyle.olParagraphStyle) // 设置为有序列表
+            if origin.hadquote {
+                p.firstLineHeadIndent = 0
+                p.headIndent = 0
+            }
         }
-        let origin = self.rt
+
         p.lineSpacing                       = origin.lineSpacing
         p.paragraphSpacing                  = origin.paragraphSpacing
         p.alignment                         = origin.alignment
-        p.firstLineHeadIndent               = origin.firstLineHeadIndent
-        p.headIndent                        = origin.headIndent
         p.tailIndent                        = origin.tailIndent
         p.lineBreakMode                     = origin.lineBreakMode
         p.minimumLineHeight                 = origin.minimumLineHeight

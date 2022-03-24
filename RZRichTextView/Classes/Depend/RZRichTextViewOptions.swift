@@ -20,6 +20,7 @@ import Photos
     case paragraph      = 7 // 段落
     case link           = 8      // 链接（附件）
     case tabStyle       = 9 // 列表
+    case quote          = 10 // 引用
 }
 /// 所涉及到的属性配置
 @objc public enum RZTextViewFontStyle : NSInteger {
@@ -115,11 +116,13 @@ open class RZRichTextViewOptions: NSObject {
     open var icon_tab: UIImage? =  RZRichTextImage.imageWith(name: "rz_liebiao") // 列表
     open var icon_wuxu: UIImage? =  RZRichTextImage.imageWith(name: "rz_wuxu") // 无序列表
     open var icon_youxu: UIImage? =  RZRichTextImage.imageWith(name: "rz_youxu") // 有序列表
-    
+    open var icon_quote: UIImage? = RZRichTextImage.imageWith(name: "rz_quote")     // 引用
+    open var icon_quote_s: UIImage? = RZRichTextImage.imageWith(name: "rz_quote_s")     // 引用 高亮
     /// 键盘上显示的工具条条目
     open lazy var toolbarItems: [RZToolBarItem] = [
         .init(type: RZTextViewToolbarItem.image.rawValue, image: icon_image), // 插入图片
         .init(type: RZTextViewToolbarItem.font.rawValue, image: icon_font, items: fontStyleItems), // 文本设置
+        .init(type: RZTextViewToolbarItem.quote.rawValue, image: icon_quote, selectedImage: icon_quote_s), // 引用
         .init(type: RZTextViewToolbarItem.tabStyle.rawValue, image: icon_tab, items: tabStyleItems), // 列表
         .init(type: RZTextViewToolbarItem.baseOfline.rawValue, image: icon_baseofline, items: baseoflineItems), // 偏移设置
         .init(type: RZTextViewToolbarItem.stroken.rawValue, image: icon_stroken, items: strokenItems), // 描边设置
@@ -127,6 +130,7 @@ open class RZRichTextViewOptions: NSObject {
         .init(type: RZTextViewToolbarItem.expansion.rawValue, image: icon_expansion, items: expansionItems), // 拉伸设置
         .init(type: RZTextViewToolbarItem.paragraph.rawValue, image: icon_paragraph, items: paragraphItems), // 段落设置
         .init(type: RZTextViewToolbarItem.link.rawValue, image: icon_link, items: linkItems), // 链接
+        
     ]
     // 字体样式设置
     open lazy var fontStyleItems: [NSInteger] = [

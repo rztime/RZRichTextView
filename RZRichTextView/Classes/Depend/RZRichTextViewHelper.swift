@@ -24,6 +24,8 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
     // 记录的文本中的附件，可能不准确，如果需要请遍历NSAttributedString
     open var attachments: [NSTextAttachment] = []
     
+    open var quoteViews: [RZQuoteMaskView] = []
+    
     public init(_ textView: RZRichTextView, options: RZRichTextViewOptions) {
         self.options = options
         super.init()
@@ -50,6 +52,9 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
             self.options.openPhotoLibrary?({ [weak self] (image, asset) in
                 self?.insert(text: nil, image: image, asset: asset)
             })
+        case RZTextViewToolbarItem.quote.rawValue:
+            self.quoteConfigure()
+            self.textView?.kinputAccessoryView.reloadData()
         case RZTextViewToolbarItem.font.rawValue,
             RZTextViewToolbarItem.baseOfline.rawValue,
             RZTextViewToolbarItem.stroken.rawValue,
@@ -278,9 +283,63 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         textView.attributedText = new
         DispatchQueue.main.async {
             textView.selectedRange = newRange
+            self.quoteUIConfigure()
         }
     }
-    /// MARK: - delegate事件
+    /// 配置显示引用块的遮罩
+    open func quoteUIConfigure() {
+        guard let attr = self.textView?.attributedText else {
+            return
+        }
+        self.quoteViews.forEach({$0.removeFromSuperview()})
+        self.quoteViews.removeAll()
+        let allpars = attr.rt.allParapraghRange()
+        
+        func setWithRange(range: NSRange) {
+            if let frame = self.textView?.rt.tempRectFor(range: range) {
+                var frame = frame
+                frame.origin.x = 0
+                frame.size.width = self.textView?.frame.size.width ?? 0
+                let view = RZQuoteMaskView.init(frame: frame)
+                self.textView?.insertSubview(view, at: 0)
+                self.quoteViews.append(view)
+            }
+        }
+        
+        allpars.forEach { [weak self] range in
+            if let p = attr.attribute(.paragraphStyle, at: range.location, effectiveRange: nil) as? NSParagraphStyle, p.hadquote {
+                var tempRange = range
+                if tempRange.rt.maxLength() < (self?.textView?.attributedText.length ?? 0), let attr = self?.textView?.attributedText.attributedSubstring(from: .init(location: tempRange.rt.maxLength() - 1, length: 1)), attr.string == "\n" {
+                    if let next = self?.textView?.attributedText.attributedSubstring(from: .init(location: tempRange.rt.maxLength(), length: 1)), next.length > 0 {
+                        tempRange.length -= 1
+                    }
+                }
+                setWithRange(range: tempRange)
+            }
+        }
+        if allpars.isEmpty || ((allpars.last?.rt.maxLength() ?? 0) == (self.textView?.selectedRange.location ?? 0)) {
+            if let p = self.textView?.typingAttributes[.paragraphStyle] as? NSParagraphStyle, p.hadquote {
+                setWithRange(range: self.textView?.selectedRange ?? .init(location: 0, length: 0))
+            }
+        }
+    }
+    // MARK: - 引用
+    open func quoteConfigure() {
+        guard let textView = self.textView, let p = textView.typingAttributes[.paragraphStyle] as? NSParagraphStyle  else {
+            return
+        }
+        let newP = NSMutableParagraphStyle.init()
+        newP.setParagraphStyle(p)
+        if newP.hadquote {
+            let temp = newP.rt.transParagraphTo(.none) // 移除制表符
+            newP.setParagraphStyle(temp)
+        }
+        newP.headIndent = newP.hadquote ? 0 : 10
+        newP.firstLineHeadIndent = newP.headIndent
+        self.textView?.typingAttributes[.paragraphStyle] = newP
+        self.insert(text: nil, image: nil, asset: nil, changeParagraph: true, replaceRange: nil)
+    }
+    // MARK: - delegate事件
     open func textViewDidBeginEditing(_ textView: UITextView) {
         if self.isFirstUse {
             self.addToHistory()
@@ -288,8 +347,20 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         }
     }
     open func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if !self.options.enableTabStyle {
+        func resetQuote() -> Bool? {
+            if text == "\n", range.length == 0 {  // 回车
+                let p = textView.attributedText.rt.paragraphAttributedSubString(form: range)
+                let para = textView.typingAttributes[.paragraphStyle] as? NSParagraphStyle
+                if (p.length == 0 || p.string == "\n"), (para?.hadquote ?? false) {  // 没有内容
+                    quoteConfigure()
+                    quoteUIConfigure()
+                    return true
+                }
+            }
             return true
+        }
+        if !self.options.enableTabStyle {
+            return resetQuote() ?? true
         }
         func removeLink() {
             var typingAttributes = textView.typingAttributes
@@ -309,7 +380,7 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         var range = range
         let tab = textView.attributedText.rt.tabStyleFor(range)
         if tab == .none {
-            return true
+            return resetQuote() ?? true
         }
         // 删除制表符
         func deleteTab() -> Bool {
@@ -355,6 +426,12 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
     }
     // 改变了光标的range，
     open func textViewDidChangeSelection(_ textView: UITextView) {
+        if let p = textView.typingAttributes[.paragraphStyle] as? NSParagraphStyle {
+            let item = self.textView?.helper?.options.toolbarItems.first(where: {$0.type == RZTextViewToolbarItem.quote.rawValue})
+            item?.selected = p.hadquote
+            self.textView?.kinputAccessoryView.reloadData()
+        }
+        
         if !self.options.enableTabStyle {
             return
         }
@@ -383,6 +460,14 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
     // 文本内容改变，需要调用，用于重新设置附件view的frame
     open func textViewDidChange(_ textView: UITextView) {
         reviseImageMaskViewFrame()
+        quoteUIConfigure()
+        
+        if let p = textView.typingAttributes[.paragraphStyle] as? NSParagraphStyle {
+            let item = self.textView?.helper?.options.toolbarItems.first(where: {$0.type == RZTextViewToolbarItem.quote.rawValue})
+            item?.selected = p.hadquote
+            self.textView?.kinputAccessoryView.reloadData()
+        }
+        
         let range = textView.markedTextRange
         let pos = textView.position(from: textView.beginningOfDocument, offset: 0)
         if range != nil, pos != nil {

@@ -74,17 +74,38 @@ open class RZRichTextView: UITextView, UITextViewDelegate {
 }
 
 public extension RZRichTextBase where T : UITextView {
-    /// 获取range对应的frame
-    func rectFor(range: NSRange?) -> CGRect {
+    /// 找到range所在位置的frame，能拿到的是range.location 的 x.y 以及最后一个 range.length的maxY
+    /// x, y,代表 range.location位置，是准确的，
+    /// width: 默认取的textView宽度，不应当取用，要按各自需求设置，是不准确的，
+    /// height 取的最后一个字的maxY - y
+    func tempRectFor(range: NSRange?) -> CGRect {
         guard let range = range else {
             return .zero
         }
         let textView = self.rt
         let beginning = textView.beginningOfDocument
+
+        guard let star = textView.position(from: beginning, offset: range.location) else { return .zero }
+        guard let end = textView.position(from: beginning, offset: range.location + range.length) else { return .zero}
+        let c1 = textView.caretRect(for: star)
+        let c2 = textView.caretRect(for: end)
+        let rect: CGRect = .init(x: c1.minX, y: c1.minY, width: textView.frame.size.width, height: c2.maxY - c1.minY)
+        return rect
+    }
+    /// 获取range对应的frame, 这个frame只适合单排的获取，多行的时候，用temRectFor(range) 然后
+    func rectFor(range: NSRange?) -> CGRect {
+        guard let range = range else {
+            return .zero
+        }
+        let _ = self.tempRectFor(range: range)
+        let textView = self.rt
+        let beginning = textView.beginningOfDocument
         guard let star = textView.position(from: beginning, offset: range.location) else { return .zero }
         guard let end = textView.position(from: star, offset: range.length) else { return .zero}
         guard let textRange = textView.textRange(from: star, to: end) else { return .zero}
-        return textView.firstRect(for: textRange)
+ 
+        let rect = textView.firstRect(for: textRange)
+        return textView.convert(rect, to: textView.textInputView)
     }
     func deleteText(for range: NSRange?) {
         if let textrange = self.textRange(for: range) {
