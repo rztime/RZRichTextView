@@ -106,7 +106,6 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
             return
         }
         let tempAttr = NSMutableAttributedString.init()
-        var attachment: NSTextAttachment?
         if let image = image {
             var tempImage: UIImage? = image
             if let insert = self.options.willInsetImage {
@@ -115,10 +114,8 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
             if let tempImage = tempImage {
                 let attach = NSTextAttachment.rtCreatWith(image: tempImage, asset: asset)
                 attach.bounds = self.tempImageCover(image: tempImage)
-                textView.addSubview(attach.rtInfo.maskView)
                 let attr = NSAttributedString.init(attachment: attach)
                 tempAttr.append(attr)
-                attachment = attach
             }
         }
         if let text = text {
@@ -152,13 +149,11 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         }
         textView.attributedText = self.options.enableTabStyle ? textAttributedstring.rt.resetTabOrderNumber() : textAttributedstring
         textView.selectedRange = range
+        textView.scrollRangeToVisible(range)
         if changeParagraph {
             textView.typingAttributes = typing
         }
         textView.delegate?.textViewDidChange?(textView)
-        if let attachment = attachment {
-            textView.options.didInsetAttachment?(attachment)
-        }
     }
     /// 这个方法只是转化获取在textView中的位置大小，并不会修改图片大小
     open func tempImageCover(image: UIImage) -> CGRect {
@@ -439,7 +434,7 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         let textString = (textView.text as NSString)
         if selectedRange.rt.maxLength() >= textString.length {
             if textString.hasSuffix("\n"), textView.attributedText.rt.tabStyleFor(selectedRange) != .none { // 当最后一个字符为"\n"，计算所有行时，是无法得到最后的光标所在行，所以这里-1，不让光标在\n后
-                textView.selectedRange = .init(location: selectedRange.location, length: selectedRange.length - 1)
+                textView.selectedRange = .init(location: selectedRange.location, length: max(0, selectedRange.length - 1))
             }
             return
         }
@@ -455,7 +450,7 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         // 让光标，无法选中或移动到制表符上
         let end = selectedRange.rt.maxLength()
         let star = rg.location + headLength
-        textView.selectedRange = NSRange.init(location: star, length: end - star)
+        textView.selectedRange = NSRange.init(location: star, length: max(0, end - star))
     }
     // 文本内容改变，需要调用，用于重新设置附件view的frame
     open func textViewDidChange(_ textView: UITextView) {

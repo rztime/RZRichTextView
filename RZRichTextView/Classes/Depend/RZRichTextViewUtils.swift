@@ -69,7 +69,7 @@ open class RZRichTextViewUtils: NSObject {
         // 先找到所有的段落range
         let allParagraphs = attributedText.rt.allParapraghRange()
         if allParagraphs.count == 0 {
-            return range
+            return .init(location: attributedText1.length, length: 0)
         }
         // 找到range所在段落的range数组
         let ranges = attributedText.rt.paragraphRanges(for: range)

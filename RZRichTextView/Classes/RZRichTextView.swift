@@ -54,7 +54,7 @@ open class RZRichTextView: UITextView, UITextViewDelegate {
             return type
         }
     }
-    private lazy var tempDelegate: RZRichTextViewDelegate? = .init(target: nil, delegate: self.helper)
+    private var tempDelegate: RZRichTextViewDelegate?
     
     public init(frame: CGRect, options: RZRichTextViewOptions = .shared) {
         self.options = options
@@ -62,7 +62,8 @@ open class RZRichTextView: UITextView, UITextViewDelegate {
         self.font = self.options.normalFont
         let color = self.options.colors[2]
         self.textColor = color.color
-        helper = .init(self, options: self.options) 
+        helper = .init(self, options: self.options)
+        tempDelegate = .init(target: nil, delegate: self.helper)
         notesCount = 20
         self.inputAccessoryView = kinputAccessoryView
         self.delegate = self 

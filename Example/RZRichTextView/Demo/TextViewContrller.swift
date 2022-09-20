@@ -49,7 +49,6 @@ class TextViewContrller: UIViewController {
             make.top.equalToSuperview().inset(100)
             make.height.equalTo(300)
         }
-        textView.backgroundColor = .white
         self.textView = textView
     }
     // 完成
