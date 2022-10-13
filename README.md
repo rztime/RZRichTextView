@@ -28,6 +28,15 @@ rztime, rztime@vip.qq.com qq交流群：580839749
 
 RZRichTextView is available under the MIT license. See the LICENSE file for more info.
 
+# 说明
+
+在 Xcode 14、iOS 16版本上，存在一些bug
+|--|
+|1: RZRichTextView delegate 会在super初始化里调用，导致RZRichTextView本身的一些回调不生效，这个在RZRichTextView.init(frame: CGRect, options: RZRichTextViewOptions = .shared) 方法里已修复|
+|2: NSTextList API放出来，可以添加有序无序，但是这个存在bug，在字符串计数、selectedRange无法正确选择有此功能的文本内容|
+|3: obliqueness 斜体属性在iOS 16上失效，设置不起作用|
+
+看苹果官方何时修复了
 
 # 简介
 
