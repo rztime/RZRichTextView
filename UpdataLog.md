@@ -1,3 +1,16 @@
+* v1.0.1
+    
+    * 
+        修改了bug：多次交替输入图片、回车后，图片遮罩显示位置不对的问题
+        
+    ***
+
+    * . 修改了`RZRichTextView`里的`func rectFor(range: NSRange?) -> CGRect`方法
+    * . 修改了`RZRichTextBase`里`public protocol RZRichTextProtocol { }`方法
+    * . 新增`RZRichTextViewHelper`里
+    `textView.layoutManager.ensureLayout(for: textView.textContainer)`代码
+    
+
 * v1.0.0
     
     * 整体重构，现在使用的是Swift，如果要在OC中使用，可以使用桥接引入，所有的属性和方法都是公开的，如果要自定义或者替换，都是可以的

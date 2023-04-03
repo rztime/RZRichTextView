@@ -98,15 +98,12 @@ public extension RZRichTextBase where T : UITextView {
         guard let range = range else {
             return .zero
         }
-        let _ = self.tempRectFor(range: range)
         let textView = self.rt
         let beginning = textView.beginningOfDocument
-        guard let star = textView.position(from: beginning, offset: range.location) else { return .zero }
-        guard let end = textView.position(from: star, offset: range.length) else { return .zero}
-        guard let textRange = textView.textRange(from: star, to: end) else { return .zero}
- 
-        let rect = textView.firstRect(for: textRange)
-        return textView.convert(rect, to: textView.textInputView)
+        guard let star = textView.position(from: beginning, offset: range.location),
+              let end = textView.position(from: star, offset: range.length),
+              let textRange = textView.textRange(from: star, to: end) else { return .zero }
+        return textView.firstRect(for: textRange)
     }
     func deleteText(for range: NSRange?) {
         if let textrange = self.textRange(for: range) {

@@ -9,6 +9,7 @@
 import UIKit
 import RZRichTextView
 import SnapKit
+import CoreText
 
 class ViewController: UIViewController {
     let tableView = UITableView.init(frame: .zero, style: .plain)
@@ -19,7 +20,6 @@ class ViewController: UIViewController {
         ("有序无序文本", OrderdTextViewController.self),
         ("插入附件", AddAttachmentViewController.self),
         ("深度自定义", CustomerTextView.self),
-        
     ]
     override func viewDidLoad() {
         super.viewDidLoad()

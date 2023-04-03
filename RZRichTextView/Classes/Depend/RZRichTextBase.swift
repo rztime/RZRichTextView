@@ -13,11 +13,7 @@ public struct RZRichTextBase<T> {
         self.rt = rt
     }
 }
-public protocol RZRichTextProtocol {
-    associatedtype T
-    static var rt: RZRichTextBase<T>.Type { get set }
-    var rt: RZRichTextBase<T> { get set }
-}
+public protocol RZRichTextProtocol { }
 public extension RZRichTextProtocol {
     static var rt: RZRichTextBase<Self>.Type {
         get { return RZRichTextBase<Self>.self }

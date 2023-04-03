@@ -8,7 +8,7 @@
 
 import UIKit
 import RZRichTextView
-import RZColorfulSwift
+
 
 /// 对输入的图像、视频进行处理，比如上传，添加水印，添加进度、删除按钮等等， 转换html
 class TextViewContrller: UIViewController {
@@ -31,6 +31,8 @@ class TextViewContrller: UIViewController {
         }
         /// 插入了一个图片或视频，这里返回附件
         options.didInsetAttachment = { attahcment in
+            let url = URL.init(string: "xxxxxxxxxxxxx")!
+            attahcment.fileWrapper = try? .init(url: url)
 //            attahcment.image
 //            attahcment.asset
             // 这是图片上的蒙层，可以添加一些进度控件、删除控件等等
@@ -61,7 +63,7 @@ class TextViewContrller: UIViewController {
         // 得到所有的图片(没有视频)
         let attachments = textView.attributedText.rz.images()
         /// 在RZColorfulSwift 中提供几种转换成html的方式，如果有视频，可能需要参照codingToHtmlWithImagesURLSIfHad来实现视频的标签
-        let html1 = textView.attributedText.rz.codingToCompleteHtml()
+        let html1 = textView.attributedText.rz.codingToCompleteHtml() ?? ""
         let html2 = textView.attributedText.rz.codingToCompleteHtmlByWeb()
         let html3 = textView.attributedText.rz.codingToHtmlWithImagesURLSIfHad(urls: [])
         let html4 = textView.attributedText.rz.codingToHtmlByWebWithImagesURLSIfHad(urls: [])

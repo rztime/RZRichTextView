@@ -28,6 +28,15 @@ rztime, rztime@vip.qq.com qq交流群：580839749
 
 RZRichTextView is available under the MIT license. See the LICENSE file for more info.
 
+
+# 简介
+
+RZRichTextView继承UITextView，实现富文本编辑功能。使用Swift完成，基本所有的方法和属性都是公开的，方便继承或自定义修改，如果OC项目使用，可以使用桥接。
+
+如果需要使用，就直接`下载源码`，改改UI自行设置一下吧，因为UI太难统一了，所以自己处理一下吧
+
+另外，请参考[UpdataLog](https://github.com/rztime/RZRichTextView/blob/master/UpdataLog.md),里边有更新信息说明，版本对应相应的tag
+
 # 说明
 
 在 Xcode 14、iOS 16版本上，存在一些bug
@@ -37,12 +46,6 @@ RZRichTextView is available under the MIT license. See the LICENSE file for more
 |3: obliqueness 斜体属性在iOS 16上失效，设置不起作用|
 
 看苹果官方何时修复了
-
-# 简介
-
-RZRichTextView继承UITextView，实现富文本编辑功能。使用Swift完成，基本所有的方法和属性都是公开的，方便继承或自定义修改，如果OC项目使用，可以使用桥接。
-
-如果需要使用，就直接下载源码，改改UI自行设置一下吧，因为UI太难统一了，所以自己处理一下吧
 
 #### 支持的功能
 

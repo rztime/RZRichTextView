@@ -23,7 +23,6 @@
 		B22B618D2728310700E3F68A /* 新愚公自由宋-L.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2FDD6A427196F9F00A10276 /* 新愚公自由宋-L.ttf */; };
 		B25DD05F2728E7AF007AE34A /* CustomToolBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25DD05E2728E7AF007AE34A /* CustomToolBarViewController.swift */; };
 		B2EB98C4273B742E008B4C88 /* AddAttachmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EB98C3273B742E008B4C88 /* AddAttachmentViewController.swift */; };
-		B2EB98C8273BBBA9008B4C88 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EB98C7273BBBA9008B4C88 /* TestViewController.m */; };
 		DE13F6A9758F4AE70A9500D0 /* libPods-RZRichTextView_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E83C93AFE44296122830C7E8 /* libPods-RZRichTextView_Example.a */; };
 /* End PBXBuildFile section */
 
@@ -57,11 +56,10 @@
 		B21BC2682730D5ED0051ADB1 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		B21BC26A273112800051ADB1 /* OrderdTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderdTextViewController.swift; sourceTree = "<group>"; };
 		B22B618A272821EB00E3F68A /* TextViewContrller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewContrller.swift; sourceTree = "<group>"; };
+		B23E867529DA6C62007492E4 /* UpdataLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = UpdataLog.md; path = ../UpdataLog.md; sourceTree = "<group>"; };
 		B25DD05E2728E7AF007AE34A /* CustomToolBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToolBarViewController.swift; sourceTree = "<group>"; };
 		B2EB98C3273B742E008B4C88 /* AddAttachmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAttachmentViewController.swift; sourceTree = "<group>"; };
 		B2EB98C5273BBBA9008B4C88 /* RZRichTextView_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RZRichTextView_Example-Bridging-Header.h"; sourceTree = "<group>"; };
-		B2EB98C6273BBBA9008B4C88 /* TestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		B2EB98C7273BBBA9008B4C88 /* TestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		B2FDD6A427196F9F00A10276 /* 新愚公自由宋-L.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "新愚公自由宋-L.ttf"; sourceTree = "<group>"; };
 		B2FDD6A527196FA000A10276 /* 新愚公自由宋-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "新愚公自由宋-B.ttf"; sourceTree = "<group>"; };
 		BC762B17B92C487B69F20C36 /* Pods-RZRichTextView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView_Example.release.xcconfig"; path = "Target Support Files/Pods-RZRichTextView_Example/Pods-RZRichTextView_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -128,8 +126,6 @@
 				B2FDD6A427196F9F00A10276 /* 新愚公自由宋-L.ttf */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				B2EB98C6273BBBA9008B4C88 /* TestViewController.h */,
-				B2EB98C7273BBBA9008B4C88 /* TestViewController.m */,
 				B22B6189272821C200E3F68A /* Demo */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -172,6 +168,7 @@
 				67BA4762C3656B6325489C4D /* RZRichTextView.podspec */,
 				F6FB4C65A57555CE31FD0DDA /* README.md */,
 				C3FBF6F42254FB0EFF8F709C /* LICENSE */,
+				B23E867529DA6C62007492E4 /* UpdataLog.md */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
@@ -395,7 +392,6 @@
 				B21BC26B273112800051ADB1 /* OrderdTextViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				B25DD05F2728E7AF007AE34A /* CustomToolBarViewController.swift in Sources */,
-				B2EB98C8273BBBA9008B4C88 /* TestViewController.m in Sources */,
 				B2EB98C4273B742E008B4C88 /* AddAttachmentViewController.swift in Sources */,
 				B204395927420779001D8614 /* CRichTextFontStyleOptionsView.swift in Sources */,
 			);
@@ -546,6 +542,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 9363D6U2QU;
 				INFOPLIST_FILE = RZRichTextView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "rz.com.RZRichTextView-Example";
@@ -567,6 +564,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9363D6U2QU;
 				INFOPLIST_FILE = RZRichTextView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "rz.com.RZRichTextView-Example";
@@ -595,6 +593,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -619,6 +618,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

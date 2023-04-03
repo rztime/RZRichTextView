@@ -1,14 +1,14 @@
 #use_frameworks!
 
-platform :ios, '9.0'
+platform :ios, '10.0'
 
 target 'RZRichTextView_Example' do
   pod 'RZRichTextView', :path => '../'
-  pod 'RZColorfulSwift'
+  pod 'RZColorfulSwift', :git => 'https://github.com/rztime/RZColorfulSwift.git'
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'TZImagePickerController'
-  
+#  pod 'QuicklySwift', :git => 'https://github.com/rztime/QuicklySwift.git'
   target 'RZRichTextView_Tests' do
     inherit! :search_paths
 

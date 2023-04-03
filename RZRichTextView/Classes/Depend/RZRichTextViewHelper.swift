@@ -149,6 +149,7 @@ open class RZRichTextViewHelper: NSObject, UITextViewDelegate {
         }
         textView.attributedText = self.options.enableTabStyle ? textAttributedstring.rt.resetTabOrderNumber() : textAttributedstring
         textView.selectedRange = range
+        textView.layoutManager.ensureLayout(for: textView.textContainer)
         textView.scrollRangeToVisible(range)
         if changeParagraph {
             textView.typingAttributes = typing
