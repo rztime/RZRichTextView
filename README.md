@@ -33,7 +33,7 @@ RZRichTextView is available under the MIT license. See the LICENSE file for more
 
 RZRichTextView继承UITextView，实现富文本编辑功能。使用Swift完成，基本所有的方法和属性都是公开的，方便继承或自定义修改，如果OC项目使用，可以使用桥接。
 
-另外，请参考[UpdataLog](https://github.com/rztime/RZRichTextView/blob/master/UpdataLog.md),里边有更新信息说明，版本对应相应的tag
+另外，请参考[UpdataLog](UpdataLog.md),里边有更新信息说明，版本对应相应的tag
 
 示例图片在最下边
 
@@ -61,7 +61,7 @@ RZRichTextView继承UITextView，实现富文本编辑功能。使用Swift完成
 
 #### 使用方法
 
-  [HowToUseDemo](https://github.com/rztime/RZRichTextView/blob/master/Example/RZRichTextView/HowToUseDemo.swift)
+  [HowToUseDemo](./Example/RZRichTextView/HowToUseDemo.swift)
 
 ```swift
 将Demo里的HowToUseDemo里的代码复制到自己的项目中，根据需求，配置viewModel相关信息，另外完成里边FIXME相关：
@@ -156,7 +156,7 @@ viewModel.textView?.insetAttachment(info)
 
 # NSAttributedString 到 HTML
 
-[RZHtml.swift]()
+[RZHtml.swift](./RZRichTextView/Classes/RZHtml.swift)
 
 ```
 let html = textView.code2html()
@@ -168,7 +168,7 @@ let html = attributedText.code2html()
 
 # HTML 到 NSAttributedString
 
-[RZHtml.swift]()
+[RZHtml.swift](./RZRichTextView/Classes/RZHtml.swift)
 
 1.RZRichTextView
 ```
@@ -206,3 +206,37 @@ let attr = html?.html2Attributedstring(options: .defaultForLabel(200, 60), loadA
 ```
 <p style="font-size:16px;"><u>文本</u></p>
 ```
+
+## 示例图片
+
+1.
+
+![选择音视频图片](./Image/1.PNG)
+
+2_1.
+
+![音频](./Image/2_1.PNG)
+
+2.
+
+![上传中](./Image/2.PNG)
+
+3.
+
+![字体样式](./Image/3.PNG)
+
+4.
+
+![列表](./Image/4.PNG)
+
+5.
+
+![段落样式](./Image/5.PNG)
+
+6.
+
+![链接样式](./Image/6.PNG)
+
+7.
+
+![生成的html](./Image/7.PNG)

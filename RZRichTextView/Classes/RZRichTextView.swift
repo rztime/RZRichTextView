@@ -10,6 +10,7 @@ import QuicklySwift
 
 /// 初始化TextView时，一定要设置frame.size.width，内部附件以frame的宽度来做最宽显示处理
 /// 如何使用以及配置？ 请查看demo的HowToUseDemo，直接复制代码，填充选择资源、预览资源的方法就可以了
+/// https://github.com/rztime/RZRichTextView/blob/master/Example/RZRichTextView/HowToUseDemo.swift
 ///       需要自定义附件显示的视图，请实现RZAttachmentInfoLayerProtocol，参考RZAttachmentInfoLayerView
 ///       并注册        RZAttachmentOption.register(attachmentLayer: UIView)
 @objcMembers
