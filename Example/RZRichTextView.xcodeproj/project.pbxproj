@@ -7,23 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5A1F43EB826FA9CF19DB943F /* libPods-RZRichTextView_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A93F4DFF159CFF4BA79705F /* libPods-RZRichTextView_Tests.a */; };
+		5BCE247EA8F0D795F999E017 /* Pods_RZRichTextView_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0FE6C166E24BCECD07B8C6 /* Pods_RZRichTextView_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		B20439572741FFB5001D8614 /* CustomerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20439562741FFB5001D8614 /* CustomerTextView.swift */; };
-		B204395927420779001D8614 /* CRichTextFontStyleOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B204395827420779001D8614 /* CRichTextFontStyleOptionsView.swift */; };
-		B21BC2692730D5ED0051ADB1 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21BC2682730D5ED0051ADB1 /* CustomCell.swift */; };
-		B21BC26B273112800051ADB1 /* OrderdTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21BC26A273112800051ADB1 /* OrderdTextViewController.swift */; };
-		B22B618B272821EB00E3F68A /* TextViewContrller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B618A272821EB00E3F68A /* TextViewContrller.swift */; };
-		B22B618C2728310400E3F68A /* 新愚公自由宋-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2FDD6A527196FA000A10276 /* 新愚公自由宋-B.ttf */; };
-		B22B618D2728310700E3F68A /* 新愚公自由宋-L.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2FDD6A427196F9F00A10276 /* 新愚公自由宋-L.ttf */; };
-		B25DD05F2728E7AF007AE34A /* CustomToolBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25DD05E2728E7AF007AE34A /* CustomToolBarViewController.swift */; };
-		B2EB98C4273B742E008B4C88 /* AddAttachmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EB98C3273B742E008B4C88 /* AddAttachmentViewController.swift */; };
-		DE13F6A9758F4AE70A9500D0 /* libPods-RZRichTextView_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E83C93AFE44296122830C7E8 /* libPods-RZRichTextView_Example.a */; };
+		B289C2182A78B0FB00D6CEC5 /* HowToUseDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B289C2172A78B0FB00D6CEC5 /* HowToUseDemo.swift */; };
+		B289C21A2A78B48D00D6CEC5 /* CustomRichTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B289C2192A78B48D00D6CEC5 /* CustomRichTextViewController.swift */; };
+		B289C21E2A7B7D2600D6CEC5 /* LabelLoadHtmlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B289C21D2A7B7D2600D6CEC5 /* LabelLoadHtmlViewController.swift */; };
+		B289C2262A81CB7D00D6CEC5 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B289C2252A81CB7D00D6CEC5 /* TestViewController.swift */; };
+		B2B1FD2D2A6E505000A6A3A2 /* NormalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B1FD2C2A6E505000A6A3A2 /* NormalViewController.swift */; };
+		B2B1FD3B2A70C2D700A6A3A2 /* HTML2AttrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B1FD3A2A70C2D700A6A3A2 /* HTML2AttrViewController.swift */; };
+		EB450A5FF93E023686C6282F /* Pods_RZRichTextView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8719C6C2F3EC0E118BBC233 /* Pods_RZRichTextView_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,8 +34,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0FF8C896EE13B013052144CC /* Pods-RZRichTextView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView_Example.debug.xcconfig"; path = "Target Support Files/Pods-RZRichTextView_Example/Pods-RZRichTextView_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		2A93F4DFF159CFF4BA79705F /* libPods-RZRichTextView_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RZRichTextView_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0176D84EA70439B62A55B6E4 /* RZRichTextView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = RZRichTextView.podspec; path = ../RZRichTextView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		0E996CEF147FE8DD1FBC7039 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		3D630A2A4352A67F32D7C55C /* Pods-RZRichTextView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView_Tests.debug.xcconfig"; path = "Target Support Files/Pods-RZRichTextView_Tests/Pods-RZRichTextView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		41BF27BAD5B83D7B0517DA18 /* Pods-RZRichTextView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView_Example.release.xcconfig"; path = "Target Support Files/Pods-RZRichTextView_Example/Pods-RZRichTextView_Example.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* RZRichTextView_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RZRichTextView_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,24 +48,18 @@
 		607FACE51AFB9204008FA782 /* RZRichTextView_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RZRichTextView_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		67BA4762C3656B6325489C4D /* RZRichTextView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = RZRichTextView.podspec; path = ../RZRichTextView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9402DB31A4D8FF59AB92B081 /* Pods-RZRichTextView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView_Tests.debug.xcconfig"; path = "Target Support Files/Pods-RZRichTextView_Tests/Pods-RZRichTextView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		B20439562741FFB5001D8614 /* CustomerTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerTextView.swift; sourceTree = "<group>"; };
-		B204395827420779001D8614 /* CRichTextFontStyleOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRichTextFontStyleOptionsView.swift; sourceTree = "<group>"; };
-		B21BC2682730D5ED0051ADB1 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
-		B21BC26A273112800051ADB1 /* OrderdTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderdTextViewController.swift; sourceTree = "<group>"; };
-		B22B618A272821EB00E3F68A /* TextViewContrller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewContrller.swift; sourceTree = "<group>"; };
-		B23E867529DA6C62007492E4 /* UpdataLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = UpdataLog.md; path = ../UpdataLog.md; sourceTree = "<group>"; };
-		B25DD05E2728E7AF007AE34A /* CustomToolBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToolBarViewController.swift; sourceTree = "<group>"; };
-		B2EB98C3273B742E008B4C88 /* AddAttachmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAttachmentViewController.swift; sourceTree = "<group>"; };
-		B2EB98C5273BBBA9008B4C88 /* RZRichTextView_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RZRichTextView_Example-Bridging-Header.h"; sourceTree = "<group>"; };
-		B2FDD6A427196F9F00A10276 /* 新愚公自由宋-L.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "新愚公自由宋-L.ttf"; sourceTree = "<group>"; };
-		B2FDD6A527196FA000A10276 /* 新愚公自由宋-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "新愚公自由宋-B.ttf"; sourceTree = "<group>"; };
-		BC762B17B92C487B69F20C36 /* Pods-RZRichTextView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView_Example.release.xcconfig"; path = "Target Support Files/Pods-RZRichTextView_Example/Pods-RZRichTextView_Example.release.xcconfig"; sourceTree = "<group>"; };
-		C3FBF6F42254FB0EFF8F709C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		DF3746B69AD98720DE333F40 /* Pods-RZRichTextView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView_Tests.release.xcconfig"; path = "Target Support Files/Pods-RZRichTextView_Tests/Pods-RZRichTextView_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		E83C93AFE44296122830C7E8 /* libPods-RZRichTextView_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RZRichTextView_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F6FB4C65A57555CE31FD0DDA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		66120FD71FB9FAF42C570902 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		7C0FE6C166E24BCECD07B8C6 /* Pods_RZRichTextView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RZRichTextView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D54757EF00239AD9298D3AD /* Pods-RZRichTextView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView_Example.debug.xcconfig"; path = "Target Support Files/Pods-RZRichTextView_Example/Pods-RZRichTextView_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		B26BEF132A837A4800C3F34B /* UpdataLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = UpdataLog.md; path = ../UpdataLog.md; sourceTree = "<group>"; };
+		B289C2172A78B0FB00D6CEC5 /* HowToUseDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToUseDemo.swift; sourceTree = "<group>"; };
+		B289C2192A78B48D00D6CEC5 /* CustomRichTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRichTextViewController.swift; sourceTree = "<group>"; };
+		B289C21D2A7B7D2600D6CEC5 /* LabelLoadHtmlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelLoadHtmlViewController.swift; sourceTree = "<group>"; };
+		B289C2252A81CB7D00D6CEC5 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		B2B1FD2C2A6E505000A6A3A2 /* NormalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalViewController.swift; sourceTree = "<group>"; };
+		B2B1FD3A2A70C2D700A6A3A2 /* HTML2AttrViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTML2AttrViewController.swift; sourceTree = "<group>"; };
+		B8719C6C2F3EC0E118BBC233 /* Pods_RZRichTextView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RZRichTextView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF008A67C39722CA3E80D13D /* Pods-RZRichTextView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView_Tests.release.xcconfig"; path = "Target Support Files/Pods-RZRichTextView_Tests/Pods-RZRichTextView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE13F6A9758F4AE70A9500D0 /* libPods-RZRichTextView_Example.a in Frameworks */,
+				EB450A5FF93E023686C6282F /* Pods_RZRichTextView_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,22 +75,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A1F43EB826FA9CF19DB943F /* libPods-RZRichTextView_Tests.a in Frameworks */,
+				5BCE247EA8F0D795F999E017 /* Pods_RZRichTextView_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		02B460C6B263FC4F9D2825B0 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E83C93AFE44296122830C7E8 /* libPods-RZRichTextView_Example.a */,
-				2A93F4DFF159CFF4BA79705F /* libPods-RZRichTextView_Tests.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -105,8 +89,8 @@
 				607FACD21AFB9204008FA782 /* Example for RZRichTextView */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
-				FF5DCCAF1F8EF65502A8B2F4 /* Pods */,
-				02B460C6B263FC4F9D2825B0 /* Frameworks */,
+				77F15F68C18246601CD8F3DB /* Pods */,
+				BF9CBF5F95D6B347700338BF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -122,16 +106,13 @@
 		607FACD21AFB9204008FA782 /* Example for RZRichTextView */ = {
 			isa = PBXGroup;
 			children = (
-				B2FDD6A527196FA000A10276 /* 新愚公自由宋-B.ttf */,
-				B2FDD6A427196F9F00A10276 /* 新愚公自由宋-L.ttf */,
+				B2B1FD2B2A6E503200A6A3A2 /* Demo */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				B22B6189272821C200E3F68A /* Demo */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
-				B2EB98C5273BBBA9008B4C88 /* RZRichTextView_Example-Bridging-Header.h */,
 			);
 			name = "Example for RZRichTextView";
 			path = RZRichTextView;
@@ -165,45 +146,45 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				67BA4762C3656B6325489C4D /* RZRichTextView.podspec */,
-				F6FB4C65A57555CE31FD0DDA /* README.md */,
-				C3FBF6F42254FB0EFF8F709C /* LICENSE */,
-				B23E867529DA6C62007492E4 /* UpdataLog.md */,
+				B26BEF132A837A4800C3F34B /* UpdataLog.md */,
+				0176D84EA70439B62A55B6E4 /* RZRichTextView.podspec */,
+				0E996CEF147FE8DD1FBC7039 /* README.md */,
+				66120FD71FB9FAF42C570902 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		B21BC2672730D5D50051ADB1 /* View */ = {
+		77F15F68C18246601CD8F3DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B21BC2682730D5ED0051ADB1 /* CustomCell.swift */,
-				B204395827420779001D8614 /* CRichTextFontStyleOptionsView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		B22B6189272821C200E3F68A /* Demo */ = {
-			isa = PBXGroup;
-			children = (
-				B21BC2672730D5D50051ADB1 /* View */,
-				B22B618A272821EB00E3F68A /* TextViewContrller.swift */,
-				B25DD05E2728E7AF007AE34A /* CustomToolBarViewController.swift */,
-				B21BC26A273112800051ADB1 /* OrderdTextViewController.swift */,
-				B2EB98C3273B742E008B4C88 /* AddAttachmentViewController.swift */,
-				B20439562741FFB5001D8614 /* CustomerTextView.swift */,
-			);
-			path = Demo;
-			sourceTree = "<group>";
-		};
-		FF5DCCAF1F8EF65502A8B2F4 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0FF8C896EE13B013052144CC /* Pods-RZRichTextView_Example.debug.xcconfig */,
-				BC762B17B92C487B69F20C36 /* Pods-RZRichTextView_Example.release.xcconfig */,
-				9402DB31A4D8FF59AB92B081 /* Pods-RZRichTextView_Tests.debug.xcconfig */,
-				DF3746B69AD98720DE333F40 /* Pods-RZRichTextView_Tests.release.xcconfig */,
+				8D54757EF00239AD9298D3AD /* Pods-RZRichTextView_Example.debug.xcconfig */,
+				41BF27BAD5B83D7B0517DA18 /* Pods-RZRichTextView_Example.release.xcconfig */,
+				3D630A2A4352A67F32D7C55C /* Pods-RZRichTextView_Tests.debug.xcconfig */,
+				FF008A67C39722CA3E80D13D /* Pods-RZRichTextView_Tests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		B2B1FD2B2A6E503200A6A3A2 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				B2B1FD2C2A6E505000A6A3A2 /* NormalViewController.swift */,
+				B2B1FD3A2A70C2D700A6A3A2 /* HTML2AttrViewController.swift */,
+				B289C2172A78B0FB00D6CEC5 /* HowToUseDemo.swift */,
+				B289C2192A78B48D00D6CEC5 /* CustomRichTextViewController.swift */,
+				B289C21D2A7B7D2600D6CEC5 /* LabelLoadHtmlViewController.swift */,
+				B289C2252A81CB7D00D6CEC5 /* TestViewController.swift */,
+			);
+			name = Demo;
+			sourceTree = "<group>";
+		};
+		BF9CBF5F95D6B347700338BF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B8719C6C2F3EC0E118BBC233 /* Pods_RZRichTextView_Example.framework */,
+				7C0FE6C166E24BCECD07B8C6 /* Pods_RZRichTextView_Tests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,11 +194,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "RZRichTextView_Example" */;
 			buildPhases = (
-				3DBDE2138CB3A3CB0DB0FFA9 /* [CP] Check Pods Manifest.lock */,
+				44C4CA57F9F4845B265DFBBC /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				3EF2E1769DD3182AE7C94AD7 /* [CP] Copy Pods Resources */,
+				88C62834C615A48B43692486 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -232,7 +213,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "RZRichTextView_Tests" */;
 			buildPhases = (
-				EEDCA7F5AC4789BEA10DE523 /* [CP] Check Pods Manifest.lock */,
+				1D242813DE2FDFB42B1A9623 /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
@@ -259,14 +240,11 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 9363D6U2QU;
-						LastSwiftMigration = 1310;
+						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 9363D6U2QU;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
@@ -298,9 +276,7 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				B22B618D2728310700E3F68A /* 新愚公自由宋-L.ttf in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
-				B22B618C2728310400E3F68A /* 新愚公自由宋-B.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,49 +290,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3DBDE2138CB3A3CB0DB0FFA9 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-RZRichTextView_Example-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3EF2E1769DD3182AE7C94AD7 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView_Example/Pods-RZRichTextView_Example-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/RZRichTextView/RZRichTextView.bundle",
-				"${PODS_ROOT}/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RZRichTextView.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TZImagePickerController.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView_Example/Pods-RZRichTextView_Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EEDCA7F5AC4789BEA10DE523 /* [CP] Check Pods Manifest.lock */ = {
+		1D242813DE2FDFB42B1A9623 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -378,6 +312,56 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		44C4CA57F9F4845B265DFBBC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RZRichTextView_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		88C62834C615A48B43692486 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView_Example/Pods-RZRichTextView_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/QuicklySwift/QuicklySwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RZColorfulSwift/RZColorfulSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RZRichTextView/RZRichTextView.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/TZImagePickerController/TZImagePickerController.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QuicklySwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RZColorfulSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RZRichTextView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TZImagePickerController.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RZRichTextView_Example/Pods-RZRichTextView_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -385,15 +369,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B22B618B272821EB00E3F68A /* TextViewContrller.swift in Sources */,
-				B20439572741FFB5001D8614 /* CustomerTextView.swift in Sources */,
+				B289C21E2A7B7D2600D6CEC5 /* LabelLoadHtmlViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
-				B21BC2692730D5ED0051ADB1 /* CustomCell.swift in Sources */,
-				B21BC26B273112800051ADB1 /* OrderdTextViewController.swift in Sources */,
+				B289C2262A81CB7D00D6CEC5 /* TestViewController.swift in Sources */,
+				B289C2182A78B0FB00D6CEC5 /* HowToUseDemo.swift in Sources */,
+				B2B1FD3B2A70C2D700A6A3A2 /* HTML2AttrViewController.swift in Sources */,
+				B2B1FD2D2A6E505000A6A3A2 /* NormalViewController.swift in Sources */,
+				B289C21A2A78B48D00D6CEC5 /* CustomRichTextViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-				B25DD05F2728E7AF007AE34A /* CustomToolBarViewController.swift in Sources */,
-				B2EB98C4273B742E008B4C88 /* AddAttachmentViewController.swift in Sources */,
-				B204395927420779001D8614 /* CRichTextFontStyleOptionsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,54 +519,40 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0FF8C896EE13B013052144CC /* Pods-RZRichTextView_Example.debug.xcconfig */;
+			baseConfigurationReference = 8D54757EF00239AD9298D3AD /* Pods-RZRichTextView_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 9363D6U2QU;
 				INFOPLIST_FILE = RZRichTextView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "rz.com.RZRichTextView-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "RZRichTextView/RZRichTextView_Example-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BC762B17B92C487B69F20C36 /* Pods-RZRichTextView_Example.release.xcconfig */;
+			baseConfigurationReference = 41BF27BAD5B83D7B0517DA18 /* Pods-RZRichTextView_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9363D6U2QU;
 				INFOPLIST_FILE = RZRichTextView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "rz.com.RZRichTextView-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "RZRichTextView/RZRichTextView_Example-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9402DB31A4D8FF59AB92B081 /* Pods-RZRichTextView_Tests.debug.xcconfig */;
+			baseConfigurationReference = 3D630A2A4352A67F32D7C55C /* Pods-RZRichTextView_Tests.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9363D6U2QU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -597,22 +566,16 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RZRichTextView_Example.app/RZRichTextView_Example";
 			};
 			name = Debug;
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DF3746B69AD98720DE333F40 /* Pods-RZRichTextView_Tests.release.xcconfig */;
+			baseConfigurationReference = FF008A67C39722CA3E80D13D /* Pods-RZRichTextView_Tests.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9363D6U2QU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -622,10 +585,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RZRichTextView_Example.app/RZRichTextView_Example";
 			};
 			name = Release;

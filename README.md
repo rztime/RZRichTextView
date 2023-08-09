@@ -33,211 +33,176 @@ RZRichTextView is available under the MIT license. See the LICENSE file for more
 
 RZRichTextView继承UITextView，实现富文本编辑功能。使用Swift完成，基本所有的方法和属性都是公开的，方便继承或自定义修改，如果OC项目使用，可以使用桥接。
 
-如果需要使用，就直接`下载源码`，改改UI自行设置一下吧，因为UI太难统一了，所以自己处理一下吧
-
 另外，请参考[UpdataLog](https://github.com/rztime/RZRichTextView/blob/master/UpdataLog.md),里边有更新信息说明，版本对应相应的tag
+
+示例图片在最下边
+
 
 # 说明
 
-在 Xcode 14、iOS 16版本上，存在一些bug
-|--|
-|1: RZRichTextView delegate 会在super初始化里调用，导致RZRichTextView本身的一些回调不生效，这个在RZRichTextView.init(frame: CGRect, options: RZRichTextViewOptions = .shared) 方法里已修复|
-|2: NSTextList API放出来，可以添加有序无序，但是这个存在bug，在字符串计数、selectedRange无法正确选择有此功能的文本内容|
-|3: obliqueness 斜体属性在iOS 16上失效，设置不起作用|
-
-看苹果官方何时修复了
 
 #### 支持的功能
 
-    . 插入图片、视频
-    . 字体样式（大小、颜色、背景色、粗体斜体、下划线、删除线）等等
-    . 列表，即html里的ul、ol标签
-    . 上下标（偏移）
-    . 描边
-    . 阴影
-    . 拉伸
-    . 段落样式（对齐方式、行距、缩进）
-    . 插入url链接：插入的方式很多，可以参考demo。 url进行了一次转码`text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)`，否则输入中文，点击会崩溃，所以这里设置、取用需注意转码解码
-    . 新增引用，目前和列表存在一点点冲突，需要优化
+    . 插入图片、视频、音频
+    . 字体样式（粗体，斜体，下划线，删除线、大小、颜色）等等，如有其他需求，可以轻松自定义
+    . 支持有序无序列表
+    . 支持段落对齐方式
+    . 支持链接的输入和编辑
+    . 引用块的功能（注释了，和列表存在冲突）
 
 # 功能说明
 
-支持的功能，可以查看demo。  
-UITextView的typingAttributes，会根据光标位置改变，自动改变成上一个文本的相关属性，在输入文字之后，会自动填充到新的文本中  
-文本操作分 插入，新增，删除，替换，就是对UITextView的attributedText的不断修改，然后设置正确的selectedRange  
-  
-  
-#### 1.关于[RZColorful](https://github.com/rztime/RZColorful) [RZColorfulSwift](https://github.com/rztime/RZColorfulSwift) 
-为方便Swift或者OC能够使用RZRichTextView，此次版本将RZColorful分开，将不在依赖，避免RZColorful RZColorfulSwift两个版本的冲突，需要使用时，按项目类型自行添加RZColorful，不了解RZColorful的功能的话，可以去看看[RZColorful](https://github.com/rztime/RZColorful)
-
 #### 依赖库
-    SnapKit：用于设置自动布局
+    SnapKit:用于设置自动布局
+    [QuicklySwift](https://github.com/rztime/QuicklySwift):我自己写的方便swift使用的库
+    [RZColorfulSwift](https://github.com/rztime/RZColorfulSwift):富文本 
+    Kingfisher: 用于重新编辑时，拉取图片
 
-#### 2.插入视频、图片
 
-`NSTextAttachment`
-```Swift
-class func creatWith(image: UIImage, asset: PHAsset? = nil) -> NSTextAttachment {
-    let attach = NSTextAttachment.init()
-    attach.image = image
-    let obj = RZRichAttachmentObj.init()
-    obj.asset = asset
-    obj.image = image
-    obj.type = asset?.mediaType == .video ? .video : .image
-    obj.identifier = asset?.localIdentifier ?? "\(image.description)"
-    attach.rzrt = obj
-    return attach
-}
+#### 使用方法
+
+  [HowToUseDemo](https://github.com/rztime/RZRichTextView/blob/master/Example/RZRichTextView/HowToUseDemo.swift)
+
+```swift
+将Demo里的HowToUseDemo里的代码复制到自己的项目中，根据需求，配置viewModel相关信息，另外完成里边FIXME相关：
+1.preview:  预览功能需要自己实现，
+2.upload:  上传音视频、图片的功能需要自己实现
+3.音视频图片的选择: 需要自己实现音视频、图片的选择
 ```
-    
-在`RZRichTextAttachment.swift`中给NSTextAttachment添加了一个属性**rzrt**: **RZRichAttachmentObj**，包含了**图片、PHAsset, Type信息，maskView**
 
-    maskView：图片上的遮罩View，与图片大小一致，添加在UITextView上，跟随图片在文本中的位置而改变，可以在maskView上添加删除、进度、播放、预览等自定义UI
-    
-#### 3.字体设置
-
-> 1.**斜体字**：中文不支持斜体，所以可以找第三方支持中文的斜体字库来实现，原先通过`obliqueness`来实现的斜体，就是通过旋转字体来实现，但是在NSAttributedString与html互转时，无法互通，所以建议使用中文斜体字库来实现。[RZColorful](https://github.com/rztime/RZColorful)中codingToCompleteHtmlByWeb，就是通过旋转字体来实现斜体字，但是无法从html还原到NSAttributedString
-    
-> 2.**字体大小、颜色、高亮色、上下标（偏移）、描边、阴影、拉伸**：是对NSAttributedString.Key的使用
-
-> 3.**列表（有序、无序）**：html中的ul、ol，这一个功能的实现逻辑比较复杂，在iOS中不支持，属于私有API，这里通过插入html里的《ul》《/ul》《ol》《/ol》生成一个NSTextList,再在**NSParagraphStyle**复制引用NSTextList,为了能连续，整个过程使用单利初始化的NSTextList，这样在编辑过程中，相邻两段，才能组成一个列表。一些逻辑处理也比较复杂，可能不全面，目前处理的方式是，当新的一行未输入内容的，点按回车或者删除，这一行列表输入就将取消。如果有其他交互逻辑，可以反馈给我。
-
-NSTextList在MacOS上支持，在iOS中并未公开，仅做私有属性，所以无法自行设置，但是在设置html ul ol之后，打印NSParagraphStyle可以看到NSTextList的描述信息。
-
-> 4.**插入url**：在插入url时，分了两种情况，1.插入图片或者文字，然后给图片文字添加链接，这样生成html的时候，url会隐藏，但是点击文字图片可以跳转。2.仅插入url，这样生成html时，url是当做文字同时显示并且可点击的
-
-
-# 使用说明
-
-#### 1.RZRichTextViewOptions
-    RZRichTextViewOptions配置文件，包含了常规设置
-    字体，  
-    颜色，  
-    工具条图片，  
-    工具条item分类，  
-    各种事件的回调，  
-    url  
-
-需要实现`openPhotoLibrary`方法，打开相册选择图片或者视频，完成后调用complete（image, PHAsset）,将图片视频插入到textView中
-
-插入的图片，可以在`willInsetImage`中进行统一处理
-
-要绑定上传进度等等自定义UI功能，`didInsetAttachment`、`didRemovedAttachment`可以管理进度和UI，在NSTextAttachment中，rzrh里的maskView上可以添加自定义UI。
-
-在输入过程中，因为涉及到删除，重新写入，撤销，恢复等操作，所以一张图片可能会重复插入，didInsetAttachment会重复调用，所以在插入自定义UI时，最好判断是否已经加载有了，防止重复插入
-
-#### 2.RZRichTextView
-
-初始化的时候，
+初始化的时候，需要设置frame.width，
+这是因为如果重新编辑时，富文本要设置音视频图片宽度的时候，避免拿不到
 ```
- public init(frame: CGRect, options: RZRichTextViewOptions = .shared)
+let textView = RZRichTextView.init(frame: .init(x: 15, y: 0, width: qscreenwidth - 30, height: 300), viewModel: .shared())
+    .qbackgroundColor(.qhex(0xf5f5f5))
+    .qplaceholder("请输入正文")
 ```
-RZRichTextViewOptions,可以使用shared，或者init（）一个新的，这样方便全局使用或者单独使用
 
-#### 3.RZRichTextViewHelper
+#### upload 上传
 
-专门用于处理TextView相关的插入、删除、工具条点击事件等等方法集合
+需要通过设置info?.uploadStatus来绑定上传进度，上传完成后，需要写入src、poster
 
-要调用或者修改,可以直接通过textView.helper.didSelectedToolbarItem()方式来调用方法
-
-也可以继承RZRichTextViewHelper，重写里边的方法来实现自己想要的功能，只需要初始化之后，设置到textView.helper上
-
-# 示例
-
-简单使用
-```
-let options = RZRichTextViewOptions.init()
-/// 对要插入的图片进行处理，比如加水印等等
-options.willInsetImage = { image in
-    return image
-}
-/// 插入了一个图片或视频，这里返回附件
-options.didInsetAttachment = { attahcment in
-    // 这是图片上的蒙层，可以添加一些进度控件、删除控件等等
-    attahcment.rzrt.maskView.backgroundColor = UIColor.init(red: 1, green: 0, blue: 0, alpha: 0.3)
-    // 也可以根据需要绑定上传
-}
-/// 移除了附件
-options.didRemovedAttachment = { attachments in
-    print("移除了\(attachments.description)")
-}
-
-let textView = RZRichTextView.init(frame: .zero, options: options)
-self.view.addSubview(textView)
-textView.backgroundColor = .lightGray
-```
-### 选择图片视频
-image必须存在，才能设置NSAttachment，也就是插入到textView中才有效，不然也看不见
-
-请自行选择合适的图片选择库，来实现图片视频的选择功能
-```
-// 打开相册
-options.openPhotoLibrary = { complete in
-    let vc = TZImagePickerController.init(maxImagesCount: 1, delegate: nil)
-    vc?.allowPickingImage = true
-    vc?.allowPickingVideo = true
-    vc?.allowTakeVideo = false
-    vc?.allowTakePicture = false
-    vc?.allowCrop = false
-    vc?.didFinishPickingPhotosHandle = { (photos, assets, _) in
-        if let image = photos?.first {
-            let asset = assets?.first as? PHAsset
-            complete(image, asset)
+```swift
+case .upload(let info): // 上传 以及点击重新上传时，将会执行
+    // FIXME: 此处自行实现上传功能，通过info获取里边的image、asset、filePath， 上传的进度需要设置到info.uploadStatus
+    UploadTaskTest.uploadFile(id: info, testVM: info) { [weak info] progress in
+        if progress < 1 {
+            info?.uploadStatus.accept(.uploading(progress: progress))
+        } else {
+            info?.uploadStatus.accept(.complete(success: true, info: "上传完成"))
+            switch info?.type ?? .image {
+            case .image: info?.src = "/Users/rztime/Downloads/123.jpeg"
+            case .audio: info?.src = "/Users/rztime/Downloads/123.m4a"
+            case .video:
+                info?.src = "/Users/rztime/Downloads/123.mp4"
+                info?.poster = "/Users/rztime/Downloads/123.jpeg"
+            }
         }
     }
-    vc?.didFinishPickingVideoHandle = { (image, asset) in
-        if let image = image {
-            complete(image, asset)
-        }
+
+```
+
+判断富文本中的音视频图片是否全部上传完成
+
+```swift
+let success = textView.viewModel.uploadAttachmentsComplete.value
+// true 表示全部上传完成，没有音视频图片时，默认true
+```
+
+#### 插入音视频、图片
+
+选择音视频图片之后，生成`RZAttachmentInfo`，插入textView
+```swift
+/// let info = RZAttachmentInfo.init(type: .audio, image: nil, asset: nil, filePath: "file:///Users/rztime/Downloads/123.m4a", maxWidth: viewModel.attachmentMaxWidth, audioHeight: viewModel.audioAttachmentHeight)
+/// 视频需包含首帧图
+/// let info = RZAttachmentInfo.init(type: .video, image: image, asset: asset, filePath: nil, maxWidth: viewModel.attachmentMaxWidth, audioHeight: viewModel.audioAttachmentHeight)
+let info = RZAttachmentInfo.init(type: .image, image: image, asset: asset, filePath: nil, maxWidth: viewModel.attachmentMaxWidth, audioHeight: viewModel.audioAttachmentHeight)
+/// 插入资源
+viewModel.textView?.insetAttachment(info)
+```
+    
+在`RZAttachmentInfo.swift`中给NSTextAttachment添加了一个属性**rzattachmentInfo**:
+**RZAttachmentInfo**，包含了**音视频图片相关信息，以及上传完成之后的信息，以及用于显示相关数据的遮罩view**
+
+#### 编辑器核心方法
+
+```
+/// 字体样式
+1.reloadText() /// 修改textView.typingAttributes 之后，只需要调用此方法，即可刷新所在区域样式
+/// 段落样式
+2.reloadParagraphStyle() /// 修改了textView.typingAttributes里的paragraphstyle之后，只需要调用此方法，即可刷新所在区域段落样式
+/// 列表（有序无序样式）
+3.reloadTextByUpdateTableStyle() /// 修改了textView.typingAttributes里的paragraphstyle的列表样式之后，只需要调用此方法，即可刷新所在区域段落样式
+
+```
+
+#### 自定义
+
+* 在`RZRichTextViewModel`里,各种数组可以重新设置，用于修改工具栏样式.
+* 在`RZInputAccessoryType`里，预留了custom1-20, 用于自定义功能
+* 自定义显示音视频图片在textView中显示的视图，参考`RZAttachmentInfoLayerView`
+
+示例
+```
+    let viewModel = RZRichTextViewModel.shared()
+    viewModel.inputItems.insert(.init(type: .custom1, image: UIColor.red.qtoImage(.init(width: 23, height: 23)), highlight:  UIColor.blue.qtoImage(.init(width: 23, height: 23))), at: 0)
+    
+    lazy var textView = RZRichTextView.init(frame: .init(x: 15, y: 0, width: qscreenwidth - 30, height: 300), viewModel: viewModel)
+    .qbackgroundColor(.qhex(0xf5f5f5))
+    .qplaceholder("请输入正文")
+
+// 最后在viewModel.didClickedAccessoryItem里实现custom1的功能
+```
+
+# NSAttributedString 到 HTML
+
+[RZHtml.swift]()
+
+```
+let html = textView.code2html()
+```
+
+```
+let html = attributedText.code2html()
+```
+
+# HTML 到 NSAttributedString
+
+[RZHtml.swift]()
+
+1.RZRichTextView
+```
+textView.html2Attributedstring(html: html)
+```
+
+2.UILabel
+
+```
+Label.html2AttributedString(html: html) { [weak self] in
+    // label里的富文本图片改变，此时内容高度会有变化，可以按需更新高度
+    if let self = self {
+        self.reload?(self.indexPath)
     }
-    RZRichTextViewUtils.rz_currentViewController()?.present(vc!, animated: true, completion: nil)
+} preview: { tapActionId in
+    if tapActionId.hasPrefix("<NSTextAttachment") {
+        print("预览附件:\(tapActionId)")// 通过富文本，获取所有的附件，然后预览
+    } else {
+        print("处理链接:\(tapActionId)")
+    }
 }
 ```
 
-
-自定义工具条cell
+3.String
 ```
-/// 自定义工具条上的cell
-options.willRegisterAccessoryViewCell = { collectionView in
-    collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "CustomCell")
-}
-/// 实现工具条cell的样式UI
-options.accessoryViewCellFor = { (collectionView, item, indexPath) -> UICollectionViewCell? in
-    switch item.type {
-    case CustomToolBar.custom1.rawValue:
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? CustomCell {
-            cell.imageView.image = item.displayImage()
-            cell.textLabel.text = "\(CustomToolBar.custom1)"
-            return cell
-        }
-    case CustomToolBar.custom2.rawValue:
-        print("自行处理时，return cell 否则return nil")
-        return nil
-    case CustomToolBar.custom3.rawValue:
-        print("自行处理时，return cell 否则return nil")
-        return nil
-    default: break
-    }
-    return nil
-}
+let attr = html?.html2Attributedstring(options: .defaultForLabel(200, 60), loadAttachments: { infos in
+   // 参考textView或者UILabel里的实现
+})
 ```
 
-自定义实现工具条点击的事件
+## 关于生成的HTML
+
+生成的内容，以行内样式生成，未使用系统原生方法，
+即类似：
 ```
-/// 自定义实现点击事件
-options.didSelectedToolbarItem = { (item, index) -> Bool in
-    switch item.type {
-    case CustomToolBar.custom1.rawValue:
-        print("点击了cell时，若需自己实现，return false: \(CustomToolBar.custom1)")
-        return false
-    case CustomToolBar.custom2.rawValue:
-        print("点击了cell时，若需自己实现，return false: \(CustomToolBar.custom2)")
-        return false
-    case CustomToolBar.custom3.rawValue:
-        print("点击了cell时，若需自己实现，return false: \(CustomToolBar.custom3)")
-        return false
-    default: break
-    }
-    return true
-}
+<p style="font-size:16px;"><u>文本</u></p>
 ```

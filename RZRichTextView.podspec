@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RZRichTextView'
-  s.version          = '1.0.1'
+  s.version          = '2.0.0'
   s.summary          = 'RZRichTextView. 原生UITextView，支持富文本输入（图片，视频，列表序号，文本颜色大小各种样式等等）'
 
 # This description is used to generate tags and improve search results.
@@ -29,22 +29,21 @@ TODO: Add long description of the pod here.
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '10.0'
+
+  s.source_files = 'RZRichTextView/Classes/**/*'
+  
   s.swift_version = ["4.2", "5.0"]
-  s.subspec 'core' do |s|
-      s.source_files = 'RZRichTextView/Classes/**/*'
-      s.dependency 'SnapKit'
-      s.resource_bundles = {
-        'RZRichTextView' => ['RZRichTextView/Assets/*']
-      }
-  end
-#  s.subspec 'image' do |s|
-##      s.dependency 'TZImagePickerController'
-#      s.xcconfig = {
-#        "SWIFT_ACTIVE_COMPILATION_CONDITIONS" => 'TZImage'
-#      }
-#  end
+  s.dependency 'SnapKit'
+  s.dependency 'QuicklySwift'
+  s.dependency 'RZColorfulSwift'
+  s.dependency 'Kingfisher'
+  # s.resource_bundles = {
+  #   'RZRichTextView' => ['RZRichTextView/Assets/*.png']
+  # }
+  s.resource_bundles = {
+    'RZRichTextView' => ['RZRichTextView/Assets/*']
+  }
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
-#  s.default_subspecs = 'core', 'image'
 end

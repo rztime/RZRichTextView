@@ -1,17 +1,24 @@
-#use_frameworks!
+use_frameworks!
 
 platform :ios, '10.0'
 
 target 'RZRichTextView_Example' do
   pod 'RZRichTextView', :path => '../'
-  pod 'RZColorfulSwift', :git => 'https://github.com/rztime/RZColorfulSwift.git'
-  pod 'RxSwift'
-  pod 'RxCocoa'
   pod 'TZImagePickerController'
-#  pod 'QuicklySwift', :git => 'https://github.com/rztime/QuicklySwift.git'
+  pod 'Kingfisher'
+  
   target 'RZRichTextView_Tests' do
     inherit! :search_paths
 
-    pod 'FBSnapshotTestCase' , '~> 2.1.4'
+#    pod 'FBSnapshotTestCase' , '~> 2.1.4'
   end
+  
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
+      end
+    end
+  end
+ 
 end

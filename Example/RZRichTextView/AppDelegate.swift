@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  RZRichTextView
 //
-//  Created by rztime on 10/15/2021.
-//  Copyright (c) 2021 rztime. All rights reserved.
+//  Created by rztime on 07/20/2023.
+//  Copyright (c) 2023 rztime. All rights reserved.
 //
 
 import UIKit
@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
     }
