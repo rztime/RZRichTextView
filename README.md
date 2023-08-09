@@ -209,34 +209,34 @@ let attr = html?.html2Attributedstring(options: .defaultForLabel(200, 60), loadA
 
 ## 示例图片
 
-1.
+1.选择音视频图片
 
 ![选择音视频图片](./Image/1.PNG)
 
-2_1.
+2_1.音频
 
-![音频](./Image/2_1.PNG)
+![音频](./Image/2_1.png)
 
-2.
+2.上传中
 
 ![上传中](./Image/2.PNG)
 
-3.
+3.字体样式
 
 ![字体样式](./Image/3.PNG)
 
-4.
+4.列表
 
 ![列表](./Image/4.PNG)
 
-5.
+5.段落样式
 
 ![段落样式](./Image/5.PNG)
 
-6.
+6.链接样式
 
 ![链接样式](./Image/6.PNG)
 
-7.
+7.生成的html
 
-![生成的html](./Image/7.PNG)
+![生成的html](./Image/7.png)
