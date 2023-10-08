@@ -120,7 +120,7 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        audioPlayBtn.imageView?.contentMode = .scaleAspectFit
         let stackView = [imageContent, audioContent].qjoined(aixs: .vertical, spacing: 0, align: .fill, distribution: .equalSpacing)
         self.qbody([
             stackView.qmakeConstraints({ make in
