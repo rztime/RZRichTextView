@@ -55,10 +55,10 @@ open class RZRichTableStyleView: UIView {
         var img: UIImage?
         switch type {
         case .t_ol:
-            mutablePara.textLists = btn.isSelected ? rz_ol : []
+            mutablePara.setTextListType(btn.isSelected ? .ol : .none)
             img = toolImage(type: .t_ol)
         case .t_ul:
-            mutablePara.textLists = btn.isSelected ? rz_ul : []
+            mutablePara.setTextListType(btn.isSelected ? .ul : .none)
             img = toolImage(type: .t_ul)
         default: break
         }

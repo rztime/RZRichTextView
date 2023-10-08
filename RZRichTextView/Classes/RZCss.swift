@@ -9,30 +9,66 @@ import UIKit
 import RZColorfulSwift
 
 public extension NSParagraphStyle {
+    fileprivate struct RZTextListTypeName {
+        static var name = "RZTextListTypeName"
+    }
+    enum RZTextListType: Int {
+        case none //
+        case ol     // 有序
+        case ul     // 无序
+    }
+    /// 有序无序状态
+    var rzTextListType: RZTextListType {
+        set {
+            objc_setAssociatedObject(self, &RZTextListTypeName.name, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+        get {
+            if let value = objc_getAssociatedObject(self, &RZTextListTypeName.name) as? RZTextListType {
+                return value
+            }
+            return .none
+        }
+    }
     /// 是否是有序段落
     var isol: Bool {
+        if self.rzTextListType == .ol {
+            return true
+        }
         var temp = false
         self.textLists.forEach { item in
             if item.markerFormat.rawValue.contains(NSTextList.MarkerFormat.decimal.rawValue) {
                temp = true
             }
         }
+        if self.firstLineHeadIndent > 30.08 && self.firstLineHeadIndent < 30.12 &&
+            self.headIndent > 30.08 && self.headIndent < 30.12{
+            temp = true
+        }
         return temp
     }
     /// 是否是无序
     var isul: Bool {
+        if self.rzTextListType == .ul {
+            return true
+        }
         var temp = false
         self.textLists.forEach { item in
             if item.markerFormat.rawValue.contains(NSTextList.MarkerFormat.disc.rawValue) {
                temp = true
             }
         }
+        if self.firstLineHeadIndent > 30.28 && self.firstLineHeadIndent < 30.32 &&
+            self.headIndent > 30.28 && self.headIndent < 30.32{
+            temp = true
+        }
         return temp
     }
     /// 将paragraph转换为css对应的样式
     func rz2cssStyle(font: UIFont?) -> String {
         var styles: [String] = []
-        styles.append("margin:\(self.paragraphSpacingBefore)px 0.0px \(self.paragraphSpacing)px \(self.headIndent)px;")
+        if !self.isol && !self.isul {
+            styles.append("margin:\(self.paragraphSpacingBefore)px 0.0px \(self.paragraphSpacing)px \(self.headIndent)px;")
+        } 
         switch self.alignment {
         case .left, .justified, .natural: break
         case .center: styles.append("text-align:center;")
@@ -45,6 +81,25 @@ public extension NSParagraphStyle {
             styles.append("font-size:\(font.pointSize)px;")
         }
         return styles.joined()
+    }
+}
+public extension NSMutableParagraphStyle {
+    /// 设置列表样式
+    func setTextListType(_ type: NSParagraphStyle.RZTextListType) {
+        self.rzTextListType = type
+        self.textLists = []
+        // 30.1 30.3浮点需要，主要用于区分
+        switch type {
+        case .none:
+            self.firstLineHeadIndent = 0
+            self.headIndent = 0
+        case .ol:
+            self.firstLineHeadIndent = 30.1
+            self.headIndent = 30.1
+        case .ul:
+            self.firstLineHeadIndent = 30.3
+            self.headIndent = 30.3
+        }
     }
 }
 

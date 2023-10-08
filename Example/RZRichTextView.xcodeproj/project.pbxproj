@@ -240,10 +240,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = LBSWTUGGNB;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = LBSWTUGGNB;
 						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -522,11 +524,12 @@
 			baseConfigurationReference = 8D54757EF00239AD9298D3AD /* Pods-RZRichTextView_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = LBSWTUGGNB;
 				INFOPLIST_FILE = RZRichTextView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rztime.RZRichTextViewExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -538,11 +541,12 @@
 			baseConfigurationReference = 41BF27BAD5B83D7B0517DA18 /* Pods-RZRichTextView_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = LBSWTUGGNB;
 				INFOPLIST_FILE = RZRichTextView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rztime.RZRichTextViewExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -553,6 +557,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3D630A2A4352A67F32D7C55C /* Pods-RZRichTextView_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = LBSWTUGGNB;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -576,6 +581,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FF008A67C39722CA3E80D13D /* Pods-RZRichTextView_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = LBSWTUGGNB;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",

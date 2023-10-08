@@ -14,14 +14,13 @@ public struct RZRichTempAttributedString {
     let isul: Bool // 无序
     let isol: Bool // 有序
 }
-/// 有序 .decimal
-public let rz_ol: [NSTextList] = [.init(markerFormat: .decimal, options: 0)]
-/// 无序 .disc
-public let rz_ul: [NSTextList] = [.init(markerFormat: .disc, options: 0)]
 
 public extension RZRichTextView {
     /// 转换时，需要确认附件是否真的上传完成，否则src、poster可能为空
     func code2html() -> String {
+        if self.textStorage.length == 0 {
+            return ""
+        }
         return self.textStorage.code2Html(self.viewModel.spaceRule)
     }
     /// 重新编辑时，将html转换为NSAttributedString
@@ -127,10 +126,16 @@ public extension NSAttributedString {
             let lastpol = idx > 0 ? (tempAllparagraphContents[qsafe: idx - 1]?.isol ?? false) : false
             let currentpol = p.isol
             let nextpol = tempAllparagraphContents[qsafe: idx + 1]?.isol ?? false
-            
+            let para = p.content.rt.paragraphstyle
+            var style = "<li>"
+            if para?.alignment == .center {
+                style = #"<li style="text-align:center;">"#
+            } else if para?.alignment == .right {
+                style = #"<li style="text-align:right;">"#
+            }
             if currentpul && !lastpul { realParagraphs.append("<ul>") }
             if currentpol && !lastpol { realParagraphs.append("<ol>") }
-            if currentpul || currentpol { realParagraphs.append("<li>") }
+            if currentpul || currentpol { realParagraphs.append(style) }
             realParagraphs.append(p.content)
             if currentpul || currentpol { realParagraphs.append("</li>") }
             if currentpol && !nextpol { realParagraphs.append("</ol>") }
@@ -313,8 +318,11 @@ public extension String {
                     mp.paragraphSpacing = p.paragraphSpacing
                     mp.headIndent = p.headIndent
                     mp.firstLineHeadIndent = p.firstLineHeadIndent
-                    if p.isol { mp.textLists = rz_ol }
-                    else if p.isul { mp.textLists = rz_ul }
+                    if p.isol {
+                        mp.setTextListType(.ol)
+                    } else if p.isul {
+                        mp.setTextListType(.ul)
+                    }
                     switch p.alignment {
                     case .center, .right: mp.alignment = p.alignment
                     case .left, .natural, .justified: mp.alignment = .left

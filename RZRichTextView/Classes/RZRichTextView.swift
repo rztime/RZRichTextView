@@ -41,6 +41,7 @@ open class RZRichTextView: UITextView {
     /// 是否可以编辑
     open override var isEditable: Bool {
         didSet {
+            if isInit { return }
             self.viewModel.canEdit = isEditable
             if enable && isEditable {
                 self.inputAccessoryView = accessoryView
@@ -63,11 +64,12 @@ open class RZRichTextView: UITextView {
     }
     /// 记录最新一次attachments，主要用于对比是否有删除的附件，然后删除额外添加的界面
     open var lastAttachments: [RZAttachmentInfo] = []
-    
+    var isInit = true
     /// viewModel可以自行设置使用一个单例，用于图片、视频、音频等附件输入时，统一处理，一定要设置frame的width
     public init(frame: CGRect, viewModel: RZRichTextViewModel) {
         self.viewModel = viewModel
         super.init(frame: frame, textContainer: nil)
+        isInit = false
         self.viewModel.textView = self
         self.isEditable = self.viewModel.canEdit
         if self.isEditable {
@@ -98,6 +100,12 @@ open class RZRichTextView: UITextView {
                 guard let self = self else { return true }
                 if self.viewModel.removeLinkWhenInputText {
                     textView.typingAttributes[.link] = nil
+                }
+                if range.length == 0 && range.location == 0 && replaceText == "", let p = textView.typingAttributes[.paragraphStyle] as? NSParagraphStyle, p.isol || p.isul {
+                    let newp = NSMutableParagraphStyle.init()
+                    newp.alignment = p.alignment
+                    textView.typingAttributes[.paragraphStyle] = newp
+                    self.reloadTextByUpdateTableStyle()
                 }
                 return true
             }
@@ -347,7 +355,19 @@ public extension RZRichTextView {
         self.textStorage.enumerateAttribute(.attachment, in: .init(location: 0, length: self.textStorage.length)) { [weak self] value, range, _ in
             if let self = self, let value = value as? NSTextAttachment {
                 if let info = value.rzattachmentInfo {
-                    info.infoLayer.frame = self.rz.rectFor(range: range) ?? .zero
+                    self.layoutManager.ensureLayout(forCharacterRange: range)
+                    var frame = self.rz.rectFor(range: range) ?? .zero
+                    /// 当出现有序无序列表时，或者重新编辑时，附件的大小可能超出编辑器，所以这里重新设置一下附近的大小
+                    if frame.maxX > self.frame.size.width {
+                        let width = frame.size.width - (frame.maxX - (self.contentSize.width - self.contentInset.left - self.contentInset.right))
+                        frame.size = frame.size.qscaleto(width: width)
+                        value.bounds = .init(origin: .zero, size: frame.size)
+                        let x = self.textStorage.attributes(at: range.location, effectiveRange: nil)
+                        self.textStorage.replaceCharacters(in: range, with: .init(attachment: value))
+                        self.textStorage.addAttributes(x, range: range)
+                        self.layoutManager.ensureLayout(forCharacterRange: range)
+                    }
+                    info.infoLayer.frame = frame
                     if info.infoLayer.superview == nil {
                         self.addSubview(info.infoLayer)
                         changed = true
@@ -386,6 +406,9 @@ public extension RZRichTextView {
         if changed {
             self.viewModel.attachmentInfoChanged?(newattachments)
         }
+        DispatchQueue.main.async {
+            self.fixTextlistNum()
+        }
     }
     /// 内容改变之后，需要修复附件的位置、以及判断是否超字数
     func contentTextChanged() {
@@ -393,6 +416,12 @@ public extension RZRichTextView {
             self.fixAttachmentInfo()
             self.showInputCount()
             self.contentChanged?(self)
+            ///  重新校验显示placeholder
+            DispatchQueue.main.async {
+                /// 有序无序列表会占用
+                let show = self.textStorage.length == 0 && self.subviews.filter({$0.isKind(of: RZTextListView.self)}).count == 0
+                self.qtextViewHelper.placeHolderLabel?.isHidden = !show
+            }
         }
         /// 在有中文输入拼音高亮时，不做处理
         let language = UIApplication.shared.textInputMode?.primaryLanguage
@@ -437,6 +466,61 @@ public extension RZRichTextView {
         self.fixAttachmentInfo()
     }
 }
+public extension RZRichTextView {
+    /// 修复有序无序列表的序列号
+    func fixTextlistNum() {
+        self.subviews.filter({$0.isKind(of: RZTextListView.self)}).forEach({$0.removeFromSuperview()})
+        let all = self.textStorage.rt.allParapraghRange()
+        var temp : [(String, NSRange, NSParagraphStyle, [NSAttributedString.Key: Any])] = []
+        var index = 0
+        var lastType = NSParagraphStyle.RZTextListType.none
+        all.forEach { range in
+            var dict: [NSAttributedString.Key: Any] = [:]
+            if range == self.selectedRange {
+                dict = self.typingAttributes
+            } else {
+                dict = self.textStorage.attributes(at: range.location, effectiveRange: nil)
+            }
+            if let p = dict[.paragraphStyle] as? NSParagraphStyle {
+                if p.isol {
+                    if lastType == .ol {
+                        index += 1
+                    } else {
+                        index = 1
+                    }
+                    lastType = .ol
+                    temp.append(("\(index).", range, p, dict))
+                } else if p.isul {
+                    if lastType == .ul {
+                        index += 1
+                    } else {
+                        index = 1
+                    }
+                    lastType = .ul
+                    temp.append(("·", range, p, dict))
+                } else {
+                    lastType = .none
+                    index = 0
+                }
+            } else {
+                lastType = .none
+                index = 0
+            }
+        }
+        temp.forEach { (index, range, p, dict) in
+            if index != "" {
+                self.layoutManager.ensureGlyphs(forCharacterRange: range)
+                if let rect = self.rz.rectFor(range: .init(location: range.location, length: 0)) {
+                    let view = RZTextListView.init().qframe(.init(x: rect.origin.x - 35, y: rect.origin.y, width: 30, height: rect.size.height))
+                        .qfont((dict[.font] as? UIFont) ?? .systemFont(ofSize: 16))
+                        .qtextColor((dict[.foregroundColor] as? UIColor) ?? .black)
+                        .qtext("\(index)")
+                    self.addSubview(view)
+                }
+            }
+        }
+    }
+}
 /// 历史记录
 open class RZRichHistory {
     let attr: NSAttributedString
@@ -449,5 +533,16 @@ open class RZRichHistory {
         let newtyping: NSMutableDictionary = .init()
         newtyping.addEntries(from: typingAttributes)
         self.typingAttributes = newtyping as! [NSAttributedString.Key : Any]
+    }
+}
+public class RZTextListView: UILabel {
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.textAlignment = .right
+        self.adjustsFontSizeToFitWidth = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

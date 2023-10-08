@@ -44,7 +44,7 @@ public extension RZRichTextViewModel {
                     viewModel?.textView?.removeAttachment(info)
                 case .preview(let info):// 预览
                     // FIXME: 此处自行实现预览音视频图片的功能, 重新编辑时，取src等数据
-                    if let allattachments = viewModel?.textView?.attachments {
+                    if let allattachments = viewModel?.textView?.attachments.filter({$0.asset != nil}) {
                         if let index = allattachments.firstIndex(where: {$0 == info}) {
                             // 预览播放
                             let vc = TZPhotoPreviewController.init()
