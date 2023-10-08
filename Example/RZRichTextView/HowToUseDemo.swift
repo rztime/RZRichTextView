@@ -30,6 +30,10 @@ public extension RZRichTextViewModel {
             // FIXME: 这里按需求，可以添加Toast提示
             print("----超出输入字数上限")
         }
+        viewModel.shouldInteractWithURL = { url in
+            // 如果是自定义跳转，则 return false
+            return true
+        }
         viewModel.uploadAttachmentsComplete.subscribe({ value in
             print("上传是否完成：\(value)")
         }, disposebag: viewModel)

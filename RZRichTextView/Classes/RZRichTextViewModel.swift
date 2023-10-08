@@ -77,6 +77,9 @@ open class RZRichTextViewModel: NSObject {
     open var historyCount: Int = 20
     /// 需要自定义工具条内容时，需要实现并返回true，返回false时走内部方法
     open var didClickedAccessoryItem: ((_ item: RZInputAccessoryItem) -> Bool)?
+    /// 点击url，是否需要跳转
+    open var shouldInteractWithURL: ((_ url: String?) -> Bool)?
+    
     /// 如果有必要，可以刷新附件显示信息
     /// 有新的附件插入时，需在附件的infoLayer上，绑定操作（上传、删除、预览等等）
     open var reloadAttachmentInfoIfNeed: ((_ attachmentInfo: RZAttachmentInfoLayerProtocol) -> Void)?

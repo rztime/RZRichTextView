@@ -93,8 +93,14 @@ open class RZRichTextView: UITextView {
                 }
             }
             .shouldInteractWithURL { [weak self] textView, url, range, interaction in
-                self?.changeLink(range: range, link: url)
-                return false
+                if textView.isEditable {
+                    self?.changeLink(range: range, link: url)
+                    return false
+                }
+                if let s = self?.viewModel.shouldInteractWithURL {
+                    return s(url.absoluteString)
+                }
+                return true
             }
             .qshouldChangeText { [weak self] textView, range, replaceText in
                 guard let self = self else { return true }
