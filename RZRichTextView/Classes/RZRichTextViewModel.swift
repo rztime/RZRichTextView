@@ -89,6 +89,8 @@ open class RZRichTextViewModel: NSObject {
     open lazy var attachmentMaxWidth: CGFloat = (self.textView?.frame.size.width ?? 300) - 10
     /// 音频附件在textview里的高度
     open lazy var audioAttachmentHeight: CGFloat = 60
+    /// 是否显示音频名字（根据path获取到的文件名）
+    open var showAudioName: Bool = true
     /// 最多输入字数（0无限制）
     open lazy var maxInputLenght: UInt = 0
     /// 超出输入上限时，会调用此block

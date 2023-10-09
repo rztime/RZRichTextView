@@ -17,6 +17,8 @@ public extension RZRichTextViewModel {
     class func shared(edit: Bool = true) -> RZRichTextViewModel {
         let viewModel = RZRichTextViewModel.init()
         viewModel.canEdit = edit
+        /// 显示音频文件名字
+//        viewModel.showAudioName = false
         /// 音频高度
         viewModel.audioAttachmentHeight = 60
         /// 最大输入10w字

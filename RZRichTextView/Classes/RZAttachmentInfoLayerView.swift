@@ -27,6 +27,8 @@ public protocol RZAttachmentInfoLayerProtocol: NSObjectProtocol {
     var imageView: UIImageView {get set}
     /// 用于判断释放
     var dispose: NSObject {get set}
+    /// 显示音频文件名 默认true
+    var showAudioName: Bool {get set}
 }
 open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     public var operation: QuicklySwift.QPublish<RZAttachmentOperation> = .init(value: .none)
@@ -81,7 +83,11 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
             contentView.isHidden = !canEdit
         }
     }
-    
+    public var showAudioName: Bool = true {
+        didSet {
+            self.nameLabel.isHidden = !showAudioName
+        }
+    }
     /// 图片视频相关view
     // 显示的图片
     public var imageView: UIImageView = .init().qcontentMode(.scaleAspectFill).qcornerRadius(3, true)

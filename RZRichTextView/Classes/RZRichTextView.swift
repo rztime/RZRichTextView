@@ -380,6 +380,7 @@ public extension RZRichTextView {
                     }
                     if let v = info.infoLayer.subviews.first as? RZAttachmentInfoLayerProtocol {
                         v.canEdit = self.viewModel.canEdit
+                        v.showAudioName = self.viewModel.showAudioName
                     } else {
                         let infoView = RZAttachmentOption.share.viewclass.init()
                         info.infoLayer.qbody([
@@ -389,6 +390,7 @@ public extension RZRichTextView {
                         if let infoView = infoView as? RZAttachmentInfoLayerProtocol {
                             infoView.info = info
                             infoView.canEdit = self.viewModel.canEdit
+                            infoView.showAudioName = self.viewModel.showAudioName
                             self.viewModel.reloadAttachmentInfoIfNeed?(infoView)
                         }
                     }
