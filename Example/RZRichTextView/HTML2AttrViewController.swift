@@ -12,7 +12,7 @@ import RZRichTextView
 
 class HTML2AttrViewController: UIViewController {
 
-    lazy var textView = RZRichTextView.init(frame: .init(x: 15, y: 100, width: qscreenwidth - 30, height: 300), viewModel: .shared(edit: true))
+    lazy var textView = RZRichTextView.init(frame: .init(x: 15, y: 100, width: qscreenwidth - 30, height: 300), viewModel: .shared(edit: false))
         .qbackgroundColor(.qhex(0xf5f5f5))
         .qplaceholder("请输入内容")
 

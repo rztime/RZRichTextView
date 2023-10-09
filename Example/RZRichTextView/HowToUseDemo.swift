@@ -28,9 +28,11 @@ public extension RZRichTextViewModel {
         /// 空格回车规则
         viewModel.spaceRule = .removeEnd
         /// 当超出长度限制时，会回调此block
-        viewModel.morethanInputLength = {
+        viewModel.morethanInputLength = { [weak viewModel] in
             // FIXME: 这里按需求，可以添加Toast提示
-            print("----超出输入字数上限")
+            if viewModel?.canEdit ?? true {
+                print("----超出输入字数上限")
+            }
         }
         viewModel.shouldInteractWithURL = { url in
             // 如果是自定义跳转，则 return false

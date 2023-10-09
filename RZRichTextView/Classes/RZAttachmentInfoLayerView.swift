@@ -159,6 +159,7 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
                 make.size.equalTo(40)
             })
         ])
+        let line = UIView().qbackgroundColor(.qhex(0xbbbbbb, a: 1))
         audioContent.qbody([
             audioPlayBtn.qmakeConstraints({ make in
                 make.size.equalTo(30)
@@ -169,7 +170,14 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
                 make.right.equalToSuperview().inset(20)
                 make.centerY.equalToSuperview()
             }),
+            line.qmakeConstraints({ make in
+                make.left.right.centerY.equalTo(self.nameLabel)
+                make.height.equalTo(1)
+            }),
         ])
+        nameLabel.qisHiddenChanged { [weak line] view in
+            line?.isHidden = !view.isHidden
+        }
         
         self.qtap { [weak self] view in
             if let info = self?.info {
