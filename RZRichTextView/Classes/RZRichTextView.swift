@@ -116,11 +116,26 @@ open class RZRichTextView: UITextView {
                 return true
             }
             .qshouldBeginEditing({ [weak self] textView in
-                self?.addHistoryData()
+                if self?.isFirstLoad ?? true {
+                    self?.addHistoryData()
+                    self?.isFirstLoad = false
+                }
                 return true
             })
             .qtextChanged { [weak self] textView in
                 self?.contentTextChanged()
+            }
+            .qcontentSizeChanged { view in
+                ///  修正：当textView高度随键盘开启隐藏而动态高度时，会出现contentsize错误变化而导致无法滚动（此时输入内容时，又会自动修复）。这里在contentsize变化之后，判断一下最后一个字符的位置，在重新计算contentsize
+                let minHeight = view.frame.size.height - view.contentInset.top - view.contentInset.bottom
+                if view.contentSize.height < minHeight, let rect = view.rz.rectFor(range: NSRange(location: view.textStorage.length, length: 0)) {
+                    let realHeight = ceil(rect.maxY + view.contentInset.bottom)
+                    let height = max(minHeight, realHeight)
+                    if height > view.contentSize.height {
+                        let width = view.frame.width - view.contentInset.left - view.contentInset.right
+                        view.contentSize = .init(width: width, height: height)
+                    }
+                }
             }
         /// 显示字数
         self.qshowToWindow { [weak self] view, showed in

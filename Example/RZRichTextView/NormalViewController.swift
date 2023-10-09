@@ -23,10 +23,16 @@ class NormalViewController: UIViewController {
             textView.qmakeConstraints({ make in
                 make.left.right.equalToSuperview().inset(15)
                 make.top.equalToSuperview().inset(100)
-                make.height.equalTo(300)
+                make.bottom.equalToSuperview().inset(qbottomSafeHeight)
             }),
-
         ])
+        NotificationCenter.default.qaddKeyboardObserver(target: self, object: nil) { [weak self] keyboardInfo in
+            let y = keyboardInfo.frameEnd.height
+            let ishidden = keyboardInfo.isHidden
+            self?.textView.snp.updateConstraints({ make in
+                make.bottom.equalToSuperview().inset(ishidden ? qbottomSafeHeight : y)
+            })
+        }
         let btn = UIButton.init(type: .custom)
             .qtitle("转html")
             .qtitleColor(.red)

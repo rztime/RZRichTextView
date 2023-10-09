@@ -12,10 +12,10 @@ import RZRichTextView
 
 class HTML2AttrViewController: UIViewController {
 
-    let textView = RZRichTextView.init(frame: .init(x: 15, y: 0, width: qscreenwidth - 30, height: 300), viewModel: .shared(edit: true))
+    lazy var textView = RZRichTextView.init(frame: .init(x: 15, y: 100, width: qscreenwidth - 30, height: 300), viewModel: .shared(edit: true))
         .qbackgroundColor(.qhex(0xf5f5f5))
         .qplaceholder("请输入内容")
-    let label = UILabel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -23,13 +23,17 @@ class HTML2AttrViewController: UIViewController {
             textView.qmakeConstraints({ make in
                 make.left.right.equalToSuperview().inset(15)
                 make.top.equalToSuperview().inset(100)
-                make.height.equalTo(300)
+                make.bottom.equalToSuperview().inset(qbottomSafeHeight)
             }),
-            label.qmakeConstraints({ make in
-                make.left.right.equalToSuperview()
-                make.bottom.equalToSuperview().inset(100)
-            })
         ])
+        
+        NotificationCenter.qaddKeyboardObserver(target: self, object: nil) { [weak self] keyboardInfo in
+            let y = keyboardInfo.frameEnd.height
+            let ishidden = keyboardInfo.isHidden
+            self?.textView.snp.updateConstraints({ make in 
+                make.bottom.equalToSuperview().inset(ishidden ? qbottomSafeHeight : y)
+            })
+        }
         let btn = UIButton.init(type: .custom)
             .qtitle("转html")
             .qtitleColor(.red)
