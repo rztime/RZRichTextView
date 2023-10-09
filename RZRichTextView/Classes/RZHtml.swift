@@ -25,15 +25,20 @@ public extension RZRichTextView {
     }
     /// 重新编辑时，将html转换为NSAttributedString
     func html2Attributedstring(html: String?) {
+        /// 判断是否和上次数据一样，（在tableVIew中，reload之后和上次一样，contentTextChanged回调会导致额外的错误）
+        var isEqualtoLast = false
         defer {
-            self.typingAttributes = self.viewModel.defaultTypingAttributes
-            if let d = self.delegate {
-                d.textViewDidChange?(self)
-            } else {
-                self.contentTextChanged()
+            if !isEqualtoLast {
+                self.typingAttributes = self.viewModel.defaultTypingAttributes
+                if let d = self.delegate {
+                    d.textViewDidChange?(self)
+                } else {
+                    self.contentTextChanged()
+                }
             }
         }
         if html == self.html {
+            isEqualtoLast = true
             return
         }
         self.html = html
