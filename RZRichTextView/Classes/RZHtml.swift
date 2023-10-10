@@ -141,7 +141,11 @@ public extension NSAttributedString {
             if currentpul && !lastpul { realParagraphs.append("<ul>") }
             if currentpol && !lastpol { realParagraphs.append("<ol>") }
             if currentpul || currentpol { realParagraphs.append(style) }
-            realParagraphs.append(p.content)
+            if p.content.string == "\n" {
+                realParagraphs.append("</br>")
+            } else {
+                realParagraphs.append(p.content)
+            }
             if currentpul || currentpol { realParagraphs.append("</li>") }
             if currentpol && !nextpol { realParagraphs.append("</ol>") }
             if currentpul && !nextpul { realParagraphs.append("</ul>") }
@@ -198,7 +202,8 @@ public extension NSAttributedString {
                 if let attachment = dict[.attachment] as? NSTextAttachment {
                     labelStar.append(attachment.rz2html)
                 } else if tempAttr.string.count > 0 {
-                    labelStar.append(tempAttr.string)
+                    let text = tempAttr.string.replacingOccurrences(of: "\n", with: "")
+                    labelStar.append(text)
                 }
                 let temp = labelStar + labelEnd
                 pstar.append(temp.joined())
