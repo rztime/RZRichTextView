@@ -62,6 +62,10 @@ open class RZRichTextView: UITextView {
             self.fixAttachmentInfo()
         }
     }
+    /// 用于计算整个内容完全显示时的高度
+    open var contentTextHeight: CGFloat {
+        return self.contentSize.height + self.contentInset.top + self.contentInset.bottom
+    }
     /// 记录最新一次attachments，主要用于对比是否有删除的附件，然后删除额外添加的界面
     open var lastAttachments: [RZAttachmentInfo] = []
     var isInit = true
@@ -126,14 +130,17 @@ open class RZRichTextView: UITextView {
                 self?.contentTextChanged()
             }
             .qcontentSizeChanged { view in
-                ///  修正：当textView高度随键盘开启隐藏而动态高度时，会出现contentsize错误变化而导致无法滚动（此时输入内容时，又会自动修复）。这里在contentsize变化之后，判断一下最后一个字符的位置，在重新计算contentsize
-                let minHeight = view.frame.size.height - view.contentInset.top - view.contentInset.bottom
-                if view.contentSize.height < minHeight, let rect = view.rz.rectFor(range: NSRange(location: view.textStorage.length, length: 0)) {
-                    let realHeight = ceil(rect.maxY + view.contentInset.bottom)
-                    let height = max(minHeight, realHeight)
-                    if height > view.contentSize.height {
-                        let width = view.frame.width - view.contentInset.left - view.contentInset.right
-                        view.contentSize = .init(width: width, height: height)
+                DispatchQueue.main.async {
+                    ///  修正：当textView高度随键盘开启隐藏而动态高度时，会出现contentsize错误变化而导致无法滚动（此时输入内容时，又会自动修复）。
+                    ///  这里在contentsize变化之后，判断一下最后一个字符的位置，在重新计算contentsize
+                    let minHeight = view.frame.size.height - view.contentInset.top - view.contentInset.bottom
+                    if view.contentSize.height < minHeight, let rect = view.rz.rectFor(range: NSRange(location: view.textStorage.length, length: 0)), !rect.maxY.isInfinite {
+                        let realHeight = ceil(rect.maxY + view.contentInset.bottom)
+                        let height = realHeight
+                        if Int(height) > Int(view.contentSize.height) {
+                            let width = view.frame.width - view.contentInset.left - view.contentInset.right
+                            view.contentSize = .init(width: width, height: height)
+                        }
                     }
                 }
             }
@@ -369,81 +376,81 @@ public extension RZRichTextView {
     }
     /// 插入了附件之后，需要fix附件相关的界面
     func fixAttachmentInfo() {
-        self.textStorage.ensureAttributesAreFixed(in: .init(location: 0, length: self.textStorage.length))
-        self.layoutIfNeeded()
-        var changed = false
-        /// 将现有的附件额外添加的视图更新位置
-        self.textStorage.enumerateAttribute(.attachment, in: .init(location: 0, length: self.textStorage.length)) { [weak self] value, range, _ in
-            if let self = self, let value = value as? NSTextAttachment {
-                if let info = value.rzattachmentInfo {
-                    self.layoutManager.ensureLayout(forCharacterRange: range)
-                    var frame = self.rz.rectFor(range: range) ?? .zero
-                    /// 当出现有序无序列表时，或者重新编辑时，附件的大小可能超出编辑器，所以这里重新设置一下附近的大小
-                    if frame.maxX > self.frame.size.width {
-                        let width = frame.size.width - (frame.maxX - (self.contentSize.width - self.contentInset.left - self.contentInset.right))
-                        frame.size = frame.size.qscaleto(width: width)
-                        value.bounds = .init(origin: .zero, size: frame.size)
-                        let x = self.textStorage.attributes(at: range.location, effectiveRange: nil)
-                        self.textStorage.replaceCharacters(in: range, with: .init(attachment: value))
-                        self.textStorage.addAttributes(x, range: range)
-                        self.layoutManager.ensureLayout(forCharacterRange: range)
-                    }
-                    info.infoLayer.frame = frame
-                    if info.infoLayer.superview == nil {
-                        self.addSubview(info.infoLayer)
-                        changed = true
-                    }
-                    if let v = info.infoLayer.subviews.first as? RZAttachmentInfoLayerProtocol {
-                        v.canEdit = self.viewModel.canEdit
-                        v.showAudioName = self.viewModel.showAudioName
-                    } else {
-                        let infoView = RZAttachmentOption.share.viewclass.init()
-                        info.infoLayer.qbody([
-                            infoView.qmakeConstraints({ make in
-                                make.edges.equalToSuperview().inset(1)
-                            })])
-                        if let infoView = infoView as? RZAttachmentInfoLayerProtocol {
-                            infoView.info = info
-                            infoView.canEdit = self.viewModel.canEdit
-                            infoView.showAudioName = self.viewModel.showAudioName
-                            self.viewModel.reloadAttachmentInfoIfNeed?(infoView)
+        /// 将相关方法延迟加载，是为了在附件绘制完成之后，在获取位置
+        func fixAttachment() {
+            self.textStorage.ensureAttributesAreFixed(in: .init(location: 0, length: self.textStorage.length))
+            self.layoutIfNeeded()
+            var changed = false
+            /// 将现有的附件额外添加的视图更新位置
+            self.textStorage.enumerateAttribute(.attachment, in: .init(location: 0, length: self.textStorage.length)) { [weak self] value, range, _ in
+                if let self = self, let value = value as? NSTextAttachment {
+                    if let info = value.rzattachmentInfo {
+                        let frame = self.rz.rectFor(range: range) ?? .zero
+                        /// 在textView加载内容过程中，执行了此方法的话，frame会无法获取准确数据，所以这里要做一个判断
+                        if frame.origin.x.isInfinite || frame.origin.x.isNaN ||
+                            frame.origin.y.isInfinite || frame.origin.y.isNaN {
+                            self.fixAttachmentInfo()
+                            return
+                        }
+                        info.infoLayer.frame = frame
+                        if info.infoLayer.superview == nil {
+                            self.addSubview(info.infoLayer)
+                            changed = true
+                        }
+                        if let v = info.infoLayer.subviews.first as? RZAttachmentInfoLayerProtocol {
+                            v.info = info
+                            v.canEdit = self.viewModel.canEdit
+                            v.showAudioName = self.viewModel.showAudioName
+                        } else {
+                            let infoView = RZAttachmentOption.share.viewclass.init()
+                            info.infoLayer.qbody([
+                                infoView.qmakeConstraints({ make in
+                                    make.edges.equalToSuperview().inset(1)
+                                })])
+                            if let infoView = infoView as? RZAttachmentInfoLayerProtocol {
+                                infoView.info = info
+                                infoView.canEdit = self.viewModel.canEdit
+                                infoView.showAudioName = self.viewModel.showAudioName
+                                self.viewModel.reloadAttachmentInfoIfNeed?(infoView)
+                            }
                         }
                     }
                 }
             }
-        }
-        /// 筛选出已删除的附件，并移除
-        let newattachments = self.attachments
-        let deletedAttachments = lastAttachments.filter { info in
-            if let _ = newattachments.firstIndex(where: {$0 == info}) {
-                return false
+            /// 筛选出已删除的附件，并移除
+            let newattachments = self.attachments
+            let deletedAttachments = lastAttachments.filter { info in
+                if let _ = newattachments.firstIndex(where: {$0 == info}) {
+                    return false
+                }
+                return true
             }
-            return true
-        }
-        deletedAttachments.forEach({ $0.infoLayer.removeFromSuperview() })
-        if deletedAttachments.count > 0 {
-            changed = true
-        }
-        /// 记录现有的
-        self.lastAttachments = newattachments
-        if changed {
-            self.viewModel.attachmentInfoChanged?(newattachments)
+            deletedAttachments.forEach({ $0.infoLayer.removeFromSuperview() })
+            if deletedAttachments.count > 0 {
+                changed = true
+            }
+            /// 记录现有的
+            self.lastAttachments = newattachments
+            if changed {
+                self.viewModel.attachmentInfoChanged?(newattachments)
+            }
         }
         DispatchQueue.main.async {
+            fixAttachment()
             self.fixTextlistNum()
         }
     }
     /// 内容改变之后，需要修复附件的位置、以及判断是否超字数
     func contentTextChanged() {
         defer {
-            self.fixAttachmentInfo()
-            self.showInputCount()
             self.contentChanged?(self)
             ///  重新校验显示placeholder
             DispatchQueue.main.async {
+                self.fixAttachmentInfo()
                 /// 有序无序列表会占用
                 let show = self.textStorage.length == 0 && self.subviews.filter({$0.isKind(of: RZTextListView.self)}).count == 0
                 self.qtextViewHelper.placeHolderLabel?.isHidden = !show
+                self.showInputCount()
             }
         }
         /// 在有中文输入拼音高亮时，不做处理
@@ -532,7 +539,6 @@ public extension RZRichTextView {
         }
         temp.forEach { (index, range, p, dict) in
             if index != "" {
-                self.layoutManager.ensureGlyphs(forCharacterRange: range)
                 if let rect = self.rz.rectFor(range: .init(location: range.location, length: 0)) {
                     let view = RZTextListView.init().qframe(.init(x: rect.origin.x - 35, y: rect.origin.y, width: 30, height: rect.size.height))
                         .qfont((dict[.font] as? UIFont) ?? .systemFont(ofSize: 16))

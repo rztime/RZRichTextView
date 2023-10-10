@@ -27,7 +27,8 @@ class ViewController: UIViewController {
             (HTML2AttrViewController.self, "html转富文本"),
             (CustomRichTextViewController.self, "自定义编辑器"),
             (LabelLoadHtmlViewController.self, "UILabel加载html"),
-            (TestViewController.self, "测试")
+            (TestViewController.self, "测试"),
+            (TableViewViewController.self, "列表")
         ]
         
         

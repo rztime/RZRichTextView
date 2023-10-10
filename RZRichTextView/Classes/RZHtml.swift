@@ -42,8 +42,6 @@ public extension RZRichTextView {
             return
         }
         self.html = html
-        self.textStorage.setAttributedString(.init(string: "", attributes: self.typingAttributes))
-        
         /// 1.将html转换为NSAttributedString，图片用透明的png站位
         /// 2.将有序无序等样式统一成textView支持的样式
         /// 3.先通过url拉取本地音视频图片，然后直接写入到NSAttributedString，如果本地没下载图片，则异步线程开启下载拿到图片后，在写入

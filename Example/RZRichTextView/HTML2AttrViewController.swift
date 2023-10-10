@@ -12,7 +12,7 @@ import RZRichTextView
 
 class HTML2AttrViewController: UIViewController {
 
-    lazy var textView = RZRichTextView.init(frame: .init(x: 15, y: 100, width: qscreenwidth - 30, height: 300), viewModel: .shared(edit: false))
+    lazy var textView = RZRichTextView.init(frame: .init(x: 15, y: 100, width: qscreenwidth - 30, height: 300), viewModel: .shared(edit: true))
         .qbackgroundColor(.qhex(0xf5f5f5))
         .qplaceholder("请输入内容")
 
@@ -21,9 +21,11 @@ class HTML2AttrViewController: UIViewController {
         self.view.backgroundColor = .white
         self.view.qbody([
             textView.qmakeConstraints({ make in
-                make.left.right.equalToSuperview().inset(15)
+//                make.left.right.equalToSuperview().inset(15)
+                make.left.equalToSuperview().inset(15)
                 make.top.equalToSuperview().inset(100)
                 make.bottom.equalToSuperview().inset(qbottomSafeHeight)
+                make.width.equalTo(qscreenwidth - 30)
             }),
         ])
         
@@ -51,9 +53,8 @@ class HTML2AttrViewController: UIViewController {
                     return
                 }
                 let h = self.textView.attributedText.rz.codingToCompleteHtml()!
-                print("\(h)")
                 let html = self.textView.code2html()
-//                print("\(html)")
+                print("\(html)")
             }
         
         /// 上传完成时，可以点击
