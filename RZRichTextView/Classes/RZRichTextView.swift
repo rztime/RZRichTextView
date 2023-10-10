@@ -73,6 +73,7 @@ open class RZRichTextView: UITextView {
     public init(frame: CGRect, viewModel: RZRichTextViewModel) {
         self.viewModel = viewModel
         super.init(frame: frame, textContainer: nil)
+        self.layoutManager.allowsNonContiguousLayout = false
         isInit = false
         self.viewModel.textView = self
         self.isEditable = self.viewModel.canEdit

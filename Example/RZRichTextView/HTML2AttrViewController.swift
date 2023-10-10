@@ -62,11 +62,12 @@ class HTML2AttrViewController: UIViewController {
             btn?.isEnabled = value
             btn?.alpha = value ? 1 : 0.3
         }, disposebag: btn)
-    
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: btn)
         
         let html = try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")
-        textView.html2Attributedstring(html: html)
+        let t = "<body style=\"font-size:16px;color:#110000;\">\(html ?? "")</body>"
+        textView.html2Attributedstring(html: t)
 
     }
 }

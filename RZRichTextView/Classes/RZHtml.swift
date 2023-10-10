@@ -140,7 +140,7 @@ public extension NSAttributedString {
             if currentpol && !lastpol { realParagraphs.append("<ol>") }
             if currentpul || currentpol { realParagraphs.append(style) }
             if p.content.string == "\n" {
-                realParagraphs.append("</br>")
+                realParagraphs.append("<br/>")
             } else {
                 realParagraphs.append(p.content)
             }
@@ -210,7 +210,9 @@ public extension NSAttributedString {
 //            html.append(temp.joined(separator: "\n")) // 加\n在查看html时更友好
             html.append(temp.joined())
         }
-        return html.joined()//html.joined(separator: "\n")
+        var res = html.joined()//html.joined(separator: "\n")
+        res = res.replacingOccurrences(of: "\u{2028}", with: "<br/>")
+        return res
     }
 }
 open class RZHtmlOptions {

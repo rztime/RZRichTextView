@@ -33,9 +33,14 @@ class TableViewViewController: UIViewController {
         
         tableView
             .qnumberofRows { section in
-                return 1
+                return 2
             }
             .qcell { [weak self] tableView, indexPath in
+                if indexPath.row == 1 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "!") ?? UITableViewCell.init(style: .default, reuseIdentifier: "1")
+                    cell.textLabel?.text = "1"
+                    return cell
+                }
                 var cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? TestTextCell
                 if cell == nil {
                     cell = TestTextCell.init(style: .default, reuseIdentifier: "cell")
@@ -44,38 +49,43 @@ class TableViewViewController: UIViewController {
                     }
                 }
                 var html = try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")
-                cell?.textView.html2Attributedstring(html: html)
+                let t = "<body style=\"font-size:16px;\">\(html ?? "")</body>"
+                cell?.textView.html2Attributedstring(html: t)
                 return cell!
             }
     }
 }
 
 class TestTextCell : UITableViewCell {
-    let textView = RZRichTextView.init(frame: .init(x: 10, y: 10, width: qscreenwidth - 20, height: 300), viewModel: .shared(edit: false))
+    let textView = RZRichTextView.init(frame: .init(x: 15, y: 15, width: 384, height: 44), viewModel: .shared(edit: false))
     var reload: ((_ indexPath: IndexPath?) -> Void)?
     var indexPath: IndexPath = .init(row: 0, section: 0)
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.addSubview(textView)
         self.contentView.snp.makeConstraints { make in
-            make.height.equalTo(300)
+            make.height.equalTo(44)
         }
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.backgroundColor = UIColor.clear
+        self.selectionStyle = .none
         var first = true
         textView.qcontentSizeChanged { [weak self] scrollView in
             if first {
                 first = false
                 return
             }
-            let x: CGFloat = 10
-            let height = scrollView.contentTextHeight
-            scrollView.frame = .init(x: x, y: x, width: qscreenwidth - 2 * x, height: height)
-
-            let h = Int(height + 2 * x)
-            if h != Int(self?.frame.size.height ?? 0) {
-                self?.contentView.snp.updateConstraints({ make in
-                    make.height.equalTo(h)
-                }) 
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                let x: CGFloat = 15
+                let height = scrollView.contentTextHeight
+                scrollView.frame = .init(x: x, y: x, width: 384, height: height)
+                
+                let h = Int(height + 2 * x)
+                if h != Int(self?.frame.size.height ?? 0) {
+                    self?.contentView.snp.updateConstraints({ make in
+                        make.height.equalTo(h)
+                    })
+                    
                     self?.reload?(self?.indexPath)
                 }
             }
