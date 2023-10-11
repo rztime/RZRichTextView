@@ -69,6 +69,9 @@ open class RZRichTextView: UITextView {
     /// 记录最新一次attachments，主要用于对比是否有删除的附件，然后删除额外添加的界面
     open var lastAttachments: [RZAttachmentInfo] = []
     var isInit = true
+    
+    /// 用于记录光标在末尾时的属性
+    open var lastTexttypingAttributes: [NSAttributedString.Key: Any] = [:]
     /// viewModel可以自行设置使用一个单例，用于图片、视频、音频等附件输入时，统一处理，一定要设置frame的width
     public init(frame: CGRect, viewModel: RZRichTextViewModel) {
         self.viewModel = viewModel
@@ -86,15 +89,19 @@ open class RZRichTextView: UITextView {
         }
 
         self.typingAttributes = self.viewModel.defaultTypingAttributes
-        
+        self.lastTexttypingAttributes = self.typingAttributes
         NotificationCenter.qaddKeyboardObserver(target: self, object: nil) { [weak self] keyboardInfo in
             self?.keyboardHeight = keyboardInfo.frameEnd.size.height - 44
         }
         self
-            .qdidChangeSelection { textView in
+            .qdidChangeSelection { [weak self] textView in
                 if let _ = textView.inputView {
                     textView.inputView = nil
                     textView.reloadInputViews()
+                }
+                if textView.textStorage.length == textView.selectedRange.location {
+                    /// 当光标在末尾的时候，记录一下末尾的属性
+                    self?.lastTexttypingAttributes = textView.typingAttributes
                 }
             }
             .shouldInteractWithURL { [weak self] textView, url, range, interaction in
@@ -515,8 +522,10 @@ public extension RZRichTextView {
             var dict: [NSAttributedString.Key: Any] = [:]
             if range == self.selectedRange {
                 dict = self.typingAttributes
-            } else {
+            } else if range.location < self.textStorage.length {
                 dict = self.textStorage.attributes(at: range.location, effectiveRange: nil)
+            } else {
+                dict = self.lastTexttypingAttributes
             }
             if let p = dict[.paragraphStyle] as? NSParagraphStyle {
                 if p.isol {
@@ -547,7 +556,7 @@ public extension RZRichTextView {
         temp.forEach { (index, range, p, dict) in
             if index != "" {
                 if let rect = self.rz.rectFor(range: .init(location: range.location, length: 0)) {
-                    let view = RZTextListView.init().qframe(.init(x: rect.origin.x - 35, y: rect.origin.y, width: 30, height: rect.size.height))
+                    let view = RZTextListView.init().qframe(.init(x: 3, y: rect.origin.y, width: 30, height: rect.size.height))
                         .qfont((dict[.font] as? UIFont) ?? .systemFont(ofSize: 16))
                         .qtextColor((dict[.foregroundColor] as? UIColor) ?? .black)
                         .qtext("\(index)")

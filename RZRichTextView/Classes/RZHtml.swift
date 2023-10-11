@@ -140,7 +140,9 @@ public extension NSAttributedString {
             if currentpol && !lastpol { realParagraphs.append("<ol>") }
             if currentpul || currentpol { realParagraphs.append(style) }
             if p.content.string == "\n" {
-                realParagraphs.append("<br/>")
+                if !currentpol && !currentpul {
+                    realParagraphs.append("<br/>")
+                } 
             } else {
                 realParagraphs.append(p.content)
             }
