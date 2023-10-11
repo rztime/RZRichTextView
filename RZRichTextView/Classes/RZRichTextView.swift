@@ -399,7 +399,6 @@ public extension RZRichTextView {
                             changed = true
                         }
                         if let v = info.infoLayer.subviews.first as? RZAttachmentInfoLayerProtocol {
-                            v.info = info
                             v.canEdit = self.viewModel.canEdit
                             v.showAudioName = self.viewModel.showAudioName
                         } else {

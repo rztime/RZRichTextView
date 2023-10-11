@@ -41,11 +41,11 @@ public class RZAttachmentInfo: NSObject {
     /// 图片
     public var image: UIImage? {
         didSet {
-            if let v = self.infoLayer.subviews.first as? RZAttachmentInfoLayerProtocol {
-                v.imageView.image = image
-            }
+            imagePublish.accept(image)
         }
     }
+    /// 图片改变之后，发一个通知
+    public let imagePublish: QPublish<UIImage?> = .init(value: nil)
     /// 源文件
     public var asset: PHAsset?
     /// 文件路径

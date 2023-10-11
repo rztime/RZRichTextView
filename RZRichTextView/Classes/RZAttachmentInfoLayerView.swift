@@ -36,18 +36,22 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     public var info: RZAttachmentInfo? {
         didSet {
             dispose = .init()
+            operation.accept(.none)
             guard let info = info else { return }
             imageContent.isHidden = info.type == .audio
             audioContent.isHidden = info.type != .audio
 
             switch info.type {
             case .image, .video:
-                self.imageView.image = info.image
                 self.playBtn.isHidden = info.type == .image
-                let size = info.image?.size ?? .init(width: 16.0, height: 9.0)
-                self.imageView.snp.makeConstraints { make in
-                    make.height.equalTo(self.imageView.snp.width).multipliedBy(size.height / size.width)
-                }
+                info.imagePublish.subscribe({ [weak self] value in
+                    guard let self = self else { return }
+                    let size = value?.size ?? .init(width: 16.0, height: 9.0)
+                    self.imageView.image = value
+                    self.imageView.snp.makeConstraints { make in
+                        make.height.equalTo(self.imageView.snp.width).multipliedBy(size.height / size.width)
+                    }
+                }, disposebag: dispose)
             case .audio:
                 if let path = info.path ?? info.src  {
                     self.nameLabel.text = path.qtoURL?.lastPathComponent
