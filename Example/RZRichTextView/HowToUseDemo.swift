@@ -15,6 +15,9 @@ import Kingfisher
 /// 使用时，直接将此代码复制到项目中，并完成相关FIXME的地方即可
 public extension RZRichTextViewModel {
     class func shared(edit: Bool = true) -> RZRichTextViewModel {
+        /// 自定义遮罩view 默认RZAttachmentInfoLayerView
+//        RZAttachmentOption.register(attachmentLayer: RZAttachmentInfoLayerView.self)
+        
         let viewModel = RZRichTextViewModel.init()
         viewModel.canEdit = edit
         /// 显示音频文件名字

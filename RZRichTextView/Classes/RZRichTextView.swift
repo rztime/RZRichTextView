@@ -448,10 +448,8 @@ public extension RZRichTextView {
             ///  重新校验显示placeholder
             DispatchQueue.main.async {
                 self.fixAttachmentInfo()
-                /// 有序无序列表会占用
-                let show = self.textStorage.length == 0 && self.subviews.filter({$0.isKind(of: RZTextListView.self)}).count == 0
-                self.qtextViewHelper.placeHolderLabel?.isHidden = !show
                 self.showInputCount()
+                self.showPlaceHolder()
             }
         }
         /// 在有中文输入拼音高亮时，不做处理
@@ -495,9 +493,18 @@ public extension RZRichTextView {
         }
         self.accessoryView.reloadData()
         self.fixAttachmentInfo()
+        self.showPlaceHolder()
     }
 }
 public extension RZRichTextView {
+    /// 是否显示隐藏placeholder
+    func showPlaceHolder() {
+        DispatchQueue.main.async {
+            /// 有序无序列表会占用
+            let show = self.textStorage.length == 0 && self.subviews.filter({$0.isKind(of: RZTextListView.self)}).count == 0
+            self.qtextViewHelper.placeHolderLabel?.isHidden = !show
+        }
+    }
     /// 修复有序无序列表的序列号
     func fixTextlistNum() {
         self.subviews.filter({$0.isKind(of: RZTextListView.self)}).forEach({$0.removeFromSuperview()})
@@ -565,6 +572,7 @@ open class RZRichHistory {
         self.typingAttributes = newtyping as! [NSAttributedString.Key : Any]
     }
 }
+/// 用于显示列表的序号， 这个是为了方便找到列表view
 public class RZTextListView: UILabel {
     public override init(frame: CGRect) {
         super.init(frame: frame)

@@ -41,7 +41,7 @@ public class RZAttachmentInfo: NSObject {
     /// 图片
     public var image: UIImage? {
         didSet {
-            if let v = self.infoLayer.subviews.first as? RZAttachmentInfoLayerView {
+            if let v = self.infoLayer.subviews.first as? RZAttachmentInfoLayerProtocol {
                 v.imageView.image = image
             }
         }
