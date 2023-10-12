@@ -45,7 +45,7 @@ public class RZAttachmentInfo: NSObject {
         }
     }
     /// 图片改变之后，发一个通知
-    public let imagePublish: QPublish<UIImage?> = .init(value: nil)
+    public lazy var imagePublish: QPublish<UIImage?> = .init(value: self.image)
     /// 源文件
     public var asset: PHAsset?
     /// 文件路径
