@@ -7,7 +7,8 @@
 
 import UIKit
 import QuicklySwift
-
+import Kingfisher
+import Photos
 /// 操作
 public enum RZAttachmentOperation {
     case none
@@ -40,17 +41,37 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
             guard let info = info else { return }
             imageContent.isHidden = info.type == .audio
             audioContent.isHidden = info.type != .audio
-
+            self.playBtn.isHidden = info.type != .video
             switch info.type {
-            case .image, .video:
-                self.playBtn.isHidden = info.type == .image
+            case .image:
+                if let asset = info.asset {
+                    let option = PHImageRequestOptions.init()
+                    option.isNetworkAccessAllowed = true
+                    option.resizeMode = .fast
+                    option.deliveryMode = .highQualityFormat
+                    PHImageManager.default().requestImageData(for: asset, options: option) { [weak self] data, _, _, _ in
+                        if let imageData = data {
+                            self?.imageView.kf.setImage(with: .provider(RawImageDataProvider(data: imageData, cacheKey: asset.localIdentifier))) { [weak self] _ in
+                                self?.updateImageViewSize()
+                            }
+                        }
+                    }
+                } else if let url = info.src {
+                    self.imageView.kf.setImage(with: url.qtoURL, completionHandler: { [weak self] _ in
+                        self?.updateImageViewSize()
+                    })
+                } else {
+                    info.imagePublish.subscribe({ [weak self] value in
+                        guard let self = self else { return }
+                        self.imageView.image = value
+                        self.updateImageViewSize()
+                    }, disposebag: dispose)
+                }
+            case .video:
                 info.imagePublish.subscribe({ [weak self] value in
                     guard let self = self else { return }
-                    let size = value?.size ?? .init(width: 16.0, height: 9.0)
                     self.imageView.image = value
-                    self.imageView.snp.makeConstraints { make in
-                        make.height.equalTo(self.imageView.snp.width).multipliedBy(size.height / size.width)
-                    }
+                    self.updateImageViewSize()
                 }, disposebag: dispose)
             case .audio:
                 if let path = info.path ?? info.src  {
@@ -94,7 +115,7 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     }
     /// 图片视频相关view
     // 显示的图片
-    public var imageView: UIImageView = .init().qcontentMode(.scaleAspectFill).qcornerRadius(3, true)
+    public var imageView: UIImageView = AnimatedImageView.init().qcontentMode(.scaleAspectFill).qcornerRadius(3, true)
     /// 播放按钮
     var playBtn: UIButton = .init(type: .custom).qimage(RZRichImage.imageWith("play")).qisUserInteractionEnabled(false)
     
@@ -213,5 +234,12 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     }
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    func updateImageViewSize() {
+        guard let image = self.imageView.image else { return }
+        let size = image.size
+        self.imageView.snp.makeConstraints { make in
+            make.height.equalTo(self.imageView.snp.width).multipliedBy(size.height / size.width)
+        }
     }
 }

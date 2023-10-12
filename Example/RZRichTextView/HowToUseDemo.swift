@@ -62,7 +62,7 @@ public extension RZRichTextViewModel {
                             vc.currentIndex = index
 
                             let models = allattachments.compactMap { info -> TZAssetModel? in
-                                var i: UInt = 0
+                                var i: UInt = 2
                                 switch info.type {
                                 case .image:break
                                 case .video: i = 3
