@@ -45,8 +45,10 @@ open class RZRichTableStyleView: UIView {
     }
     // 点击修改有序无序
     open func changedTableStyle(_ btn: UIButton) {
+        guard let p = self.viewModel.textView?.getRealTypingAttributes()[.paragraphStyle] as? NSParagraphStyle else { return }
         btn.isSelected = !btn.isSelected
         let mutablePara = NSMutableParagraphStyle.init()
+        mutablePara.setParagraphStyle(p)
         let type = RZInputAccessoryType(rawValue: btn.tag)
         func toolImage(type: RZInputAccessoryType) -> UIImage? {
             let p = self.viewModel.tableStyleItems.filter({$0.type == type})
@@ -72,7 +74,7 @@ open class RZRichTableStyleView: UIView {
         }
     }
     open func reloadData() {
-        guard let p = self.viewModel.textView?.typingAttributes[.paragraphStyle] as? NSParagraphStyle else { return }
+        guard let p = self.viewModel.textView?.getRealTypingAttributes()[.paragraphStyle] as? NSParagraphStyle else { return }
         let isol = p.isol
         let isul = p.isul
         let btns: [UIButton]? = self.stackView?.arrangedSubviews as? [UIButton]

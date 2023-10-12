@@ -47,7 +47,7 @@ open class RZRichParagraphStyleView: UIView {
     // 点击修改对齐方式
     open func changedtextaligint(_ btn: UIButton) {
         if btn.isSelected { return }
-        guard let para = self.viewModel.textView?.typingAttributes[.paragraphStyle] as? NSParagraphStyle else { return }
+        guard let para = self.viewModel.textView?.getRealTypingAttributes()[.paragraphStyle] as? NSParagraphStyle else { return }
         let mutablePara = NSMutableParagraphStyle.init()
         mutablePara.setParagraphStyle(para)         
         let type = RZInputAccessoryType(rawValue: btn.tag)
@@ -68,7 +68,7 @@ open class RZRichParagraphStyleView: UIView {
             img = toolImage(type: .p_right)
         default: break
         }
-   
+        mutablePara.setTextListType(para.rzTextListType)
         self.viewModel.textView?.typingAttributes[.paragraphStyle] = mutablePara
         self.viewModel.textView?.reloadParagraphStyle()
         self.reloadData()
@@ -79,7 +79,7 @@ open class RZRichParagraphStyleView: UIView {
         }
     }
     open func reloadData() {
-        guard let p = self.viewModel.textView?.typingAttributes[.paragraphStyle] as? NSParagraphStyle else { return }
+        guard let p = self.viewModel.textView?.getRealTypingAttributes()[.paragraphStyle] as? NSParagraphStyle else { return }
         let index = p.alignment.rawValue
         let btns: [UIButton]? = self.stackView?.arrangedSubviews as? [UIButton]
         btns?.enumerated().forEach({ (idx,btn) in

@@ -133,7 +133,7 @@ open class RZRichFontStyleView: UIView {
     }
     /// 改变样式
     open func changeStyle(_ btn: UIButton) {
-        guard var typingAttributes = self.viewModel.textView?.typingAttributes else { return }
+        guard var typingAttributes = self.viewModel.textView?.getRealTypingAttributes() else { return }
         if btn == B {
             guard let font = typingAttributes[.font] as? UIFont else { return }
             let newfont: UIFont
@@ -176,7 +176,7 @@ open class RZRichFontStyleView: UIView {
     open func changeSize(_ btn: UIButton) {
         if btn.isSelected { return }
         btn.isSelected = true
-        guard let size = btn.titleLabel?.font.pointSize, let font = self.viewModel.textView?.typingAttributes[.font] as? UIFont else { return }
+        guard let size = btn.titleLabel?.font.pointSize, let font = self.viewModel.textView?.getRealTypingAttributes()[.font] as? UIFont else { return }
         let newfont = font.withSize(size)
         self.viewModel.textView?.typingAttributes[.font] = newfont
         self.viewModel.textView?.reloadText()
@@ -193,7 +193,7 @@ open class RZRichFontStyleView: UIView {
 
     /// 刷新数据
     open func reloadData(_ type: RZRichFontStyleView.ReloadType = .all) {
-        guard let typingAttributes = self.viewModel.textView?.typingAttributes else { return }
+        guard let typingAttributes = self.viewModel.textView?.getRealTypingAttributes() else { return }
         /// 刷新样式
         func reloadStyle() {
             if let font = typingAttributes[.font] as? UIFont {

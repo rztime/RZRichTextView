@@ -68,10 +68,10 @@ open class RZRichTextView: UITextView {
     }
     /// 记录最新一次attachments，主要用于对比是否有删除的附件，然后删除额外添加的界面
     open var lastAttachments: [RZAttachmentInfo] = []
-    var isInit = true
-    
+    private var isInit = true    
     /// 用于记录光标在末尾时的属性
     open var lastTexttypingAttributes: [NSAttributedString.Key: Any] = [:]
+    private var lastCursorIsEnd = true
     /// viewModel可以自行设置使用一个单例，用于图片、视频、音频等附件输入时，统一处理，一定要设置frame的width
     public init(frame: CGRect, viewModel: RZRichTextViewModel) {
         self.viewModel = viewModel
@@ -95,14 +95,12 @@ open class RZRichTextView: UITextView {
         }
         self
             .qdidChangeSelection { [weak self] textView in
+                guard let self = self else { return }
                 if let _ = textView.inputView {
                     textView.inputView = nil
                     textView.reloadInputViews()
                 }
-                if textView.textStorage.length == textView.selectedRange.location {
-                    /// 当光标在末尾的时候，记录一下末尾的属性
-                    self?.lastTexttypingAttributes = textView.typingAttributes
-                }
+                self.fixTypingAttributes()
             }
             .shouldInteractWithURL { [weak self] textView, url, range, interaction in
                 if textView.isEditable {
@@ -116,6 +114,9 @@ open class RZRichTextView: UITextView {
             }
             .qshouldChangeText { [weak self] textView, range, replaceText in
                 guard let self = self else { return true }
+                if textView.textStorage.length == range.location {
+                    textView.typingAttributes = self.lastTexttypingAttributes
+                }
                 if self.viewModel.removeLinkWhenInputText {
                     textView.typingAttributes[.link] = nil
                 }
@@ -268,6 +269,9 @@ open class RZRichTextView: UITextView {
     }
     /// 刷新内容 修改了typingAttributes，刷新内容
     open func reloadText() {
+        defer {
+            self.fixTypingAttributes()
+        }
         guard selectedRange.length > 0 else { return }
         self.textStorage.addAttributes(self.typingAttributes, range: selectedRange)
         self.selectedRange = selectedRange
@@ -275,6 +279,9 @@ open class RZRichTextView: UITextView {
     }
     /// 修改段落样式，需要将样式写入typingAttributes
     open func reloadParagraphStyle() {
+        defer {
+            self.fixTypingAttributes()
+        }
         guard let paragraph = self.typingAttributes[.paragraphStyle] as? NSParagraphStyle else { return }
         var ranges = self.attributedText.rt.paragraphRanges(for: selectedRange)
         if ranges.count == 0 {
@@ -288,6 +295,9 @@ open class RZRichTextView: UITextView {
     }
     /// 修改了列表样式时更新,需要将样式写入typingAttributes
     open func reloadTextByUpdateTableStyle() {
+        defer {
+            self.fixTypingAttributes()
+        }
         guard let paragraph = self.typingAttributes[.paragraphStyle] as? NSParagraphStyle else { return }
         let ranges = self.attributedText.rt.paragraphRanges(for: self.selectedRange)
         ranges.forEach { range in
@@ -298,6 +308,9 @@ open class RZRichTextView: UITextView {
     }
     /// 编辑链接
     open func changeLink(range: NSRange, link: URL?) {
+        defer {
+            self.fixTypingAttributes()
+        }
         let string = self.textStorage.attributedSubstring(from: range).string
         if string.count == 0, !self.canInsertContent() {
             self.viewModel.morethanInputLength?()
@@ -500,6 +513,26 @@ public extension RZRichTextView {
         self.accessoryView.reloadData()
         self.fixAttachmentInfo()
         self.showPlaceHolder()
+    }
+    /// fix光标在末尾时的属性
+    /// 光标在末尾时，修改了属性但是未输入内容，移开之后再回来，修改的属性会丢失，所以这里加一个fix
+    func fixTypingAttributes() {
+        if self.textStorage.length == self.selectedRange.location {
+            if self.lastCursorIsEnd {
+                /// 当光标在末尾的时候，记录一下末尾的属性
+                self.lastTexttypingAttributes = self.typingAttributes
+            } else {
+                self.typingAttributes = self.lastTexttypingAttributes
+            }
+        }
+        self.lastCursorIsEnd = self.selectedRange.location == self.textStorage.length
+    }
+    /// 获取真实的属性
+    func getRealTypingAttributes() -> [NSAttributedString.Key: Any] {
+        if self.textStorage.length == self.selectedRange.location {
+            return self.lastTexttypingAttributes
+        }
+        return self.typingAttributes
     }
 }
 public extension RZRichTextView {
