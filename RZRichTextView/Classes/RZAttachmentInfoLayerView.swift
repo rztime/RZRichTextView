@@ -115,7 +115,7 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     }
     /// 图片视频相关view
     // 显示的图片
-    public var imageView: UIImageView = AnimatedImageView.init().qcontentMode(.scaleAspectFill).qcornerRadius(3, true)
+    public var imageView: UIImageView = AnimatedImageView.init().qcontentMode(.scaleAspectFit).qcornerRadius(3, true)
     /// 播放按钮
     var playBtn: UIButton = .init(type: .custom).qimage(RZRichImage.imageWith("play")).qisUserInteractionEnabled(false)
     
