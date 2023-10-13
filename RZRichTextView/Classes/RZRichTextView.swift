@@ -138,21 +138,6 @@ open class RZRichTextView: UITextView {
             .qtextChanged { [weak self] textView in
                 self?.contentTextChanged()
             }
-            .qcontentSizeChanged { view in
-                DispatchQueue.main.async {
-                    ///  修正：当textView高度随键盘开启隐藏而动态高度时，会出现contentsize错误变化而导致无法滚动（此时输入内容时，又会自动修复）。
-                    ///  这里在contentsize变化之后，判断一下最后一个字符的位置，在重新计算contentsize
-                    let minHeight = view.frame.size.height - view.contentInset.top - view.contentInset.bottom
-                    if view.contentSize.height < minHeight, let rect = view.rz.rectFor(range: NSRange(location: view.textStorage.length, length: 0)), !rect.maxY.isInfinite {
-                        let realHeight = ceil(rect.maxY + view.contentInset.bottom)
-                        let height = realHeight
-                        if Int(height) > Int(view.contentSize.height) {
-                            let width = view.frame.width - view.contentInset.left - view.contentInset.right
-                            view.contentSize = .init(width: width, height: height)
-                        }
-                    }
-                }
-            }
         /// 显示字数
         self.qshowToWindow { [weak self] view, showed in
             if let v = view.superview, let self = self, showed {
@@ -166,17 +151,13 @@ open class RZRichTextView: UITextView {
         switch self.viewModel.showcountType {
         case .hidden:
             inputCountLabel.isHidden = true
-            self.textContainerInset = .init(top: 5, left: 5, bottom: 5, right: 5)
             self.contentInset  = .init(top: 5, left: 5, bottom: 5, right: 5)
         case .showcount, .showcountandall:
             inputCountLabel.isHidden = false
-            self.textContainerInset = .init(top: 5, left: 5, bottom: 20, right: 5)
             self.contentInset  = .init(top: 5, left: 5, bottom: 20, right: 5)
         }
         if #available(iOS 11.0, *) {
             self.contentInsetAdjustmentBehavior = .never
-        } else {
-            // Fallback on earlier versions
         }
         self.showInputCount()
     }
