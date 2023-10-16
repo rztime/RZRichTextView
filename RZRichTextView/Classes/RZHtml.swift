@@ -266,7 +266,7 @@ public extension String {
         var tempHtml = html as NSString
         var attachments: [RZAttachmentInfo] = []
         /// 找音、视频、图片
-        let regrule = #"(<video\s+.*?src\s*=\s*([^ <>]+)\b.*?>(.*?)</video>)|(<audio\s+.*?src\s*=\s*([^ <>]+)\b.*?>(.*?)</audio>)|(<img\s+.*?src\s*=\s*([^ <>]+)\b.*?>)"#
+        let regrule = #"(<video\s+.*?src\s*=\s*([^ <>]+)\b.*?>([\s\S]*?)</video>)|(<audio\s+.*?src\s*=\s*([^ <>]+)\b.*?>([\s\S]*?)</audio>)|(<img\s+.*?src\s*=\s*([^ <>]+)\b.*?>)"#
         if let regex = try? NSRegularExpression.init(pattern: regrule, options: .caseInsensitive) {
             var labels:[RZLabelInfo] = []
             let matches = regex.matches(in: tempHtml as String, range: NSRange.init(location: 0, length: tempHtml.length))
