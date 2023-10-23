@@ -27,34 +27,63 @@ public extension NSParagraphStyle {
             return .none
         }
     }
-    /// 是否是有序段落
+    /// 是否是有序段落  罗马数字、abc等等等等，统一成序号
     var isol: Bool {
         if self.rzTextListType == .ol {
             return true
         }
         var temp = false
+        let ollist: [String] = [NSTextList.MarkerFormat.decimal.rawValue,
+                                NSTextList.MarkerFormat.lowercaseHexadecimal.rawValue,
+                                NSTextList.MarkerFormat.uppercaseHexadecimal.rawValue,
+                                NSTextList.MarkerFormat.octal.rawValue,
+                                NSTextList.MarkerFormat.lowercaseAlpha.rawValue,
+                                NSTextList.MarkerFormat.uppercaseAlpha.rawValue,
+                                NSTextList.MarkerFormat.lowercaseLatin.rawValue,
+                                NSTextList.MarkerFormat.uppercaseLatin.rawValue,
+                                NSTextList.MarkerFormat.lowercaseRoman.rawValue,
+                                NSTextList.MarkerFormat.uppercaseRoman.rawValue,
+                                "num",
+                                ]
         self.textLists.forEach { item in
-            if item.markerFormat.rawValue.contains(NSTextList.MarkerFormat.decimal.rawValue) {
-               temp = true
+            if temp { return }
+            let value = item.markerFormat.rawValue
+            ollist.forEach { text in
+                if temp { return }
+                if value.contains(text) {
+                    temp = true
+                }
             }
         }
+        if temp { return true }
         if self.firstLineHeadIndent > 30.08 && self.firstLineHeadIndent < 30.12 &&
             self.headIndent > 30.08 && self.headIndent < 30.12{
             temp = true
         }
         return temp
     }
-    /// 是否是无序
+    /// 是否是无序  点、圈等等都当做无序
     var isul: Bool {
         if self.rzTextListType == .ul {
             return true
         }
         var temp = false
+        let ullist : [String] = [NSTextList.MarkerFormat.disc.rawValue,
+                                 NSTextList.MarkerFormat.hyphen.rawValue,
+                                 NSTextList.MarkerFormat.circle.rawValue,
+                                 NSTextList.MarkerFormat.diamond.rawValue,
+                                ]
         self.textLists.forEach { item in
-            if item.markerFormat.rawValue.contains(NSTextList.MarkerFormat.disc.rawValue) {
-               temp = true
+            if temp { return }
+            let value = item.markerFormat.rawValue
+            ullist.forEach { text in
+                if temp { return }
+                if value.contains(text) {
+                    temp = true
+                }
             }
         }
+        if temp { return true }
         if self.firstLineHeadIndent > 30.28 && self.firstLineHeadIndent < 30.32 &&
             self.headIndent > 30.28 && self.headIndent < 30.32{
             temp = true

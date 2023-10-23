@@ -612,13 +612,12 @@ public extension RZRichTextView {
         }
         temp.forEach { (index, range, p, dict) in
             if index != "" {
-                if let rect = self.rz.rectFor(range: .init(location: range.location, length: 0)) {
-                    let view = RZTextListView.init().qframe(.init(x: 3, y: rect.origin.y, width: 30, height: rect.size.height))
-                        .qfont((dict[.font] as? UIFont) ?? .systemFont(ofSize: 16))
-                        .qtextColor((dict[.foregroundColor] as? UIColor) ?? .black)
-                        .qtext("\(index)")
-                    self.addSubview(view)
-                }
+                let rect = self.qcaretRect(for: range.location)
+                let view = RZTextListView.init().qframe(.init(x: 3, y: rect.origin.y, width: 30, height: rect.size.height))
+                    .qfont((dict[.font] as? UIFont) ?? .systemFont(ofSize: 16))
+                    .qtextColor((dict[.foregroundColor] as? UIColor) ?? .black)
+                    .qtext("\(index)")
+                self.addSubview(view)
             }
         }
     }
