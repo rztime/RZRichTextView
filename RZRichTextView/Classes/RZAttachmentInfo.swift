@@ -82,16 +82,20 @@ public class RZAttachmentInfo: NSObject {
     }
 }
 
+private var attachmentinfokey: UInt8 = 1
+
 /// 给附件添加信息
 public extension NSTextAttachment {
-    static var attachmentinfokey = "attachmentinfokey"
+    fileprivate struct RZAttachmentKey {
+        static var attachmentinfokey = "attachmentinfokey"
+    }
     /// 用于编辑时，附件相关信息存取
     var rzattachmentInfo: RZAttachmentInfo? {
         set {
-            objc_setAssociatedObject(self, &NSTextAttachment.attachmentinfokey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &attachmentinfokey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         get {
-            if let obj = objc_getAssociatedObject(self, &NSTextAttachment.attachmentinfokey) as? RZAttachmentInfo {
+            if let obj = objc_getAssociatedObject(self, &attachmentinfokey) as? RZAttachmentInfo {
                 return obj
             }
             return nil

@@ -30,6 +30,8 @@ public protocol RZAttachmentInfoLayerProtocol: NSObjectProtocol {
     var dispose: NSObject {get set}
     /// 显示音频文件名 默认true
     var showAudioName: Bool {get set}
+    /// 图片或者音频view上下左右边距
+    var imageViewEdgeInsets: UIEdgeInsets { get }
 }
 open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     public var operation: QuicklySwift.QPublish<RZAttachmentOperation> = .init(value: .none)
@@ -141,7 +143,10 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     let contentView: UIView = .init()
     
     public var dispose: NSObject = .init()
-    
+    /// 图片或者音频view上下左右边距
+    public var imageViewEdgeInsets: UIEdgeInsets {
+        return .init(top: 15, left: 3, bottom: 0, right: 15)
+    }
     /// 0.0-1.0
     public func updateProgress(_ progress: CGFloat) {
         var bounds = self.progressView.bounds
@@ -155,7 +160,9 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
         let stackView = [imageContent, audioContent].qjoined(aixs: .vertical, spacing: 0, align: .fill, distribution: .equalSpacing)
         self.qbody([
             stackView.qmakeConstraints({ make in
-                make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 10, left: 5, bottom: 5, right: 10))
+                make.left.equalToSuperview().inset(3)
+                make.top.right.equalToSuperview().inset(15)
+                make.bottom.lessThanOrEqualToSuperview()
             }),
             contentView.qmakeConstraints({ make in
                 make.edges.equalToSuperview()
@@ -177,7 +184,8 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
         ])
         imageContent.qbody([
             imageView.qmakeConstraints({ make in
-                make.edges.equalToSuperview()
+                make.top.left.right.equalToSuperview()
+                make.bottom.lessThanOrEqualToSuperview()
             }),
             playBtn.qmakeConstraints({ make in
                 make.center.equalToSuperview()

@@ -86,15 +86,15 @@ public extension UILabel {
         self.attributedText = attr
     }
 }
+private var htmlkey: UInt8 = 2
 public extension UILabel {
-    private static var htmlkey = "rzrichhtmlkey"
     /// 将html转换为富文本时，设置的内容
     var html: String? {
         set {
-            objc_setAssociatedObject(self, &UILabel.htmlkey, newValue, .OBJC_ASSOCIATION_COPY)
+            objc_setAssociatedObject(self, &htmlkey, newValue, .OBJC_ASSOCIATION_COPY)
         }
         get {
-            if let res = objc_getAssociatedObject(self, &UILabel.htmlkey) as? String {
+            if let res = objc_getAssociatedObject(self, &htmlkey) as? String {
                 return res
             }
             return nil

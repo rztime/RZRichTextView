@@ -14,6 +14,7 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		B22BB38F2AE236C40059A609 /* NormalTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22BB38E2AE236C40059A609 /* NormalTestViewController.swift */; };
 		B289C2182A78B0FB00D6CEC5 /* HowToUseDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B289C2172A78B0FB00D6CEC5 /* HowToUseDemo.swift */; };
 		B289C21A2A78B48D00D6CEC5 /* CustomRichTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B289C2192A78B48D00D6CEC5 /* CustomRichTextViewController.swift */; };
 		B289C21E2A7B7D2600D6CEC5 /* LabelLoadHtmlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B289C21D2A7B7D2600D6CEC5 /* LabelLoadHtmlViewController.swift */; };
@@ -52,6 +53,7 @@
 		66120FD71FB9FAF42C570902 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		7C0FE6C166E24BCECD07B8C6 /* Pods_RZRichTextView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RZRichTextView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D54757EF00239AD9298D3AD /* Pods-RZRichTextView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView_Example.debug.xcconfig"; path = "Target Support Files/Pods-RZRichTextView_Example/Pods-RZRichTextView_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		B22BB38E2AE236C40059A609 /* NormalTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalTestViewController.swift; sourceTree = "<group>"; };
 		B26BEF132A837A4800C3F34B /* UpdataLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = UpdataLog.md; path = ../UpdataLog.md; sourceTree = "<group>"; };
 		B289C2172A78B0FB00D6CEC5 /* HowToUseDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToUseDemo.swift; sourceTree = "<group>"; };
 		B289C2192A78B48D00D6CEC5 /* CustomRichTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRichTextViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				B289C2192A78B48D00D6CEC5 /* CustomRichTextViewController.swift */,
 				B289C21D2A7B7D2600D6CEC5 /* LabelLoadHtmlViewController.swift */,
 				B289C2252A81CB7D00D6CEC5 /* TestViewController.swift */,
+				B22BB38E2AE236C40059A609 /* NormalTestViewController.swift */,
 				B2DBFBC02AD4ED38001AA5C9 /* TableViewViewController.swift */,
 			);
 			name = Demo;
@@ -375,6 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B289C21E2A7B7D2600D6CEC5 /* LabelLoadHtmlViewController.swift in Sources */,
+				B22BB38F2AE236C40059A609 /* NormalTestViewController.swift in Sources */,
 				B2DBFBC12AD4ED38001AA5C9 /* TableViewViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				B289C2262A81CB7D00D6CEC5 /* TestViewController.swift in Sources */,

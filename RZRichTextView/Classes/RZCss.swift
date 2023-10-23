@@ -8,10 +8,8 @@
 import UIKit
 import RZColorfulSwift
 
+private var paragraphTextListname: UInt8 = 3
 public extension NSParagraphStyle {
-    fileprivate struct RZTextListTypeName {
-        static var name = "RZTextListTypeName"
-    }
     enum RZTextListType: Int {
         case none //
         case ol     // 有序
@@ -20,10 +18,10 @@ public extension NSParagraphStyle {
     /// 有序无序状态
     var rzTextListType: RZTextListType {
         set {
-            objc_setAssociatedObject(self, &RZTextListTypeName.name, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &paragraphTextListname, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         get {
-            if let value = objc_getAssociatedObject(self, &RZTextListTypeName.name) as? RZTextListType {
+            if let value = objc_getAssociatedObject(self, &paragraphTextListname) as? RZTextListType {
                 return value
             }
             return .none

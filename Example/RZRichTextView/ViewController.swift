@@ -28,7 +28,8 @@ class ViewController: UIViewController {
             (CustomRichTextViewController.self, "自定义编辑器"),
             (LabelLoadHtmlViewController.self, "UILabel加载html"),
             (TestViewController.self, "测试"),
-            (TableViewViewController.self, "列表")
+            (TableViewViewController.self, "列表"),
+            (NormalTestViewController.self, "正常TextView")
         ]
         
         

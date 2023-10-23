@@ -151,10 +151,10 @@ open class RZRichTextView: UITextView {
         switch self.viewModel.showcountType {
         case .hidden:
             inputCountLabel.isHidden = true
-            self.contentInset  = .init(top: 5, left: 5, bottom: 5, right: 5)
+            self.contentInset  = .init(top: 5, left: 3, bottom: 5, right: 0)
         case .showcount, .showcountandall:
             inputCountLabel.isHidden = false
-            self.contentInset  = .init(top: 5, left: 5, bottom: 20, right: 5)
+            self.contentInset  = .init(top: 5, left: 3, bottom: 20, right: 0)
         }
         if #available(iOS 11.0, *) {
             self.contentInsetAdjustmentBehavior = .never
@@ -378,8 +378,50 @@ public extension RZRichTextView {
     }
     /// 插入了附件之后，需要fix附件相关的界面
     func fixAttachmentInfo() {
+        /// 修正一下附件在textView中的位置，当设置了列表的时候，附件显示宽度被压缩，此时重新设置一下附件宽高
+        func fixAttachmentBounds() {
+            self.textStorage.ensureAttributesAreFixed(in: .init(location: 0, length: self.textStorage.length))
+            self.layoutIfNeeded()
+            self.textStorage.enumerateAttribute(.attachment, in: .init(location: 0, length: self.textStorage.length)) { [weak self] value, range, _ in
+                guard let self = self, let value = value as? NSTextAttachment, let info = value.rzattachmentInfo else { return }
+                let frame = self.qfistRect(for: range)
+                var size: CGSize?
+                let lineWidth = self.frame.size.width - frame.minX - 5   // 当前行附件可显示的最大宽度
+                let edgeinsets = (info.infoLayer.subviews.first { v -> Bool in
+                    if let _ = v as? RZAttachmentInfoLayerProtocol {
+                        return true
+                    }
+                    return false
+                } as? RZAttachmentInfoLayerProtocol)?.imageViewEdgeInsets ?? .init(top: 15, left: 3, bottom: 0, right: 15)
+                switch info.type {
+                case .image, .video:
+                    if let image = info.image {
+                        let imageMaxWidth = lineWidth - (edgeinsets.left + edgeinsets.right) // 图片可显示的最大宽度
+                        let imageSize = image.size.qscaleto(maxWidth: imageMaxWidth)        // 图片真实size
+                        let realSize = CGSize.init(width: imageSize.width + (edgeinsets.left + edgeinsets.right), height: imageSize.height + (edgeinsets.top + edgeinsets.bottom)) // 附件的真实size（是由图片+边距计算得到的）
+                        if abs(frame.size.width - realSize.width) > 5 || abs(frame.size.height - realSize.height) > 10 {
+                            size = realSize
+                        }
+                    }
+                case .audio:
+                    let h = self.viewModel.audioAttachmentHeight + (edgeinsets.top + edgeinsets.bottom)
+                    if abs(lineWidth - frame.size.width) > 5 || abs(frame.size.height - h) > 10   {
+                        size = .init(width: lineWidth, height: h)
+                    }
+                }
+                if let size = size, size.width > 0 {
+                    value.bounds = .init(origin: .zero, size: size)
+                    let attr = NSMutableAttributedString.init(attributedString: .init(attachment: value))
+                    attr.addAttributes(self.textStorage.attributes(at: range.location, effectiveRange: nil), range: .init(location: 0, length: attr.length))
+                    let selctedRange = self.selectedRange
+                    self.textStorage.replaceCharacters(in: range, with: attr)
+                    self.layoutIfNeeded()
+                    self.selectedRange = selctedRange
+                }
+            }
+        }
         /// 将相关方法延迟加载，是为了在附件绘制完成之后，在获取位置
-        func fixAttachment() {
+        func fixAttachmentViewFrame() {
             self.textStorage.ensureAttributesAreFixed(in: .init(location: 0, length: self.textStorage.length))
             self.layoutIfNeeded()
             var changed = false
@@ -436,8 +478,9 @@ public extension RZRichTextView {
                 self.viewModel.attachmentInfoChanged?(newattachments)
             }
         }
+        fixAttachmentBounds()
         DispatchQueue.main.async {
-            fixAttachment()
+            fixAttachmentViewFrame()
             self.fixTextlistNum()
         }
     }
