@@ -23,10 +23,7 @@ class NormalTestViewController: UIViewController {
                 make.height.equalTo(400)
             })
         ])
-        
         textView.rz.colorfulConfer { confer in
-            confer.text("!1111111111")?.font(.systemFont(ofSize: 16))
-            confer.image(.qimageBy(color: .red, size: .init(width: 1000, height: 100)))
         }
         textView.layoutIfNeeded()
     }
