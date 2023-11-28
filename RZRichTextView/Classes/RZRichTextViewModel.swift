@@ -147,8 +147,11 @@ open class RZRichTextViewModel: NSObject {
                 }
                 self?.uploadAttachmentsComplete.accept(finish)
             }
-            
             self?.attachmentInfoDispose = .init()
+            guard attachments.count > 0 else {
+                checkupload()
+                return
+            }
             attachments.forEach { [weak self] info in
                 info.uploadStatus.subscribe({ value in
                     checkupload()

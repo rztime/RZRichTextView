@@ -1,3 +1,7 @@
+* v2.1.1
+    * . 修复只有一个附件，删除时，uploadAttachmentsComplete重新设值
+
+
 * v2.1.0
     * . 优化列表功能，解决列表带来的一系列bug
     * . 支持gif等显示
