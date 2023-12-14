@@ -1,3 +1,6 @@
+* v2.1.2
+    * . 系统字体中，不支持斜体中文，所以在导出到html时，斜体属性在富文本的NSOriginFont里，此时用NSOriginFont来覆盖原NSFont
+
 * v2.1.1
     * . 修复只有一个附件，删除时，uploadAttachmentsComplete重新设值
 

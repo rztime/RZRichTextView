@@ -188,6 +188,24 @@ public extension [NSAttributedString.Key: Any] {
             default: break
             }
         }
+        /// 系统字体不支持斜体中文，导致self[.font]拿到的字体NSFont不包含斜体，但是会加一个NSOriginalFont，所以这里以NSOriginalFont来覆盖上边设置过的
+        if let font = self[.init(rawValue: "NSOriginalFont")] as? UIFont {
+            switch font.fontType {
+            case .boldItalic:
+                styletexts.removeAll(where: {$0.contains("font-weight:bold;")})
+                styletexts.removeAll(where: {$0.contains("font-style:italic;")})
+                styletexts.append("font-weight:bold;")
+                styletexts.append("font-style:italic;")
+            case .bold:
+                styletexts.removeAll(where: {$0.contains("font-weight:bold;")})
+                styletexts.append("font-weight:bold;")
+            case .italic:
+                styletexts.removeAll(where: {$0.contains("font-style:italic;")})
+                styletexts.append("font-style:italic;")
+            case .normal:
+                break
+            }
+        }
         return styletexts.joined()
     }
 }
