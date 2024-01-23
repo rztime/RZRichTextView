@@ -23,8 +23,12 @@ public extension RZRichTextBase where T : NSAttributedString {
         let all = self.allParapraghRange()
         var res: [NSRange] = []
         for (idx, tempRange) in all.enumerated() {
-            if idx == all.count - 1 {
+            if let _ = range.intersection(tempRange) {
+                res.append(tempRange)
+            } else if idx == all.count - 1 {
                 if range.location >= tempRange.location && range.location <= tempRange.rt.maxLength() {
+                    res.append(tempRange)
+                } else if range.upperBound >= tempRange.location && range.upperBound <= tempRange.upperBound {
                     res.append(tempRange)
                 }
             } else if range.location >= tempRange.rt.maxLength() {
@@ -32,6 +36,8 @@ public extension RZRichTextBase where T : NSAttributedString {
             } else if range.location >= tempRange.location && range.location <= tempRange.rt.maxLength() {
                 res.append(tempRange)
             } else if range.location < tempRange.location && range.rt.maxLength() > tempRange.location {
+                res.append(tempRange)
+            } else if range.upperBound >= tempRange.location && range.upperBound <= tempRange.upperBound {
                 res.append(tempRange)
             }
         }

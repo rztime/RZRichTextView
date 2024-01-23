@@ -549,7 +549,7 @@ public extension RZRichTextView {
                 self.typingAttributes = self.lastTexttypingAttributes
             }
         }
-        self.lastCursorIsEnd = self.selectedRange.location == self.textStorage.length
+        self.lastCursorIsEnd = self.selectedRange.location == self.textStorage.length || self.selectedRange.upperBound == self.textStorage.length
     }
     /// 获取真实的属性
     func getRealTypingAttributes() -> [NSAttributedString.Key: Any] {
