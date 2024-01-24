@@ -202,7 +202,7 @@ public extension NSAttributedString {
                 if let attachment = dict[.attachment] as? NSTextAttachment {
                     labelStar.append(attachment.rz2html)
                 } else if tempAttr.string.count > 0 {
-                    let text = tempAttr.string.replacingOccurrences(of: "\n", with: "")
+                    let text = tempAttr.string.replacingOccurrences(of: "\n", with: "").fixHtml()
                     labelStar.append(text)
                 }
                 let temp = labelStar + labelEnd
@@ -419,6 +419,22 @@ public extension String {
             }
         }
         return tempAttr.rt.trimmingCharacters(in: options.trimingCharacters)
+    }
+    func fixHtml() -> String {
+        let symbols = [
+            ("&", "&amp;"),
+            ("<","&lt;"),
+            (">","&gt;"),
+            (" ","&nbsp;"),
+            ("©","&copy;"),
+            ("®","&trade;"),
+            ("™","&nbsp;"),
+        ]
+        var temp = self
+        symbols.forEach { (v1, v2) in
+            temp = temp.replacingOccurrences(of: v1, with: v2)
+        }
+        return temp
     }
 }
 
