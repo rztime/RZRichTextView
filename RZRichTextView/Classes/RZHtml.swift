@@ -369,13 +369,13 @@ public extension String {
                 let newfont: UIFont
                 switch font.fontType {
                 case .boldItalic:
-                    newfont = UIFont.rzboldItalicFont
+                    newfont = UIFont.rzboldItalicFont.withSize(font.pointSize)
                 case .bold:
-                    newfont = UIFont.rzboldFont
+                    newfont = UIFont.rzboldFont.withSize(font.pointSize)
                 case .italic:
-                    newfont = UIFont.rzitalicFont
+                    newfont = UIFont.rzitalicFont.withSize(font.pointSize)
                 case .normal:
-                    newfont = UIFont.rznormalFont
+                    newfont = UIFont.rznormalFont.withSize(font.pointSize)
                 }
                 tempAttr.addAttribute(.font, value: newfont, range: range)
             }
