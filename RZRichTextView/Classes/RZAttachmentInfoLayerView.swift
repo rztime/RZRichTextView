@@ -123,7 +123,7 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     
     /// 音频相关view
     var nameLabel = UILabel().qfont(.systemFont(ofSize: 12))
-    var audioPlayBtn = UIButton.init(type: .custom).qimage(RZRichImage.imageWith("audio"))
+    var audioPlayBtn = UIButton.init(type: .custom).qimage(RZRichImage.imageWith("audio")).qisUserInteractionEnabled(false)
     
     /// 删除按钮
     var deleteBtn: UIButton = .init(type: .custom).qimage(RZRichImage.imageWith("delete"))

@@ -12,30 +12,35 @@ import RZRichTextView
 
 class HTML2AttrViewController: UIViewController {
 
-    lazy var textView = RZRichTextView.init(frame: .init(x: 15, y: 100, width: qscreenwidth - 30, height: 300), viewModel: .shared(edit: true))
+    lazy var textView = RZRichTextView.init(frame: .init(x: 16, y: 100, width: qscreenwidth - 32, height: 80), viewModel: .shared(edit: true))
+//        .qisScrollEnabled(false)
         .qbackgroundColor(.qhex(0xf5f5f5))
         .qplaceholder("请输入内容")
+//        .qlinkTextAttributes([.foregroundColor: UIColor.red])
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.view.qbody([
-            textView.qmakeConstraints({ make in
-//                make.left.right.equalToSuperview().inset(15)
-                make.left.equalToSuperview().inset(15)
-                make.top.equalToSuperview().inset(100)
-                make.bottom.equalToSuperview().inset(qbottomSafeHeight)
-                make.width.equalTo(qscreenwidth - 30)
-            }),
-        ])
-        
-        NotificationCenter.qaddKeyboardObserver(target: self, object: nil) { [weak self] keyboardInfo in
-            let y = keyboardInfo.frameEnd.height
-            let ishidden = keyboardInfo.isHidden
-            self?.textView.snp.updateConstraints({ make in 
-                make.bottom.equalToSuperview().inset(ishidden ? qbottomSafeHeight : y)
+            UIScrollView.qbody([
+                textView.qmakeConstraints({ make in
+                    make.left.equalToSuperview().inset(16)
+                    make.top.equalToSuperview()
+                    make.height.equalTo(300)
+                    make.width.equalTo(qscreenwidth - 32)
+                }),
+            ]).qmakeConstraints({ make in
+                make.edges.equalToSuperview()
             })
-        }
+        ])
+        textView.textContainerInset = .init(top: 8, left: 0, bottom: 20, right: 0)
+//        NotificationCenter.qaddKeyboardObserver(target: self, object: nil) { [weak self] keyboardInfo in
+//            let y = keyboardInfo.frameEnd.height
+//            let ishidden = keyboardInfo.isHidden
+//            self?.textView.snp.updateConstraints({ make in 
+//                make.bottom.equalToSuperview().inset(ishidden ? qbottomSafeHeight : y)
+//            })
+//        }
         let btn = UIButton.init(type: .custom)
             .qtitle("转html")
             .qtitleColor(.red)
@@ -65,7 +70,10 @@ class HTML2AttrViewController: UIViewController {
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: btn)
         
-        let html = try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")
+        var html = try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")
+        html = """
+<p style=\"margin:0.0px 0.0px 0.0px 0.0px;font-size:16.0px;\"><span style=\"color:#191919;font-size:16.0px;\">I yu</span></p><br/><p style=\"margin:0.0px 0.0px 0.0px 0.0px;font-size:16.0px;\"><span style=\"color:#191919;font-size:16.0px;\"><a href=\"https\">百度一下</a></span><span style=\"color:#191919;font-size:16.0px;\"></span></p><p style=\"margin:0.0px 0.0px 0.0px 0.0px;font-size:16.0px;\"><span style=\"color:#191919;font-size:16.0px;\">生活的</span></p>
+"""
         let t = "<body style=\"font-size:16px;color:#110000;\">\(html ?? "")</body>"
         textView.html2Attributedstring(html: t)
 

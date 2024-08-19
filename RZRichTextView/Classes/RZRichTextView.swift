@@ -87,7 +87,7 @@ open class RZRichTextView: UITextView {
         accessoryView.clicked = { [weak self] item in
             self?.didClickedAccessoryItem(item)
         }
-
+        self.linkTextAttributes = self.viewModel.defaultLinkTypingAttributes
         self.typingAttributes = self.viewModel.defaultTypingAttributes
         self.lastTexttypingAttributes = self.typingAttributes
         NotificationCenter.qaddKeyboardObserver(target: self, object: nil) { [weak self] keyboardInfo in
@@ -117,7 +117,8 @@ open class RZRichTextView: UITextView {
                 if textView.textStorage.length == range.location {
                     textView.typingAttributes = self.lastTexttypingAttributes
                 }
-                if self.viewModel.removeLinkWhenInputText {
+                if self.viewModel.removeLinkWhenInputText, let _ = textView.typingAttributes[.link] {
+                    textView.typingAttributes = self.lastTexttypingAttributes
                     textView.typingAttributes[.link] = nil
                 }
                 if range.length == 0 && range.location == 0 && replaceText == "", let p = textView.typingAttributes[.paragraphStyle] as? NSParagraphStyle, p.isol || p.isul {
@@ -384,7 +385,11 @@ public extension RZRichTextView {
             self.layoutIfNeeded()
             self.textStorage.enumerateAttribute(.attachment, in: .init(location: 0, length: self.textStorage.length)) { [weak self] value, range, _ in
                 guard let self = self, let value = value as? NSTextAttachment, let info = value.rzattachmentInfo else { return }
-                let frame = self.qfistRect(for: range)
+                var frame = self.qfistRect(for: range)
+                /// 某些机型可能会出现无法获取位置，导致计算错误，这个地方使用这个兜底
+                if frame.origin.x.isInfinite || frame.origin.x.isNaN {
+                    frame = .init(x: 5, y: 0, width: 0, height: 0)
+                }
                 var size: CGSize?
                 let lineWidth = self.frame.size.width - frame.minX - 5   // 当前行附件可显示的最大宽度
                 let edgeinsets = (info.infoLayer.subviews.first { v -> Bool in

@@ -90,6 +90,17 @@ public extension RZRichTextView {
                 }
             }
         }
+        /// 修改链接字体
+        attr.enumerateAttribute(.link, in: .init(location: 0, length: attr.length)) { link, range, _ in
+            if link != nil {
+                attr.removeAttribute(.foregroundColor, range: range)
+                attr.removeAttribute(.strokeColor, range: range)
+                attr.removeAttribute(.strokeWidth, range: range)
+                attr.removeAttribute(.underlineStyle, range: range)
+                attr.removeAttribute(.underlineColor, range: range)
+                attr.addAttributes(self.linkTextAttributes, range: range)
+            }
+        }
         self.textStorage.setAttributedString(attr)
         self.selectedRange = .init(location: self.textStorage.length, length: 0)
     }
@@ -427,8 +438,8 @@ public extension String {
             (">","&gt;"),
             (" ","&nbsp;"),
             ("©","&copy;"),
-            ("®","&trade;"),
-            ("™","&nbsp;"),
+            ("®","&reg;"),
+            ("™","&trade;"),
         ]
         var temp = self
         symbols.forEach { (v1, v2) in

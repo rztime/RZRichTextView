@@ -44,9 +44,8 @@ public extension RZRichTextViewModel {
         viewModel.uploadAttachmentsComplete.subscribe({ value in
             print("上传是否完成：\(value)")
         }, disposebag: viewModel)
-
         /// 有新的附件插入时，需在附件的infoLayer上，添加自定义的视图，用于显示图片、视频、音频，以及交互
-        viewModel.reloadAttachmentInfoIfNeed = { [weak viewModel] info in
+        viewModel.reloadAttachmentInfoIfNeed = { [weak viewModel] info in            
             /// 绑定操作，用于重传，删除、预览等功能
             info.operation.subscribe({ [weak viewModel] value in
                 switch value {

@@ -71,6 +71,8 @@ open class RZRichTextViewModel: NSObject {
     open weak var textView: RZRichTextView?
     /// 默认字体样式, 如果需要修改，直接设置
     open lazy var defaultTypingAttributes: [NSAttributedString.Key : Any] = [:]
+    /// 默认链接字体样式, 如果需要修改，直接设置
+    open lazy var defaultLinkTypingAttributes: [NSAttributedString.Key : Any] = [.foregroundColor: UIColor.qhex(0x307bf6)]
     /// 需要刷新工具栏时，调用此block
     open var reloadDataWithAccessoryView: (() -> Void)?
     /// 用于记录输入历史可撤回次数
