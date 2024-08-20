@@ -142,11 +142,23 @@ open class RZRichTextView: UITextView {
         /// 显示字数
         self.qshowToWindow { [weak self] view, showed in
             if let v = view.superview, let self = self, showed {
-                v.qbody([
-                    self.inputCountLabel.qmakeConstraints({ make in
-                        make.right.bottom.equalTo(view).inset(1)
-                    })
-                ])
+                v.qbody([self.inputCountLabel])
+                self.inputCountLabel.snp.remakeConstraints { make in
+                    switch self.viewModel.countLabelLocation {
+                    case .topLeft(let x, let y):
+                        make.top.equalTo(view).inset(y)
+                        make.left.equalTo(view).inset(x)
+                    case .topRight(let x, let y):
+                        make.top.equalTo(view).inset(y)
+                        make.right.equalTo(view).inset(x)
+                    case .bottomLeft(let x, let y):
+                        make.bottom.equalTo(view).inset(y)
+                        make.left.equalTo(view).inset(x)
+                    case .bottomRight(let x, let y):
+                        make.bottom.equalTo(view).inset(y)
+                        make.right.equalTo(view).inset(x)
+                    }
+                }
             }
         }
         switch self.viewModel.showcountType {
@@ -314,6 +326,16 @@ open class RZRichTextView: UITextView {
             }
             self.contentTextChanged()
         }
+    }
+    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let v = super.hitTest(point, with: event)
+        if v == self {
+            if let _ = self.inputView {
+                self.inputView = nil
+                self.reloadInputViews()
+            }
+        }
+        return v
     }
     deinit {
         /// infoLayer里info有相互引用，所以这里强行移除，用于释放

@@ -103,9 +103,17 @@ open class RZRichTextViewModel: NSObject {
         case showcount      // 仅显示已输入字数
         case showcountandall // 显示输入和总限制字数
     }
+    /// 字数显示的位置（x、y是相对于父视图的inset）
+    public enum RZShowCountLocation {
+        case topLeft(x: Int, y: Int)
+        case topRight(x: Int, y: Int)
+        case bottomLeft(x: Int, y: Int)
+        case bottomRight(x: Int, y: Int)
+    }
     /// 显示字数类型
     open lazy var showcountType: RZShowCountType = .hidden
-
+    /// 字数显示的位置（x、y是相对于父视图的inset）
+    open var countLabelLocation: RZShowCountLocation = .bottomRight(x: 1, y: 1)
     /// 空格回车的规则，在转换为html时，将移除
     public enum RZSpaceRule: Int {
         case none               // 不做处理

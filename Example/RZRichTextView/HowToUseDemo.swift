@@ -28,6 +28,7 @@ public extension RZRichTextViewModel {
         viewModel.maxInputLenght = 100000
         /// 显示已输入字数
         viewModel.showcountType = .showcountandall
+        viewModel.countLabelLocation = .bottomRight(x: 1, y: 1)
         /// 空格回车规则
         viewModel.spaceRule = .removeEnd
         /// 当超出长度限制时，会回调此block
