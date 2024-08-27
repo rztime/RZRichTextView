@@ -80,9 +80,17 @@ public extension RZRichTextView {
                 case .image, .video:
                     let url = info.poster?.qtoURL ?? info.src?.qtoURL
                     if let url = url?.absoluteString {
-                        UIImage.asyncImageBy(url) { [weak info] image in
-                            info?.image = image
-                            fix(attachment: at.0, range: at.1)
+                        if let c = RZRichTextViewConfigure.shared.async_imageBy {
+                            let complete: ((String?, UIImage?) -> Void)? = { [weak info] source, image in
+                                info?.image = image
+                                fix(attachment: at.0, range: at.1)
+                            }
+                            c(url, complete)
+                        } else {
+                            UIImage.asyncImageBy(url) { [weak info] image in
+                                info?.image = image
+                                fix(attachment: at.0, range: at.1)
+                            }
                         }
                     }
                 case .audio:
@@ -400,10 +408,18 @@ public extension String {
                 at.rzattachmentInfo = att
                 switch att.type {
                 case .image:
-                    att.image = UIImage.syncImageBy(att.src)
+                    if let c = RZRichTextViewConfigure.shared.sync_imageBy {
+                        att.image = c(att.src)
+                    } else {
+                        att.image = UIImage.syncImageBy(att.src)
+                    }
                 case .video:
                     let src = ((att.poster.qisEmpty ? att.src : att.poster) ?? "")
-                    att.image = UIImage.syncImageBy(src)
+                    if let c = RZRichTextViewConfigure.shared.sync_imageBy {
+                        att.image = c(att.src)
+                    } else {
+                        att.image = UIImage.syncImageBy(src)
+                    }
                 case .audio:
                     break
                 }

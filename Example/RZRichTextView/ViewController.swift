@@ -60,7 +60,6 @@ class ViewController: UIViewController {
                 make.edges.equalToSuperview()
             })
         ])
-
     }
 
     override func didReceiveMemoryWarning() {

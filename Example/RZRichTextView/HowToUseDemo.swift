@@ -14,12 +14,39 @@ import Kingfisher
 
 /// 使用时，直接将此代码复制到项目中，并完成相关FIXME的地方即可
 public extension RZRichTextViewModel {
+    /// 如果有需要自定义实现资源下载，可以放开代码，并实现sync_imageBy、async_imageBy方法
+    static var configure: RZRichTextViewConfigure = {
+        /// 同步获取图片
+        RZRichTextViewConfigure.shared.sync_imageBy = { source in
+            print("sync source:\(source ?? "")")
+            let imgView = UIImageView()
+            imgView.kf.setImage(with: source?.qtoURL)
+            return imgView.image
+        }
+        /// 异步获取图片
+        RZRichTextViewConfigure.shared.async_imageBy = { source, complete in
+            print("async source:\(source ?? "")")
+            let comp = complete
+            let s = source
+            let imgView = UIImageView()
+            imgView.kf.setImage(with: source?.qtoURL) { result in
+                let image = try? result.get().image
+                comp?(s, image)
+            }
+        }
+        return RZRichTextViewConfigure.shared
+    }()
     class func shared(edit: Bool = true) -> RZRichTextViewModel {
         /// 自定义遮罩view 默认RZAttachmentInfoLayerView
 //        RZAttachmentOption.register(attachmentLayer: RZAttachmentInfoLayerView.self)
         
+        /// 如果有需要自定义实现资源下载，可以放开代码，并实现sync_imageBy、async_imageBy方法
+//        _ = RZRichTextViewModel.configure
+        
         let viewModel = RZRichTextViewModel.init()
         viewModel.canEdit = edit
+        /// 链接颜色
+        viewModel.defaultLinkTypingAttributes = [.foregroundColor: UIColor.qhex(0x307bf6), .underlineColor: UIColor.qhex(0x307bf6), .underlineStyle: NSUnderlineStyle.styleSingle.rawValue]
         /// 显示音频文件名字
 //        viewModel.showAudioName = false
         /// 音频高度

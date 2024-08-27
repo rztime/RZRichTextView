@@ -59,9 +59,17 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
                         }
                     }
                 } else if let url = info.src {
-                    self.imageView.kf.setImage(with: url.qtoURL, completionHandler: { [weak self] _ in
-                        self?.updateImageViewSize()
-                    })
+                    if let c = RZRichTextViewConfigure.shared.async_imageBy {
+                        let complete: ((String?, UIImage?) -> Void)? = { [weak self] source, image in
+                            self?.imageView.image = image
+                            self?.updateImageViewSize()
+                        }
+                        c(url, complete)
+                    } else {
+                        self.imageView.kf.setImage(with: url.qtoURL, completionHandler: { [weak self] _ in
+                            self?.updateImageViewSize()
+                        })
+                    } 
                 } else {
                     info.imagePublish.subscribe({ [weak self] value in
                         guard let self = self else { return }

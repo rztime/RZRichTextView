@@ -31,7 +31,7 @@ class LabelLoadHtmlViewController: UIViewController {
             cell.reload = { [weak self] indexPath in
                 self?.tableView.reloadRows(at: [indexPath], with: .automatic)
             }
-            cell.html = try? String.init(contentsOfFile: "/Users/rztime/Desktop/test1.html")
+            cell.html = try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")
             return cell
         }
     }

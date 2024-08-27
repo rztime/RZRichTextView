@@ -69,13 +69,8 @@ class HTML2AttrViewController: UIViewController {
         }, disposebag: btn)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: btn)
-        
-        var html = try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")
-        html = """
-<p style=\"margin:0.0px 0.0px 0.0px 0.0px;font-size:16.0px;\"><span style=\"color:#191919;font-size:16.0px;\">I yu</span></p><br/><p style=\"margin:0.0px 0.0px 0.0px 0.0px;font-size:16.0px;\"><span style=\"color:#191919;font-size:16.0px;\"><a href=\"https\">百度一下</a></span><span style=\"color:#191919;font-size:16.0px;\"></span></p><p style=\"margin:0.0px 0.0px 0.0px 0.0px;font-size:16.0px;\"><span style=\"color:#191919;font-size:16.0px;\">生活的</span></p>
-"""
+        let html = (try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html"))
         let t = "<body style=\"font-size:16px;color:#110000;\">\(html ?? "")</body>"
         textView.html2Attributedstring(html: t)
-
     }
 }

@@ -72,10 +72,19 @@ public extension UILabel {
                 switch info.type {
                 case .image, .video:
                     let url = info.poster?.qtoURL ?? info.src?.qtoURL
-                    UIImage.asyncImageBy(url?.absoluteString) {[weak info]  image in
-                        info?.image = image
-                        info?.image = UILabel.creatAttachmentInfoView(info, width: max)
-                        fix(attachment: at.0, range: at.1)
+                    if let c = RZRichTextViewConfigure.shared.async_imageBy {
+                        let complete: ((String?, UIImage?) -> Void)? = { [weak info] source, image in
+                            info?.image = image
+                            info?.image = UILabel.creatAttachmentInfoView(info, width: max)
+                            fix(attachment: at.0, range: at.1)
+                        }
+                        c(url?.absoluteString, complete)
+                    } else {
+                        UIImage.asyncImageBy(url?.absoluteString) { [weak info] image in
+                            info?.image = image
+                            info?.image = UILabel.creatAttachmentInfoView(info, width: max)
+                            fix(attachment: at.0, range: at.1)
+                        }
                     }
                 case .audio:
                     info.image = UILabel.creatAttachmentInfoView(info, width: max)
