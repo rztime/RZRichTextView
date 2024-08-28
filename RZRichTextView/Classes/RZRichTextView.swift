@@ -460,7 +460,9 @@ public extension RZRichTextView {
                         /// 在textView加载内容过程中，执行了此方法的话，frame会无法获取准确数据，所以这里要做一个判断
                         if frame.origin.x.isInfinite || frame.origin.x.isNaN ||
                             frame.origin.y.isInfinite || frame.origin.y.isNaN {
-                            self.fixAttachmentInfo()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                                self.fixAttachmentInfo()
+                            })
                             return
                         }
                         info.infoLayer.frame = frame
@@ -522,12 +524,14 @@ public extension RZRichTextView {
                 self.showPlaceHolder()
             }
         }
-        /// 在有中文输入拼音高亮时，不做处理
-        let language = UIApplication.shared.textInputMode?.primaryLanguage
-        if language?.hasPrefix("zh-Han") ?? false {
-            let position = self.position(from: (self.markedTextRange ?? .init()).start, offset: 0)
-            if position != nil {
-                return
+        if self.isFirstResponder {
+            /// 在有中文输入拼音高亮时，不做处理
+            let language = UIApplication.shared.textInputMode?.primaryLanguage
+            if language?.hasPrefix("zh-Han") ?? false {
+                let position = self.position(from: (self.markedTextRange ?? .init()).start, offset: 0)
+                if position != nil {
+                    return
+                }
             }
         }
         /// 如果超过字数限制，则将移除超过的内容
