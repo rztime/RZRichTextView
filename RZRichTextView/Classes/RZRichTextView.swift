@@ -631,7 +631,7 @@ public extension RZRichTextView {
                         index = 1
                     }
                     lastType = .ul
-                    temp.append(("·", range, p, dict))
+                    temp.append((viewModel.ulSymbol, range, p, dict))
                 } else {
                     lastType = .none
                     index = 0
@@ -648,6 +648,7 @@ public extension RZRichTextView {
                     .qfont((dict[.font] as? UIFont) ?? .systemFont(ofSize: 16))
                     .qtextColor((dict[.foregroundColor] as? UIColor) ?? .black)
                     .qtext("\(index)")
+                    .qtextAliginment(viewModel.ulSymbolAlignment)
                 self.addSubview(view)
             }
         }

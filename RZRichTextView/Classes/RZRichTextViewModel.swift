@@ -132,6 +132,9 @@ open class RZRichTextViewModel: NSObject {
     /// 初始化的时候配置此项，在编辑过程中，如果想禁用编辑，直接设置textView.isEditable = false
     open var canEdit: Bool = true
     
+    open var ulSymbol:String = "·"
+    open var ulSymbolAlignment:NSTextAlignment = .right
+    
     public override init() {
         super.init()
         /// 默认居左
