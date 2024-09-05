@@ -134,6 +134,7 @@ open class RZRichTextViewModel: NSObject {
     
     open var ulSymbol:String = "·"
     open var ulSymbolAlignment:NSTextAlignment = .right
+    open var ulSymbolFont:UIFont?
     
     public override init() {
         super.init()

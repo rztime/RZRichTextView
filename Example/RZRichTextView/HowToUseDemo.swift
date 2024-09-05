@@ -48,6 +48,7 @@ public extension RZRichTextViewModel {
         viewModel.ulSymbol = "•"
         //viewModel.ulSymbol = "*"
         viewModel.ulSymbolAlignment = .center
+        viewModel.ulSymbolFont = .systemFont(ofSize: 14, weight: .medium)
         
         /// 链接颜色
         viewModel.defaultLinkTypingAttributes = [.foregroundColor: UIColor.qhex(0x307bf6), .underlineColor: UIColor.qhex(0x307bf6), .underlineStyle: NSUnderlineStyle.styleSingle.rawValue]
