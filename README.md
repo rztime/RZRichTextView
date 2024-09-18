@@ -20,6 +20,17 @@ it, simply add the following line to your Podfile:
 pod 'RZRichTextView'
 ```
 
+有时可能会有一些小更新但暂时没有更新最新版本，可以在podfile中使用
+```ruby
+pod 'RZRichTextView', :git => 'https://github.com/rztime/RZRichTextView.git'
+```
+
+然后执行
+```ruby
+pod update RZRichTextView --no-repo-update
+```
+
+
 ## Author
 
 rztime, rztime@vip.qq.com qq交流群：580839749

@@ -645,7 +645,7 @@ public extension RZRichTextView {
             if index != "" {
                 let rect = self.qcaretRect(for: range.location)
                 let view = RZTextListView.init().qframe(.init(x: 3, y: rect.origin.y, width: 30, height: rect.size.height))
-                    .qfont(viewModel.ulSymbolFont ?? (dict[.font] as? UIFont) ?? .systemFont(ofSize: 16))
+                    .qfont(viewModel.ulSymbolFont ?? ((dict[.font] as? UIFont) ?? .systemFont(ofSize: 16)))
                     .qtextColor((dict[.foregroundColor] as? UIColor) ?? .black)
                     .qtext("\(index)")
                     .qtextAliginment(viewModel.ulSymbolAlignment)

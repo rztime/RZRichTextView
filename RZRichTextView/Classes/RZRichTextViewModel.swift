@@ -131,10 +131,10 @@ open class RZRichTextViewModel: NSObject {
     /// 是否是编辑状态，true可以编辑，false时，不可删除附件以及编辑textView
     /// 初始化的时候配置此项，在编辑过程中，如果想禁用编辑，直接设置textView.isEditable = false
     open var canEdit: Bool = true
-    
-    open var ulSymbol:String = "·"
-    open var ulSymbolAlignment:NSTextAlignment = .right
-    open var ulSymbolFont:UIFont?
+    /// 无序列表前序号的配置
+    open var ulSymbol: String = "·"
+    open var ulSymbolAlignment: NSTextAlignment = .right
+    open var ulSymbolFont: UIFont?
     
     public override init() {
         super.init()

@@ -45,10 +45,12 @@ public extension RZRichTextViewModel {
         
         let viewModel = RZRichTextViewModel.init()
         viewModel.canEdit = edit
-        viewModel.ulSymbol = "•"
+        /// 无序符号配置
+        viewModel.ulSymbol = "·"
         //viewModel.ulSymbol = "*"
-        viewModel.ulSymbolAlignment = .center
-        viewModel.ulSymbolFont = .systemFont(ofSize: 14, weight: .medium)
+        viewModel.ulSymbolAlignment = .right
+        /// 如果设置，将固定无序符号的font
+//        viewModel.ulSymbolFont = .systemFont(ofSize: 14, weight: .medium)
         
         /// 链接颜色
         viewModel.defaultLinkTypingAttributes = [.foregroundColor: UIColor.qhex(0x307bf6), .underlineColor: UIColor.qhex(0x307bf6), .underlineStyle: NSUnderlineStyle.styleSingle.rawValue]

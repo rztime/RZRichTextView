@@ -13,7 +13,7 @@ import RZRichTextView
 class HTML2AttrViewController: UIViewController {
 
     lazy var textView = RZRichTextView.init(frame: .init(x: 16, y: 100, width: qscreenwidth - 32, height: 80), viewModel: .shared(edit: true))
-//        .qisScrollEnabled(false)
+        .qisScrollEnabled(false)
         .qbackgroundColor(.qhex(0xf5f5f5))
         .qplaceholder("请输入内容")
 //        .qlinkTextAttributes([.foregroundColor: UIColor.red])
@@ -25,8 +25,8 @@ class HTML2AttrViewController: UIViewController {
             UIScrollView.qbody([
                 textView.qmakeConstraints({ make in
                     make.left.equalToSuperview().inset(16)
-                    make.top.equalToSuperview()
-                    make.height.equalTo(300)
+                    make.top.bottom.equalToSuperview()
+//                    make.height.equalTo(300)
                     make.width.equalTo(qscreenwidth - 32)
                 }),
             ]).qmakeConstraints({ make in
