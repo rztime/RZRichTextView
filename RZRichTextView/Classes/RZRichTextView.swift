@@ -631,7 +631,7 @@ public extension RZRichTextView {
                         index = 1
                     }
                     lastType = .ul
-                    temp.append(("·", range, p, dict))
+                    temp.append((viewModel.ulSymbol, range, p, dict))
                 } else {
                     lastType = .none
                     index = 0
@@ -645,9 +645,10 @@ public extension RZRichTextView {
             if index != "" {
                 let rect = self.qcaretRect(for: range.location)
                 let view = RZTextListView.init().qframe(.init(x: 3, y: rect.origin.y, width: 30, height: rect.size.height))
-                    .qfont((dict[.font] as? UIFont) ?? .systemFont(ofSize: 16))
+                    .qfont(viewModel.ulSymbolFont ?? (dict[.font] as? UIFont) ?? .systemFont(ofSize: 16))
                     .qtextColor((dict[.foregroundColor] as? UIColor) ?? .black)
                     .qtext("\(index)")
+                    .qtextAliginment(viewModel.ulSymbolAlignment)
                 self.addSubview(view)
             }
         }

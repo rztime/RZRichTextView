@@ -45,6 +45,11 @@ public extension RZRichTextViewModel {
         
         let viewModel = RZRichTextViewModel.init()
         viewModel.canEdit = edit
+        viewModel.ulSymbol = "•"
+        //viewModel.ulSymbol = "*"
+        viewModel.ulSymbolAlignment = .center
+        viewModel.ulSymbolFont = .systemFont(ofSize: 14, weight: .medium)
+        
         /// 链接颜色
         viewModel.defaultLinkTypingAttributes = [.foregroundColor: UIColor.qhex(0x307bf6), .underlineColor: UIColor.qhex(0x307bf6), .underlineStyle: NSUnderlineStyle.styleSingle.rawValue]
         /// 显示音频文件名字
