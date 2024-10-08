@@ -65,7 +65,9 @@ public extension RZRichTextView {
                 }
                 let atts = self.textStorage.rt.attachments()
                 if let a = atts.first(where: {$0.0 == attachment}) {
-                    self.textStorage.replaceCharacters(in: a.1, with: .init(attachment: a.0))
+                    let attr = NSMutableAttributedString.init(attachment: a.0)
+                    attr.addAttributes(self.textStorage.attributes(at: a.1.location, effectiveRange: nil), range: .init(location: 0, length: attr.length))
+                    self.textStorage.replaceCharacters(in: a.1, with: attr)
                     self.fixAttachmentInfo()
                 }
             }

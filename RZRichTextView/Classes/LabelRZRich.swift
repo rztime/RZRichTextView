@@ -58,6 +58,7 @@ public extension UILabel {
             }
             let temp = NSMutableAttributedString(attributedString: attr)
             let attach = NSMutableAttributedString(attachment: attachment)
+            attach.addAttributes(temp.attributes(at: range.location, effectiveRange: nil), range: .init(location: 0, length: attach.length))
             if needPreView {
                 attach.addAttributes([.rztapLabel: "\(attachment)"], range: .init(location: 0, length: 1))
             }
