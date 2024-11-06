@@ -453,41 +453,51 @@ public extension RZRichTextView {
             self.layoutIfNeeded()
             var changed = false
             /// 将现有的附件额外添加的视图更新位置
-            self.textStorage.enumerateAttribute(.attachment, in: .init(location: 0, length: self.textStorage.length)) { [weak self] value, range, _ in
-                if let self = self, let value = value as? NSTextAttachment {
-                    if let info = value.rzattachmentInfo {
-                        let frame = self.rz.rectFor(range: range) ?? .zero
-                        /// 在textView加载内容过程中，执行了此方法的话，frame会无法获取准确数据，所以这里要做一个判断
-                        if frame.origin.x.isInfinite || frame.origin.x.isNaN ||
-                            frame.origin.y.isInfinite || frame.origin.y.isNaN {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                                self.fixAttachmentInfo()
-                            })
-                            return
-                        }
-                        info.infoLayer.frame = frame
-                        if info.infoLayer.superview == nil {
-                            self.addSubview(info.infoLayer)
-                            changed = true
-                        }
-                        if let v = info.infoLayer.subviews.first as? RZAttachmentInfoLayerProtocol {
-                            v.canEdit = self.viewModel.canEdit
-                            v.showAudioName = self.viewModel.showAudioName
-                        } else {
-                            let infoView = RZAttachmentOption.share.viewclass.init()
-                            info.infoLayer.qbody([
-                                infoView.qmakeConstraints({ make in
-                                    make.edges.equalToSuperview().inset(1)
-                                })])
-                            if let infoView = infoView as? RZAttachmentInfoLayerProtocol {
-                                infoView.info = info
-                                infoView.canEdit = self.viewModel.canEdit
-                                infoView.showAudioName = self.viewModel.showAudioName
-                                self.viewModel.reloadAttachmentInfoIfNeed?(infoView)
-                            }
+            var atts: [(NSTextAttachment, NSRange)] = []
+            self.textStorage.enumerateAttribute(.attachment, in: .init(location: 0, length: self.textStorage.length)) { value, range, _ in
+                if let value = value as? NSTextAttachment {
+                    atts.append((value, range))
+                }
+            }
+            var needRelaod = false
+            for att in atts {
+                let value = att.0
+                let range = att.1
+                if let info = value.rzattachmentInfo {
+                    let frame = self.rz.rectFor(range: range) ?? .zero
+                    /// 在textView加载内容过程中，执行了此方法的话，frame会无法获取准确数据，所以这里要做一个判断
+                    if frame.origin.x.isInfinite || frame.origin.x.isNaN ||
+                        frame.origin.y.isInfinite || frame.origin.y.isNaN {
+                        needRelaod = true
+                        continue
+                    }
+                    info.infoLayer.frame = frame
+                    if info.infoLayer.superview == nil {
+                        self.addSubview(info.infoLayer)
+                        changed = true
+                    }
+                    if let v = info.infoLayer.subviews.first as? RZAttachmentInfoLayerProtocol {
+                        v.canEdit = self.viewModel.canEdit
+                        v.showAudioName = self.viewModel.showAudioName
+                    } else {
+                        let infoView = RZAttachmentOption.share.viewclass.init()
+                        info.infoLayer.qbody([
+                            infoView.qmakeConstraints({ make in
+                                make.edges.equalToSuperview().inset(1)
+                            })])
+                        if let infoView = infoView as? RZAttachmentInfoLayerProtocol {
+                            infoView.info = info
+                            infoView.canEdit = self.viewModel.canEdit
+                            infoView.showAudioName = self.viewModel.showAudioName
+                            self.viewModel.reloadAttachmentInfoIfNeed?(infoView)
                         }
                     }
                 }
+            }
+            if needRelaod {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                    self.fixAttachmentInfo()
+                })
             }
             /// 筛选出已删除的附件，并移除
             let newattachments = self.attachments
