@@ -25,22 +25,25 @@ class TableViewViewController: UIViewController {
         
         let btn = UIButton.init(type: .custom)
         self.navigationItem.rightBarButtonItem = .init(customView: btn)
+        let temphtml = (try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")) ?? ""
+        let html1 = "<body style=\"font-size:16px;color:#110000;\">\(temphtml)</body>"
+        let html2 = "<body style=\"font-size:16px;color:#110000;\">\(temphtml)</body>"
+        var html = html1
         btn.qtitle("测试").qtitleColor(.red)
             .qtap { [weak self] view in
+                if html == html1 {
+                    html = html2
+                } else{
+                    html = html1
+                }
                 self?.tableView.reloadData()
-            }
-//        tableView.isScrollEnabled = false
-        
+            } 
+
         tableView
             .qnumberofRows { section in
-                return 2
+                return 1
             }
             .qcell { [weak self] tableView, indexPath in
-                if indexPath.row == 1 {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "!") ?? UITableViewCell.init(style: .default, reuseIdentifier: "1")
-                    cell.textLabel?.text = "1"
-                    return cell
-                }
                 var cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? TestTextCell
                 if cell == nil {
                     cell = TestTextCell.init(style: .default, reuseIdentifier: "cell")
@@ -48,47 +51,54 @@ class TableViewViewController: UIViewController {
                         self?.tableView.reloadData()
                     }
                 }
-                var html = try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")
-                let t = "<body style=\"font-size:16px;\">\(html ?? "")</body>"
-                cell?.textView.html2Attributedstring(html: t)
+                let t = "<body style=\"font-size:16px;\">\(html)</body>"
+                cell?.html = t
                 return cell!
             }
     }
 }
 
 class TestTextCell : UITableViewCell {
-    let textView = RZRichTextView.init(frame: .init(x: 15, y: 15, width: 384, height: 44), viewModel: .shared(edit: false))
     var reload: ((_ indexPath: IndexPath?) -> Void)?
     var indexPath: IndexPath = .init(row: 0, section: 0)
+    
+    var lastHeight: CGFloat = -1
+    
+    var html: String = "" {
+        didSet {
+            textView.html2Attributedstring(html: html)
+        }
+    }
+    let textView = RZRichTextView.init(frame: .init(x: 15, y: 15, width: 384, height: 44), viewModel: .shared(edit: false))
+        .qisScrollEnabled(false)
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.contentView.addSubview(textView)
-        self.contentView.snp.makeConstraints { make in
-            make.height.equalTo(44)
-        }
-        textView.font = UIFont.systemFont(ofSize: 16)
-        textView.backgroundColor = UIColor.clear
         self.selectionStyle = .none
-        var first = true
+        
+        let h = max(textView.frame.size.height, 80) + 30
+        self.lastHeight = h
+        self.contentView.snp.makeConstraints { make in
+            make.height.equalTo(h)
+        }
+        self.contentView.qbody([
+            textView.qmakeConstraints({ make in
+                make.left.top.equalToSuperview().inset(15)
+                make.width.equalTo(qscreenwidth - 30)
+                make.height.greaterThanOrEqualTo(80)
+            })
+        ])
         textView.qcontentSizeChanged { [weak self] scrollView in
-            if first {
-                first = false
+            guard let self = self else { return }
+            let height = scrollView.frame.size.height + 30
+            if self.lastHeight == height {
                 return
             }
-            DispatchQueue.main.async {
-                let x: CGFloat = 15
-                let height = scrollView.contentTextHeight
-                scrollView.frame = .init(x: x, y: x, width: 384, height: height)
-                
-                let h = Int(height + 2 * x)
-                if h != Int(self?.frame.size.height ?? 0) {
-                    self?.contentView.snp.updateConstraints({ make in
-                        make.height.equalTo(h)
-                    })
-                    
-                    self?.reload?(self?.indexPath)
-                }
-            }
+            self.lastHeight = height
+            self.contentView.snp.updateConstraints({ make in
+                make.height.equalTo(height)
+            })
+            self.reload?(self.indexPath)
         }
     }
     

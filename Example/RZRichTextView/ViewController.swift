@@ -9,6 +9,7 @@
 import UIKit
 import RZRichTextView
 import QuicklySwift
+import Kingfisher
 
 class ViewController: UIViewController {
     
@@ -60,6 +61,15 @@ class ViewController: UIViewController {
                 make.edges.equalToSuperview()
             })
         ])
+        let btn = UIButton.init(type: .custom)
+        self.navigationItem.rightBarButtonItem = .init(customView: btn)
+        btn.qtitle("清缓存").qtitleColor(.red)
+            .qtap { _ in
+                ImageCache.default.clearMemoryCache()
+                ImageCache.default.clearCache()
+                ImageCache.default.clearDiskCache()
+                print("------- 清缓存")
+            }
     }
 
     override func didReceiveMemoryWarning() {

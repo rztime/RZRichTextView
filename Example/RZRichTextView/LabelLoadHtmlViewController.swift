@@ -23,21 +23,24 @@ class LabelLoadHtmlViewController: UIViewController {
             })
         ])
         tableView.qnumberofRows { section in
-            return 20
+            return 1
         }
         .qcell { tableView, indexPath in
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? TestCell ?? TestCell(style: .default, reuseIdentifier: "cell")
             cell.indexPath = indexPath
             cell.reload = { [weak self] indexPath in
-                self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+                self?.tableView.reloadData()
             }
-            cell.html = try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")
+            let html = (try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")) ?? ""
+            let t = "<body style=\"font-size:16px;color:#110000;\">\(html)</body>"
+            cell.html = t
             return cell
         }
     }
 }
 class TestCell: UITableViewCell {
     lazy var htmlLabel = UILabel().qpreferredMaxLayoutWidth(qscreenwidth - 20).qnumberOfLines(0)
+//        .qbackgroundColor(.lightGray)
     var reload: ((_ indexPath: IndexPath) -> Void)?
     var indexPath: IndexPath = .init(row: 0, section: 0)
     
@@ -48,9 +51,15 @@ class TestCell: UITableViewCell {
                 if let self = self {
                     self.reload?(self.indexPath)
                 }
-            } preview: { tapActionId in
+            } preview: { [weak self] tapActionId in
+                guard let self = self else { return }
                 if tapActionId.hasPrefix("<NSTextAttachment") {
                     print("预览附件:\(tapActionId)")// 通过富文本，获取所有的附件，然后预览
+                    let attach = self.htmlLabel.attributedText?.rt.attachments().compactMap({$0.0})
+                    if let a = attach?.first(where: {"\($0)".contains(tapActionId)})?.rzattachmentInfo, let url = (a.poster ?? a.src) {
+                        let vc = PreviewMediaViewController(url: url)
+                        qAppFrame.present(vc, animated: true, completion: nil)
+                    }
                 } else {
                     print("处理链接:\(tapActionId)")
                 }

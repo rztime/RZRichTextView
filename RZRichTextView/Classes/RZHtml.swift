@@ -88,7 +88,6 @@ public extension RZRichTextView {
                     let inset = self.isEditable ? configure.imageViewEdgeInsets : configure.imageViewEdgeInsetsNormal
                     bounds.size.height = self.viewModel.audioAttachmentHeight + inset.top + inset.bottom
                     at.0.bounds = bounds
-                    continue
                 }
             }
         }
@@ -280,6 +279,7 @@ public extension String {
         // 在真机中，\"  与 ” 转换没问题
         // 在模拟器中，<p style=\"text-align:center;\"> 这种\" 会导致无法居中
         tempHtml = tempHtml.replacingOccurrences(of: #"\""#, with: #"""#) as NSString
+        tempHtml = tempHtml.replacingOccurrences(of: "\n", with: "") as NSString
         var attachments: [RZAttachmentInfo] = []
         /// 找音、视频、图片
         let regrule = #"(<video\s+.*?src\s*=\s*([^ <>]+)\b.*?>([\s\S]*?)</video>)|(<audio\s+.*?src\s*=\s*([^ <>]+)\b.*?>([\s\S]*?)</audio>)|(<img\s+.*?src\s*=\s*([^ <>]+)\b.*?>)"#
@@ -415,6 +415,7 @@ public extension String {
                     var bounds = at.bounds
                     bounds.size.height = att.audioViewHeight + configure.top + configure.bottom
                     at.bounds = bounds
+                    at.image = RZRichTextViewConfigure.shared.backgroundColor.qtoImage(bounds.size)
                 }
             }
         }

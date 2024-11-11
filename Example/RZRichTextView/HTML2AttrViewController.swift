@@ -12,8 +12,8 @@ import RZRichTextView
 
 class HTML2AttrViewController: UIViewController {
 
-    lazy var textView = RZRichTextView.init(frame: .init(x: 16, y: 100, width: qscreenwidth - 32, height: 80), viewModel: .shared(edit: true))
-        .qisScrollEnabled(false)
+    lazy var textView = RZRichTextView.init(frame: .init(x: 16, y: 100, width: qscreenwidth - 32, height: 180), viewModel: .shared(edit: true))
+//        .qisScrollEnabled(false)
         .qbackgroundColor(.qhex(0xf5f5f5))
         .qplaceholder("请输入内容")
 //        .qlinkTextAttributes([.foregroundColor: UIColor.red])
@@ -26,40 +26,19 @@ class HTML2AttrViewController: UIViewController {
                 textView.qmakeConstraints({ make in
                     make.left.equalToSuperview().inset(16)
                     make.top.bottom.equalToSuperview()
-//                    make.height.equalTo(300)
+                    make.height.equalTo(500)
                     make.width.equalTo(qscreenwidth - 32)
                 }),
             ]).qmakeConstraints({ make in
                 make.edges.equalToSuperview()
             })
         ])
-        textView.textContainerInset = .init(top: 8, left: 0, bottom: 20, right: 0)
-//        NotificationCenter.qaddKeyboardObserver(target: self, object: nil) { [weak self] keyboardInfo in
-//            let y = keyboardInfo.frameEnd.height
-//            let ishidden = keyboardInfo.isHidden
-//            self?.textView.snp.updateConstraints({ make in 
-//                make.bottom.equalToSuperview().inset(ishidden ? qbottomSafeHeight : y)
-//            })
-//        }
         let btn = UIButton.init(type: .custom)
             .qtitle("转html")
             .qtitleColor(.red)
             .qtap { [weak self] view in
                 guard let self = self else { return }
-                let attachments = self.textView.attachments
-                if let _ = attachments.firstIndex(where: { info in
-                    if case .complete(let success, _) = info.uploadStatus.value {
-                        return !success
-                    }
-                    return true
-                }) {
-                    // 有未完成上传的
-                    print("有未完成上传的")
-                    return
-                }
-                let h = self.textView.attributedText.rz.codingToCompleteHtml()!
-                let html = self.textView.code2html()
-                print("\(html)")
+                self.textView.isEditable = !self.textView.isEditable
             }
         
         /// 上传完成时，可以点击
@@ -69,8 +48,8 @@ class HTML2AttrViewController: UIViewController {
         }, disposebag: btn)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: btn)
-        let html = (try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html"))
-        let t = "<body style=\"font-size:16px;color:#110000;\">\(html ?? "")</body>"
+        let html = (try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")) ?? ""
+        let t = "<body style=\"font-size:16px;color:#110000;\">\(html)</body>"
         textView.html2Attributedstring(html: t)
     }
 }

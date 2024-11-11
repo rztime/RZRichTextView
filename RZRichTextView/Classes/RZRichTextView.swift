@@ -623,7 +623,7 @@ extension RZRichTextView {
                 case .audio:
                     let h = self.viewModel.audioAttachmentHeight + (edgeinsets.top + edgeinsets.bottom)
                     let boundsSize = attachment.bounds.size
-                    if abs(lineWidth - boundsSize.width) >= 1 || abs(boundsSize.height - h) >= 1   {
+                    if abs(lineWidth - boundsSize.width) >= 1 || abs(boundsSize.height - h) >= 1 {
                         size = .init(width: lineWidth, height: h)
                     }
                 }

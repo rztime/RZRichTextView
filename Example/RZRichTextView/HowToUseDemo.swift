@@ -16,25 +16,39 @@ import Kingfisher
 public extension RZRichTextViewModel {
     /// 如果有需要自定义实现资源下载，可以放开代码，并实现sync_imageBy、async_imageBy方法
     static var configure: RZRichTextViewConfigure = {
-        /// 同步获取图片
-        RZRichTextViewConfigure.shared.sync_imageBy = { source in
-            print("sync source:\(source ?? "")")
+        let tempConfigure = RZRichTextViewConfigure.shared
+        /// 同步获取图片(这是一个默认实例，可以按需设置请求图片的方法，注意gif、视频首帧图)
+        tempConfigure.sync_imageBy = { source in
             let imgView = UIImageView()
             imgView.kf.setImage(with: source?.qtoURL)
             return imgView.image
         }
-        /// 异步获取图片
-        RZRichTextViewConfigure.shared.async_imageBy = { source, complete in
-            print("async source:\(source ?? "")")
+        /// 异步获取图片(这是一个默认实例, 可以按需设置请求图片的方法，注意gif、视频首帧图)
+        tempConfigure.async_imageBy = { source, complete in
             let comp = complete
-            let s = source
-            let imgView = UIImageView()
-            imgView.kf.setImage(with: source?.qtoURL) { result in
+            guard let s = source else {
+                comp?(source, RZRichTextViewConfigure.shared.loadErrorImage)
+                return
+            }
+            var imgView : UIImageView? = .init()
+            imgView?.kf.setImage(with: source?.qtoURL) { result in
                 let image = try? result.get().image
-                comp?(s, image)
+                if image == nil {
+                    /// 图片获取失败，当做视频去请求首帧，并缓存
+                    UIImage.qimageByVideoUrl(s) { _, image in
+                        if let image = image {
+                            ImageCache.default.store(image, forKey: s)
+                        }
+                        comp?(s, image ?? RZRichTextViewConfigure.shared.loadErrorImage)
+                        imgView = nil
+                    }
+                } else {
+                    comp?(s, image ?? RZRichTextViewConfigure.shared.loadErrorImage)
+                    imgView = nil
+                }
             }
         }
-        return RZRichTextViewConfigure.shared
+        return tempConfigure
     }()
     class func shared(edit: Bool = true) -> RZRichTextViewModel {
         /// 自定义遮罩view 默认RZAttachmentInfoLayerView
@@ -77,7 +91,7 @@ public extension RZRichTextViewModel {
             return true
         }
         viewModel.uploadAttachmentsComplete.subscribe({ value in
-            print("上传是否完成：\(value)")
+//            print("上传是否完成：\(value)")
         }, disposebag: viewModel)
         /// 有新的附件插入时，需在附件的infoLayer上，添加自定义的视图，用于显示图片、视频、音频，以及交互
         viewModel.reloadAttachmentInfoIfNeed = { [weak viewModel] info in            
@@ -89,25 +103,22 @@ public extension RZRichTextViewModel {
                     viewModel?.textView?.removeAttachment(info)
                 case .preview(let info):// 预览
                     // FIXME: 此处自行实现预览音视频图片的功能, 重新编辑时，取src等数据
-                    if let allattachments = viewModel?.textView?.attachments.filter({$0.asset != nil}) {
-                        if let index = allattachments.firstIndex(where: {$0 == info}) {
-                            // 预览播放
-                            let vc = TZPhotoPreviewController.init()
-                            vc.currentIndex = index
-
-                            let models = allattachments.compactMap { info -> TZAssetModel? in
-                                var i: UInt = 2
-                                switch info.type {
-                                case .image:break
-                                case .video: i = 3
-                                case .audio: i = 4
-                                }
-                                if info.type == .audio { return nil } /// 音频预览 借用的tz不支持，所以 这个需要自己实现
-                                return .init(asset: info.asset, type: .init(i))
-                            }
-                            vc.models = NSMutableArray.init(array: models)
-                            qAppFrame.present(vc, animated: true, completion: nil)
+                    let allattachments = viewModel?.textView?.attachments
+                    let index = allattachments?.firstIndex(where: {$0 == info})
+                    if let asset = info.asset {
+                        // 预览播放
+                        let vc = TZPhotoPreviewController.init()
+                        var i: UInt = 2
+                        switch info.type {
+                        case .image:break
+                        case .video: i = 3
+                        case .audio: i = 4
                         }
+                        vc.models = [TZAssetModel.init(asset: asset, type: .init(i))]
+                        qAppFrame.present(vc, animated: true, completion: nil)
+                    } else if let url = info.poster ?? info.src {
+                        let vc = PreviewMediaViewController(url: url)
+                        qAppFrame.present(vc, animated: true, completion: nil)
                     }
                 case .upload(let info): // 上传 以及点击重新上传时，将会执行
                     // FIXME: 此处自行实现上传功能，通过info获取里边的image、asset、filePath， 上传的进度需要设置到info.uploadStatus
