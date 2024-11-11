@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 import QuicklySwift
 
 public extension UILabel {
@@ -45,9 +44,7 @@ public extension UILabel {
         func fix(attachment: NSTextAttachment, range: NSRange) {
             if let info = attachment.rzattachmentInfo, let image = info.image {
                 attachment.image = image
-                var bounds = attachment.bounds
-                bounds.size = image.size.qscaleto(maxWidth: bounds.width)
-                attachment.bounds = bounds
+                attachment.bounds = .init(origin: .zero, size: image.size)
             }
             /// 此时富文本如果没有赋值到Label中，表示还在设置Attr
             guard let attr = self.attributedText else {
@@ -57,35 +54,31 @@ public extension UILabel {
                 return
             }
             let temp = NSMutableAttributedString(attributedString: attr)
-            let attach = NSMutableAttributedString(attachment: attachment)
-            attach.addAttributes(temp.attributes(at: range.location, effectiveRange: nil), range: .init(location: 0, length: attach.length))
+            temp.addAttribute(.attachment, value: attachment, range: range)
             if needPreView {
-                attach.addAttributes([.rztapLabel: "\(attachment)"], range: .init(location: 0, length: 1))
+                temp.addAttributes([.rztapLabel: "\(attachment)"], range: .init(location: 0, length: 1))
             }
-            temp.replaceCharacters(in: range, with: attach)
             self.attributedText = temp
             sizeChanged?()
         }
         let ats = attr.rt.attachments()
+        let configure = RZRichTextViewConfigure.shared
         for at in ats {
             if let info = at.0.rzattachmentInfo {
                 /// 如果本地已经加载过图片了，则不需要异步即可实现富文本
                 switch info.type {
                 case .image, .video:
-                    let url = info.poster?.qtoURL ?? info.src?.qtoURL
-                    if let c = RZRichTextViewConfigure.shared.async_imageBy {
-                        let complete: ((String?, UIImage?) -> Void)? = { [weak info] source, image in
-                            info?.image = image
-                            info?.image = UILabel.creatAttachmentInfoView(info, width: max)
-                            fix(attachment: at.0, range: at.1)
-                        }
+                    let complete: ((String?, UIImage?) -> Void)? = { [weak info] source, image in
+                        info?.image = image
+                        let realWidth = (image?.size.width ?? max) + configure.imageViewEdgeInsetsNormal.left + configure.imageViewEdgeInsetsNormal.right
+                        info?.image = UILabel.creatAttachmentInfoView(info, width: min(realWidth, max))
+                        fix(attachment: at.0, range: at.1)
+                    }
+                    if let _ = info.image {
+                        complete?("", info.image)
+                    } else if let c = configure.async_imageBy {
+                        let url = info.poster?.qtoURL ?? info.src?.qtoURL
                         c(url?.absoluteString, complete)
-                    } else {
-                        UIImage.asyncImageBy(url?.absoluteString) { [weak info] image in
-                            info?.image = image
-                            info?.image = UILabel.creatAttachmentInfoView(info, width: max)
-                            fix(attachment: at.0, range: at.1)
-                        }
                     }
                 case .audio:
                     info.image = UILabel.creatAttachmentInfoView(info, width: max)

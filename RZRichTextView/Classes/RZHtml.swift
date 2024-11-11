@@ -7,7 +7,6 @@
 
 import UIKit
 import QuicklySwift
-import Kingfisher
 
 public struct RZRichTempAttributedString {
     let content: NSAttributedString
@@ -50,25 +49,18 @@ public extension RZRichTextView {
                                                                            .triming(self.viewModel.spaceRule)])) else {
             return
         }
+        let configure = RZRichTextViewConfigure.shared
         let attr = NSMutableAttributedString(attributedString: t)
         func fix(attachment: NSTextAttachment, range: NSRange) {
             if let info = attachment.rzattachmentInfo, let image = info.image {
                 var bounds = attachment.bounds
-                let size = image.size.qscaleto(maxWidth: bounds.width)
-                if bounds.size != size {
-                    bounds.size = size
+                let inset = self.isEditable ? configure.imageViewEdgeInsets : configure.imageViewEdgeInsetsNormal
+                let size = image.size.qscaleto(maxWidth: bounds.width - (inset.left + inset.right))
+                let realSize = CGSize.init(width: size.width + (inset.left + inset.right), height: size.height + (inset.top + inset.bottom))
+                if bounds.size != realSize {
+                    bounds.size = realSize
                     attachment.bounds = bounds
-                }
-                /// = 0 表示目前正在设置NSAttributedString， 还没有赋值到textView
-                guard self.textStorage.length != 0 else {
-                    return
-                }
-                let atts = self.textStorage.rt.attachments()
-                if let a = atts.first(where: {$0.0 == attachment}) {
-                    let attr = NSMutableAttributedString.init(attachment: a.0)
-                    attr.addAttributes(self.textStorage.attributes(at: a.1.location, effectiveRange: nil), range: .init(location: 0, length: attr.length))
-                    self.textStorage.replaceCharacters(in: a.1, with: attr)
-                    self.fixAttachmentInfo()
+                    self.fixAttachmentInfo(attachment: attachment)
                 }
             }
         }
@@ -76,6 +68,7 @@ public extension RZRichTextView {
         for at in ats {
             if let info = at.0.rzattachmentInfo {
                 if let _ = info.image {
+                    fix(attachment: at.0, range: at.1)
                     continue
                 }
                 switch info.type {
@@ -88,14 +81,13 @@ public extension RZRichTextView {
                                 fix(attachment: at.0, range: at.1)
                             }
                             c(url, complete)
-                        } else {
-                            UIImage.asyncImageBy(url) { [weak info] image in
-                                info?.image = image
-                                fix(attachment: at.0, range: at.1)
-                            }
                         }
                     }
                 case .audio:
+                    var bounds = at.0.bounds
+                    let inset = self.isEditable ? configure.imageViewEdgeInsets : configure.imageViewEdgeInsetsNormal
+                    bounds.size.height = self.viewModel.audioAttachmentHeight + inset.top + inset.bottom
+                    at.0.bounds = bounds
                     continue
                 }
             }
@@ -285,6 +277,9 @@ public extension String {
             return nil
         }
         var tempHtml = html as NSString
+        // 在真机中，\"  与 ” 转换没问题
+        // 在模拟器中，<p style=\"text-align:center;\"> 这种\" 会导致无法居中
+        tempHtml = tempHtml.replacingOccurrences(of: #"\""#, with: #"""#) as NSString
         var attachments: [RZAttachmentInfo] = []
         /// 找音、视频、图片
         let regrule = #"(<video\s+.*?src\s*=\s*([^ <>]+)\b.*?>([\s\S]*?)</video>)|(<audio\s+.*?src\s*=\s*([^ <>]+)\b.*?>([\s\S]*?)</audio>)|(<img\s+.*?src\s*=\s*([^ <>]+)\b.*?>)"#
@@ -403,39 +398,22 @@ public extension String {
 //                tempAttr.replaceCharacters(in: rg, with: "")
 //            }
 //        }
-        /// 设置附件
+        /// 设置附件的图片，附件的bounds，由textView或者UILabel自己实现
+        /// 取未编辑状态的配置
+        let configure = RZRichTextViewConfigure.shared.imageViewEdgeInsetsNormal
         let ats : [NSTextAttachment] = tempAttr.rt.attachments().compactMap({$0.0})
         ats.enumerated().forEach { idx, at in
             if let att = attachments[qsafe: idx] {
                 at.rzattachmentInfo = att
                 switch att.type {
-                case .image:
-                    if let c = RZRichTextViewConfigure.shared.sync_imageBy {
-                        att.image = c(att.src)
-                    } else {
-                        att.image = UIImage.syncImageBy(att.src)
-                    }
-                case .video:
-                    let src = ((att.poster.qisEmpty ? att.src : att.poster) ?? "")
-                    if let c = RZRichTextViewConfigure.shared.sync_imageBy {
-                        att.image = c(att.src)
-                    } else {
-                        att.image = UIImage.syncImageBy(src)
+                case .image, .video:
+                    let url = att.poster?.qtoURL ?? att.src?.qtoURL
+                    if let url = url?.absoluteString, let c = RZRichTextViewConfigure.shared.sync_imageBy {
+                        att.image = c(url)
                     }
                 case .audio:
-                    break
-                }
-                if let image = att.image {
                     var bounds = at.bounds
-                    let size = image.size.qscaleto(maxWidth: bounds.width)
-                    if bounds.size != size {
-                        bounds.size = size
-                        at.bounds = bounds
-                    }
-                }
-                if att.type == .audio {
-                    var bounds = at.bounds
-                    bounds.size.height = att.audioViewHeight
+                    bounds.size.height = att.audioViewHeight + configure.top + configure.bottom
                     at.bounds = bounds
                 }
             }
@@ -465,42 +443,6 @@ public extension String {
             temp = temp.replacingOccurrences(of: v1, with: v2)
         }
         return temp
-    }
-}
-
-public extension UIImage {
-    /// 同步获取本地已下载的图片，如果本地不存在，此时return nil
-    class func syncImageBy(_ url: String?) -> UIImage? {
-        guard let url = url?.qtoURL?.absoluteString, !url.isEmpty else {
-            return nil
-        }
-        var image: UIImage?
-        ImageCache.default.retrieveImage(forKey: url, options: [.loadDiskFileSynchronously]) { res in
-            image = try? res.get().image
-        }
-        return image
-    }
-    /// 获取图片, 如果本地已经下载有，则同步返回图片，没得则下载图片
-    class func asyncImageBy(_ url: String?, complete: ((_ image: UIImage?) -> Void)?) {
-        guard let url = url?.qtoURL else {
-            complete?(nil)
-            return
-        }
-        UIImageView.init().kf.setImage(with: url, options: [.loadDiskFileSynchronously]) { res in
-            switch res {
-            case .success(let img):
-                complete?(img.image)
-            case .failure(_):
-                UIImage.qimageByVideoUrl(url.absoluteString) { url, image in
-                    if let image = image {
-                        ImageCache.default.store(image, forKey: url ?? "", options: .init(nil))
-                        complete?(image)
-                    } else {
-                        complete?(nil)
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -545,7 +487,7 @@ public class RZLabelInfo {
         }
     }
     var templabel: String {
-        let image = UIColor.qhex(0xffffff, a: 0).qtoImage()
+        let image = RZRichTextViewConfigure.shared.backgroundColor.qtoImage(.init(width: 16.0, height: 9.0))
         let base64 = image?.qtoPngData()?.base64EncodedString() ?? ""
         return "<img src=\"data:image/jpeg;base64,\(base64)\" style=\"width:\(width)px; height:\(width * 9.0 / 16.0)px;\">"
     }

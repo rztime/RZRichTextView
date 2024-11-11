@@ -133,7 +133,20 @@ public extension NSMutableParagraphStyle {
 public extension [NSAttributedString.Key: Any] {
     var rz2cssStyle: String {
         var styletexts:[String] = []
-        self.keys.forEach { key in
+        /// 用数组固定住，是为了每次生成的css内容顺序一致（为了判断是否有修改内容）
+        let needCodeKeys: [NSAttributedString.Key] = [
+//            .paragraphStyle, .strikethroughStyle, .underlineStyle, .attachment, .link, // 外部实现 <p> <s> <u> 附件<图片、音频、视频> <a>
+//            .ligature, .obliqueness, // 不使用
+            .font,
+            .foregroundColor,
+            .backgroundColor,
+            .kern,
+            .strokeWidth,
+            .shadow,
+            .baselineOffset,
+            .expansion,
+        ]
+        needCodeKeys.forEach { key in
             let value = self[key]
             switch key {
             case .paragraphStyle, .strikethroughStyle, .underlineStyle, .attachment, .link: break // 外部实现 <p> <s> <u> 附件<图片、音频、视频> <a> // 在外部实现

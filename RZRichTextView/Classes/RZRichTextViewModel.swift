@@ -189,6 +189,29 @@ public class RZRichImage: NSObject {
         if let imgPath = imgPath {
             return .init(contentsOfFile: imgPath)
         }
+        imgPath = tempbundle.path(forResource: "RZRichTextView.bundle/\(name)", ofType: "")
+        if let imgPath = imgPath {
+            return .init(contentsOfFile: imgPath)
+        }
+        return nil
+    }
+    public class func imagePathWith(_ name: String) -> URL? {
+        let bundle = Bundle.init(for: Self.self)
+        guard let url = bundle.url(forResource: "RZRichTextView", withExtension: "bundle") else { return nil }
+        guard let tempbundle = Bundle.init(url: url) else { return nil }
+        let fileName = "\(name)@3x"
+        var imgPath = tempbundle.path(forResource: fileName, ofType: "png")
+        if let imgPath = imgPath {
+            return imgPath.qtoURL
+        }
+        imgPath = tempbundle.path(forResource: "RZRichTextView.bundle/\(fileName)", ofType: "png")
+        if let imgPath = imgPath {
+            return imgPath.qtoURL
+        }
+        imgPath = tempbundle.path(forResource: "RZRichTextView.bundle/\(name)", ofType: "")
+        if let imgPath = imgPath {
+            return imgPath.qtoURL
+        }
         return nil
     }
 }

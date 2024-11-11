@@ -7,8 +7,8 @@
 
 import UIKit
 import QuicklySwift
-import Kingfisher
 import Photos
+import Kingfisher
 /// 操作
 public enum RZAttachmentOperation {
     case none
@@ -30,8 +30,6 @@ public protocol RZAttachmentInfoLayerProtocol: NSObjectProtocol {
     var dispose: NSObject {get set}
     /// 显示音频文件名 默认true
     var showAudioName: Bool {get set}
-    /// 图片或者音频view上下左右边距
-    var imageViewEdgeInsets: UIEdgeInsets { get }
 }
 open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     public var operation: QuicklySwift.QPublish<RZAttachmentOperation> = .init(value: .none)
@@ -45,7 +43,7 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
             audioContent.isHidden = info.type != .audio
             self.playBtn.isHidden = info.type != .video
             switch info.type {
-            case .image:
+            case .image, .video:
                 if let asset = info.asset {
                     let option = PHImageRequestOptions.init()
                     option.isNetworkAccessAllowed = true
@@ -53,23 +51,22 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
                     option.deliveryMode = .highQualityFormat
                     PHImageManager.default().requestImageData(for: asset, options: option) { [weak self] data, _, _, _ in
                         if let imageData = data {
-                            self?.imageView.kf.setImage(with: .provider(RawImageDataProvider(data: imageData, cacheKey: asset.localIdentifier))) { [weak self] _ in
+                            self?.imageView.kf.setImage(with: .provider(RawImageDataProvider(data: imageData, cacheKey: asset.localIdentifier))) { _ in
                                 self?.updateImageViewSize()
                             }
                         }
                     }
-                } else if let url = info.src {
+                } else if let image = info.image {
+                    self.imageView.image = image
+                    self.updateImageViewSize()
+                } else if let url = (info.poster ?? info.src) {
                     if let c = RZRichTextViewConfigure.shared.async_imageBy {
                         let complete: ((String?, UIImage?) -> Void)? = { [weak self] source, image in
                             self?.imageView.image = image
                             self?.updateImageViewSize()
                         }
                         c(url, complete)
-                    } else {
-                        self.imageView.kf.setImage(with: url.qtoURL, completionHandler: { [weak self] _ in
-                            self?.updateImageViewSize()
-                        })
-                    } 
+                    }
                 } else {
                     info.imagePublish.subscribe({ [weak self] value in
                         guard let self = self else { return }
@@ -77,19 +74,11 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
                         self.updateImageViewSize()
                     }, disposebag: dispose)
                 }
-            case .video:
-                info.imagePublish.subscribe({ [weak self] value in
-                    guard let self = self else { return }
-                    self.imageView.image = value
-                    self.updateImageViewSize()
-                }, disposebag: dispose)
             case .audio:
                 if let path = info.path ?? info.src  {
                     self.nameLabel.text = path.qtoURL?.lastPathComponent
                 }
             }
-            self.layoutIfNeeded()
-
             info.uploadStatus.subscribe({ [weak self] value in
                 switch value {
                 case .idle:
@@ -116,6 +105,11 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     public var canEdit: Bool = true {
         didSet {
             contentView.isHidden = !canEdit
+            let c = RZRichTextViewConfigure.shared
+            let inset = canEdit ? c.imageViewEdgeInsets : c.imageViewEdgeInsetsNormal
+            stackView.snp.updateConstraints { make in
+                make.left.top.right.bottom.equalToSuperview().inset(inset)
+            }
         }
     }
     public var showAudioName: Bool = true {
@@ -125,7 +119,8 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     }
     /// 图片视频相关view
     // 显示的图片
-    public var imageView: UIImageView = AnimatedImageView.init().qcontentMode(.scaleAspectFit).qcornerRadius(3, true)
+    public var imageView: UIImageView = AnimatedImageView().qcontentMode(.scaleAspectFit).qcornerRadius(3, true)
+        .qimage(RZRichTextViewConfigure.shared.loadingImage)
     /// 播放按钮
     var playBtn: UIButton = .init(type: .custom).qimage(RZRichImage.imageWith("play")).qisUserInteractionEnabled(false)
     
@@ -151,26 +146,21 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     let contentView: UIView = .init()
     
     public var dispose: NSObject = .init()
-    /// 图片或者音频view上下左右边距
-    public var imageViewEdgeInsets: UIEdgeInsets {
-        return .init(top: 15, left: 3, bottom: 0, right: 15)
-    }
     /// 0.0-1.0
     public func updateProgress(_ progress: CGFloat) {
         var bounds = self.progressView.bounds
         bounds.origin.x = bounds.size.width - bounds.size.width * progress
         self.progressView.bounds = bounds
     }
-    
+    lazy var stackView = [imageContent, audioContent].qjoined(aixs: .vertical, spacing: 0, align: .fill, distribution: .equalSpacing)
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        /// 测试用
+        //        self.backgroundColor = RZRichTextViewConfigure.shared.backgroundColor
         audioPlayBtn.imageView?.contentMode = .scaleAspectFit
-        let stackView = [imageContent, audioContent].qjoined(aixs: .vertical, spacing: 0, align: .fill, distribution: .equalSpacing)
         self.qbody([
             stackView.qmakeConstraints({ make in
-                make.left.equalToSuperview().inset(3)
-                make.top.right.equalToSuperview().inset(15)
-                make.bottom.lessThanOrEqualToSuperview()
+                make.left.right.top.bottom.equalToSuperview().inset(RZRichTextViewConfigure.shared.imageViewEdgeInsetsNormal)
             }),
             contentView.qmakeConstraints({ make in
                 make.edges.equalToSuperview()
@@ -178,7 +168,7 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
         ])
         contentView.qbody([
             infoLabel.qmakeConstraints({ make in
-                make.left.bottom.right.equalTo(stackView)
+                make.left.bottom.right.equalToSuperview()
                 make.height.equalTo(18)
             }),
             progressView.qmakeConstraints({ make in
@@ -192,8 +182,8 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
         ])
         imageContent.qbody([
             imageView.qmakeConstraints({ make in
-                make.top.left.right.equalToSuperview()
-                make.bottom.lessThanOrEqualToSuperview()
+                make.top.left.bottom.right.equalToSuperview()
+                make.width.lessThanOrEqualToSuperview()
             }),
             playBtn.qmakeConstraints({ make in
                 make.center.equalToSuperview()
@@ -252,10 +242,9 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
         fatalError("init(coder:) has not been implemented")
     }
     func updateImageViewSize() {
-        guard let image = self.imageView.image else { return }
-        let size = image.size
+        let size = imageView.image?.size ?? (.init(width: 16.0, height: 9.0))
         self.imageView.snp.makeConstraints { make in
-            make.height.equalTo(self.imageView.snp.width).multipliedBy(size.height / size.width)
+            make.height.equalTo(self.imageView.snp.width).multipliedBy(size.height / size.width).priority(.high)
         }
     }
 }
