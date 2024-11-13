@@ -41,7 +41,6 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
             guard let info = info else { return }
             imageContent.isHidden = info.type == .audio
             audioContent.isHidden = info.type != .audio
-            self.playBtn.isHidden = info.type != .video
             switch info.type {
             case .image, .video:
                 if let asset = info.asset {
@@ -122,7 +121,9 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
     public var imageView: UIImageView = AnimatedImageView().qcontentMode(.scaleAspectFit).qcornerRadius(3, true)
         .qimage(RZRichTextViewConfigure.shared.loadingImage)
     /// 播放按钮
-    var playBtn: UIButton = .init(type: .custom).qimage(RZRichImage.imageWith("play")).qisUserInteractionEnabled(false)
+    var playBtn: UIButton = .init(type: .custom)
+        .qimage(RZRichImage.imageWith("play")).qisUserInteractionEnabled(false)
+        .qisHidden(true)
     
     /// 音频相关view
     var nameLabel = UILabel().qfont(.systemFont(ofSize: 12))
@@ -246,5 +247,6 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
         self.imageView.snp.makeConstraints { make in
             make.height.equalTo(self.imageView.snp.width).multipliedBy(size.height / size.width).priority(.high)
         }
+        self.playBtn.isHidden = info?.type != .video
     }
 }
