@@ -121,7 +121,7 @@ open class RZRichTextView: UITextView {
                     textView.typingAttributes = self.lastTexttypingAttributes
                     textView.typingAttributes[.link] = nil
                 }
-                if range.length == 0 && range.location == 0 && replaceText == "", let p = textView.typingAttributes[.paragraphStyle] as? NSParagraphStyle, p.isol || p.isul {
+                if range.length == 0 && range.location == 0 && replaceText == "", let p = textView.typingAttributes[.paragraphStyle] as? NSParagraphStyle, p.isol || p.isul || p.isblockquote {
                     let newp = NSMutableParagraphStyle.init()
                     newp.alignment = p.alignment
                     textView.typingAttributes[.paragraphStyle] = newp
@@ -199,6 +199,17 @@ open class RZRichTextView: UITextView {
             let view = RZRichFontStyleView.init(frame: .init(x: 0, y: 0, width: qscreenwidth, height: height), viewModel: self.viewModel)
             self.inputView = view
             self.reloadInputViews()
+        case .quote:
+            guard let p = self.getRealTypingAttributes()[.paragraphStyle] as? NSParagraphStyle else { return }
+            let mutablePara = NSMutableParagraphStyle.init()
+            mutablePara.setParagraphStyle(p)
+            if p.isblockquote {
+                mutablePara.setBlockquote(.none)
+            } else {
+                mutablePara.setBlockquote(.blockquote)
+            }
+            self.typingAttributes[.paragraphStyle] = mutablePara
+            self.reloadTextByUpdateTableStyle()
         case .tableStyle:   /// 列表样式
             if didshowInputView(RZRichTableStyleView.self) {
                 self.inputView = nil
@@ -292,6 +303,7 @@ open class RZRichTextView: UITextView {
     open func reloadTextByUpdateTableStyle() {
         defer {
             self.fixTypingAttributes()
+            self.setNeedsReLayout()
         }
         guard let paragraph = self.typingAttributes[.paragraphStyle] as? NSParagraphStyle else { return }
         let ranges = self.attributedText.rt.paragraphRanges(for: self.selectedRange)
@@ -496,6 +508,8 @@ public extension RZRichTextView {
     }
     /// 修复有序无序列表的序列号
     func fixTextlistNum() {
+        let configure = RZRichTextViewConfigure.shared
+        guard configure.tabEnable || configure.quoteEnable else { return }
         self.subviews.filter({$0.isKind(of: RZTextListView.self)}).forEach({$0.removeFromSuperview()})
         let all = self.textStorage.rt.allParapraghRange()
         var temp : [(String, NSRange, NSParagraphStyle, [NSAttributedString.Key: Any])] = []
@@ -511,25 +525,30 @@ public extension RZRichTextView {
                 dict = self.lastTexttypingAttributes
             }
             if let p = dict[.paragraphStyle] as? NSParagraphStyle {
-                if p.isol {
-                    if lastType == .ol {
-                        index += 1
+                if configure.tabEnable {
+                    if p.isol {
+                        if lastType == .ol {
+                            index += 1
+                        } else {
+                            index = 1
+                        }
+                        lastType = .ol
+                        temp.append(("\(index).", range, p, dict))
+                    } else if p.isul {
+                        if lastType == .ul {
+                            index += 1
+                        } else {
+                            index = 1
+                        }
+                        lastType = .ul
+                        temp.append((configure.ulSymbol, range, p, dict))
                     } else {
-                        index = 1
+                        lastType = .none
+                        index = 0
                     }
-                    lastType = .ol
-                    temp.append(("\(index).", range, p, dict))
-                } else if p.isul {
-                    if lastType == .ul {
-                        index += 1
-                    } else {
-                        index = 1
-                    }
-                    lastType = .ul
-                    temp.append((viewModel.ulSymbol, range, p, dict))
-                } else {
-                    lastType = .none
-                    index = 0
+                }
+                if configure.quoteEnable, p.isblockquote {
+                    temp.append(("blockquote", range, p, dict))
                 }
             } else {
                 lastType = .none
@@ -537,14 +556,32 @@ public extension RZRichTextView {
             }
         }
         temp.forEach { (index, range, p, dict) in
+            var range = range
             if index != "" {
-                let rect = self.qcaretRect(for: range.location)
-                let view = RZTextListView.init().qframe(.init(x: 3, y: rect.origin.y, width: 30, height: rect.size.height))
-                    .qfont(viewModel.ulSymbolFont ?? ((dict[.font] as? UIFont) ?? .systemFont(ofSize: 16)))
+                if index != "blockquote" {
+                    let rect = self.qcaretRect(for: range.location)
+                    let view = RZTextListView.init().qframe(.init(x: 3, y: rect.origin.y, width: 30, height: rect.size.height))
+                    .qfont(configure.ulSymbolFont ?? ((dict[.font] as? UIFont) ?? .systemFont(ofSize: 16)))
                     .qtextColor((dict[.foregroundColor] as? UIColor) ?? .black)
                     .qtext("\(index)")
-                    .qtextAliginment(viewModel.ulSymbolAlignment)
-                self.addSubview(view)
+                    .qtextAliginment(configure.ulSymbolAlignment)
+                    self.addSubview(view)
+                } else {
+                    if self.textStorage.attributedSubstring(from: range).string.hasSuffix("\n") {
+                        range = .init(location: range.location, length: range.length - 1)
+                    }
+                    let rect = self.qsectionRects(for: range)
+                    guard let rect1 = rect.first,
+                          let rect2 = rect.last else {
+                        return
+                    }
+                    let miny = rect1.minY
+                    let maxy = rect2.maxY
+                    let view = RZTextListView.init().qframe(.init(x: 15, y: miny, width: 5, height: maxy - miny))
+                    view.backgroundColor = configure.quoteColor
+                    view.layer.zPosition = -1
+                    self.addSubview(view)
+                }
             }
         }
     }

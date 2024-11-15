@@ -105,7 +105,7 @@ public extension NSTextAttachment {
     class func createWithinfo(_ info: RZAttachmentInfo) -> Self {
         let attachment = Self.init()
         attachment.rzattachmentInfo = info
-        let color = RZRichTextViewConfigure.shared.backgroundColor
+        let color = RZRichTextViewConfigure.shared.attachBackgroundColor
         switch info.type {
         case .image, .video:
             let size = (info.image?.size ?? .init(width: 1, height: 1)).qscaleto(maxWidth: info.maxWidth)

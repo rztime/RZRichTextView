@@ -16,56 +16,49 @@ import Kingfisher
 public extension RZRichTextViewModel {
     /// 如果有需要自定义实现资源下载，可以放开代码，并实现sync_imageBy、async_imageBy方法
     static var configure: RZRichTextViewConfigure = {
+        /// 一些与textView无关的配置,不方便写在viewModel里,所以提取出来配置在configure里
         let tempConfigure = RZRichTextViewConfigure.shared
-        /// 同步获取图片(这是一个默认实例，可以按需设置请求图片的方法，注意gif、视频首帧图)
-        tempConfigure.sync_imageBy = { source in
-            let imgView = UIImageView()
-            imgView.kf.setImage(with: source?.qtoURL)
-            return imgView.image
-        }
-        /// 异步获取图片(这是一个默认实例, 可以按需设置请求图片的方法，注意gif、视频首帧图)
-        tempConfigure.async_imageBy = { source, complete in
-            let comp = complete
-            guard let s = source else {
-                comp?(source, RZRichTextViewConfigure.shared.loadErrorImage)
-                return
-            }
-            var imgView : UIImageView? = .init()
-            imgView?.kf.setImage(with: source?.qtoURL) { result in
-                let image = try? result.get().image
-                if image == nil {
-                    /// 图片获取失败，当做视频去请求首帧，并缓存
-                    UIImage.qimageByVideoUrl(s) { _, image in
-                        if let image = image {
-                            ImageCache.default.store(image, forKey: s)
-                        }
-                        comp?(s, image ?? RZRichTextViewConfigure.shared.loadErrorImage)
-                        imgView = nil
-                    }
-                } else {
-                    comp?(s, image ?? RZRichTextViewConfigure.shared.loadErrorImage)
-                    imgView = nil
-                }
-            }
-        }
+        /// 这个颜色将生成一张图片,用于占据textView里的附件图片
+        tempConfigure.attachBackgroundColor = .clear
+        /// 支持有序无序 默认true
+        tempConfigure.tabEnable = true
+        /// 支持块 默认false
+        tempConfigure.quoteEnable = true
+        /// 块\列表只能存在一个 ,默认true,(false时可以同时存在)
+        tempConfigure.quoteOrTab = true
+        /// 无序符号配置
+        tempConfigure.ulSymbol = "·"
+        //tempConfigure.ulSymbol = "*"
+        tempConfigure.ulSymbolAlignment = .right
+        /// 如果设置，将固定无序符号的font
+        tempConfigure.ulSymbolFont = nil // .systemFont(ofSize: 14, weight: .medium)
+        /// 引用背景色
+        tempConfigure.quoteColor = .qhex(0xcccccc)
+        /// 转换为html时,blockquote的style
+        tempConfigure.blockquoteStyle = #"border-left: 5px solid #eeeeee;"#
+        // 其他配置可查看并参照RZRichTextViewConfigure
+        /// 同步获取图片(参照内部默认配置方法)
+//        tempConfigure.sync_imageBy = { source in
+//        
+//        }
+        /// 异步获取图片(参照内部默认配置方法)
+//        tempConfigure.async_imageBy = { source, complete in
+//           
+//        }
         return tempConfigure
     }()
     class func shared(edit: Bool = true) -> RZRichTextViewModel {
         /// 自定义遮罩view 默认RZAttachmentInfoLayerView
 //        RZAttachmentOption.register(attachmentLayer: RZAttachmentInfoLayerView.self)
         
-        /// 如果有需要自定义实现资源下载，可以放开代码，并实现sync_imageBy、async_imageBy方法
-//        _ = RZRichTextViewModel.configure
+        let configure = RZRichTextViewModel.configure
         
         let viewModel = RZRichTextViewModel.init()
         viewModel.canEdit = edit
-        /// 无序符号配置
-        viewModel.ulSymbol = "·"
-        //viewModel.ulSymbol = "*"
-        viewModel.ulSymbolAlignment = .right
-        /// 如果设置，将固定无序符号的font
-//        viewModel.ulSymbolFont = .systemFont(ofSize: 14, weight: .medium)
-        
+        /// 支持块时,插入块的入口
+        if configure.quoteEnable {
+            viewModel.inputItems.insert(.init(type: .quote, image: RZRichImage.imageWith("quote"), highlight: RZRichImage.imageWith("quote")), at: 2)
+        }
         /// 链接颜色
         viewModel.defaultLinkTypingAttributes = [.foregroundColor: UIColor.qhex(0x307bf6), .underlineColor: UIColor.qhex(0x307bf6), .underlineStyle: NSUnderlineStyle.styleSingle.rawValue]
         /// 显示音频文件名字
@@ -103,8 +96,8 @@ public extension RZRichTextViewModel {
                     viewModel?.textView?.removeAttachment(info)
                 case .preview(let info):// 预览
                     // FIXME: 此处自行实现预览音视频图片的功能, 重新编辑时，取src等数据
-                    let allattachments = viewModel?.textView?.attachments
-                    let index = allattachments?.firstIndex(where: {$0 == info})
+//                    let allattachments = viewModel?.textView?.attachments
+//                    let index = allattachments?.firstIndex(where: {$0 == info})
                     if let asset = info.asset {
                         // 预览播放
                         let vc = TZPhotoPreviewController.init()

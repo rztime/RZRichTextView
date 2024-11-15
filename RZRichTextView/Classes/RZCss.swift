@@ -15,6 +15,11 @@ public extension NSParagraphStyle {
         case ol     // 有序
         case ul     // 无序
     }
+    /// 块
+    enum RZBlockquote {
+        case none
+        case blockquote
+    }
     /// 有序无序状态
     var rzTextListType: RZTextListType {
         set {
@@ -56,8 +61,9 @@ public extension NSParagraphStyle {
             }
         }
         if temp { return true }
-        if self.firstLineHeadIndent > 30.08 && self.firstLineHeadIndent < 30.12 &&
-            self.headIndent > 30.08 && self.headIndent < 30.12{
+        let fi = Int(self.firstLineHeadIndent * 100)
+        let i = Int(self.headIndent * 100)
+        if fi == 3011 && i == 3011 {
             temp = true
         }
         return temp
@@ -84,17 +90,24 @@ public extension NSParagraphStyle {
             }
         }
         if temp { return true }
-        if self.firstLineHeadIndent > 30.28 && self.firstLineHeadIndent < 30.32 &&
-            self.headIndent > 30.28 && self.headIndent < 30.32{
+        let fi = Int(self.firstLineHeadIndent * 100)
+        let i = Int(self.headIndent * 100)
+        if fi == 3012 && i == 3012 {
             temp = true
         }
         return temp
+    }
+    /// 块
+    var isblockquote: Bool {
+        return Int(self.tailIndent * 1000) == -11
     }
     /// 将paragraph转换为css对应的样式
     func rz2cssStyle(font: UIFont?) -> String {
         var styles: [String] = []
         if !self.isol && !self.isul {
-            styles.append("margin:\(self.paragraphSpacingBefore)px 0.0px \(self.paragraphSpacing)px \(self.headIndent)px;")
+            if self.paragraphSpacingBefore != 0 || self.paragraphSpacing != 0 || self.headIndent != 0 {
+                styles.append("margin:\(self.paragraphSpacingBefore)px 0.0px \(self.paragraphSpacing)px \(self.headIndent)px;")
+            }
         } 
         switch self.alignment {
         case .left, .justified, .natural: break
@@ -103,7 +116,7 @@ public extension NSParagraphStyle {
         @unknown default:
             break
         }
-        if self.tailIndent != 0 { styles.append("text-indent:\(self.tailIndent)px;") }
+        if !self.isblockquote, self.tailIndent != 0 { styles.append("text-indent:\(self.tailIndent)px;") }
         if let font = font {
             styles.append("font-size:\(font.pointSize)px;")
         }
@@ -114,18 +127,50 @@ public extension NSMutableParagraphStyle {
     /// 设置列表样式
     func setTextListType(_ type: NSParagraphStyle.RZTextListType) {
         self.rzTextListType = type
+        /// 块和列表是否只能二选一
+        let quoteOrTab = RZRichTextViewConfigure.shared.quoteOrTab
         self.textLists = []
-        // 30.1 30.3浮点需要，主要用于区分
+        // 30.11 30.12浮点需要，主要用于区分
         switch type {
         case .none:
-            self.firstLineHeadIndent = 0
-            self.headIndent = 0
+            if self.isblockquote {
+                self.firstLineHeadIndent = 30
+                self.headIndent = 30
+            } else {
+                self.firstLineHeadIndent = 0
+                self.headIndent = 0
+            }
         case .ol:
-            self.firstLineHeadIndent = 30.1
-            self.headIndent = 30.1
+            if quoteOrTab { self.tailIndent = 0 }
+            self.firstLineHeadIndent = 30.111
+            self.headIndent = 30.111
         case .ul:
-            self.firstLineHeadIndent = 30.3
-            self.headIndent = 30.3
+            if quoteOrTab { self.tailIndent = 0 }
+            self.firstLineHeadIndent = 30.121
+            self.headIndent = 30.121
+        }
+    }
+    func setBlockquote(_ type: NSParagraphStyle.RZBlockquote) {
+        /// 块和列表是否只能二选一
+        let quoteOrTab = RZRichTextViewConfigure.shared.quoteOrTab
+        switch type {
+        case .none:
+            self.tailIndent = 0
+            if !(self.isol || self.isul) {
+                self.firstLineHeadIndent = 0
+                self.headIndent = 0
+            }
+        case .blockquote:
+            self.tailIndent = -0.0111
+            if quoteOrTab {
+                self.firstLineHeadIndent = 30
+                self.headIndent = 30
+            } else {
+                if !(self.isol || self.isul) {
+                    self.firstLineHeadIndent = 30
+                    self.headIndent = 30
+                }
+            }
         }
     }
 }

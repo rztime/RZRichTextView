@@ -10,6 +10,7 @@ import UIKit
 public enum RZInputAccessoryType: Int {
     case none
     case fontStyle  /// 字体样式
+    case quote      /// 引用
     case tableStyle      /// 列表（有序、无序）
     case paragraph  /// 段落样式
     case media      /// 媒体资源（图片、视频、音频）

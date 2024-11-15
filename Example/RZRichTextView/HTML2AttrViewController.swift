@@ -37,8 +37,9 @@ class HTML2AttrViewController: UIViewController {
             .qtitle("转html")
             .qtitleColor(.red)
             .qtap { [weak self] view in
-                guard let self = self else { return }
-                self.textView.isEditable = !self.textView.isEditable
+                guard let self = self else { return }            
+                let html = self.textView.code2html()
+                print("-----html:\n\(html)")
             }
         
         /// 上传完成时，可以点击
