@@ -50,7 +50,10 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
                     option.deliveryMode = .highQualityFormat
                     PHImageManager.default().requestImageData(for: asset, options: option) { [weak self] data, _, _, _ in
                         if let imageData = data {
-                            self?.imageView.kf.setImage(with: .provider(RawImageDataProvider(data: imageData, cacheKey: asset.localIdentifier))) { _ in
+                            self?.imageView.kf.setImage(with: .provider(RawImageDataProvider(data: imageData, cacheKey: asset.localIdentifier))) { res in
+                                if let image = try? res.get().image, !asset.qisGif {
+                                    self?.imageView.image = image.qfixOrientation   
+                                }
                                 self?.updateImageViewSize()
                             }
                         }
