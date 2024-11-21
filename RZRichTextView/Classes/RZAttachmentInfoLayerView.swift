@@ -206,7 +206,9 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
                 make.centerY.equalToSuperview()
             }),
             line.qmakeConstraints({ make in
-                make.left.right.centerY.equalTo(self.nameLabel)
+                make.left.equalTo(self.audioPlayBtn.snp.right).offset(15)
+                make.right.equalToSuperview().inset(15)
+                make.centerY.equalToSuperview()
                 make.height.equalTo(1)
             }),
         ])
