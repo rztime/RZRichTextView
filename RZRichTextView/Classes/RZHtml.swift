@@ -59,11 +59,20 @@ public extension RZRichTextView {
         let attr = NSMutableAttributedString(attributedString: t)
         func fix(attachment: NSTextAttachment, range: NSRange) {
             if let info = attachment.rzattachmentInfo, let image = info.image {
+                /// 获取到对应位置的headIndent，图片的最大宽度需要减去，这样初始化时，可减少一次宽度计算
+                var headIndent: CGFloat = 0
+                if range.location < attr.length {
+                    let dict = attr.attributes(at: range.location, effectiveRange: nil)
+                    let temp = dict[NSAttributedString.Key.attachment] as? NSTextAttachment
+                    if temp == attachment, let p = dict[NSAttributedString.Key.paragraphStyle] as? NSParagraphStyle {
+                        headIndent = p.headIndent
+                    }
+                }
                 var bounds = attachment.bounds
                 /// 获取边距
                 let inset = self.isEditable ? configure.imageViewEdgeInsets : configure.imageViewEdgeInsetsNormal
                 // 图片的真实size
-                let size = image.size.qscaleto(maxWidth: bounds.width - (inset.left + inset.right))
+                let size = image.size.qscaleto(maxWidth: (bounds.width - headIndent) - (inset.left + inset.right))
                 // 图片与边距组合成一个最终的占位图，写入到attachment中
                 let realSize = CGSize.init(width: size.width + (inset.left + inset.right), height: size.height + (inset.top + inset.bottom))
                 if bounds.size != realSize {
@@ -176,7 +185,7 @@ public extension NSAttributedString {
             if p.content.string == "\n" {
                 if !currentpol && !currentpul {
                     realParagraphs.append("<br/>")
-                } 
+                }
             } else {
                 realParagraphs.append(p.content)
             }
