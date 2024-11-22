@@ -104,11 +104,9 @@ public extension NSParagraphStyle {
     /// 将paragraph转换为css对应的样式
     func rz2cssStyle(font: UIFont?) -> String {
         var styles: [String] = []
-        if !self.isol && !self.isul {
-            if self.paragraphSpacingBefore != 0 || self.paragraphSpacing != 0 || self.headIndent != 0 {
-                styles.append("margin:\(self.paragraphSpacingBefore)px 0.0px \(self.paragraphSpacing)px \(self.headIndent)px;")
-            }
-        } 
+        if !self.isol && !self.isul || !self.isblockquote {
+            styles.append("margin:\(self.paragraphSpacingBefore)px 0.0px \(self.paragraphSpacing)px \(self.headIndent)px;")
+        }
         switch self.alignment {
         case .left, .justified, .natural: break
         case .center: styles.append("text-align:center;")
@@ -209,7 +207,7 @@ public extension [NSAttributedString.Key: Any] {
                         styletexts.append("font-style:italic;")
                     case .normal:
                         break
-                    } 
+                    }
                 }
             case .foregroundColor:
                 if let color = value as? UIColor { styletexts.append("color:#\(color.qhexString);") }
