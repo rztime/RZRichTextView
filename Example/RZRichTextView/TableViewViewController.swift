@@ -26,8 +26,8 @@ class TableViewViewController: UIViewController {
         let btn = UIButton.init(type: .custom)
         self.navigationItem.rightBarButtonItem = .init(customView: btn)
         let temphtml = (try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")) ?? ""
-        let html1 = "<body style=\"font-size:16px;color:#110000;\">\(temphtml)</body>"
-        let html2 = "<body style=\"font-size:16px;color:#110000;\">\(temphtml)</body>"
+        let html1 = temphtml.toHtml()
+        let html2 = temphtml.toHtml()
         var html = html1
         btn.qtitle("测试").qtitleColor(.red)
             .qtap { [weak self] view in
@@ -51,8 +51,7 @@ class TableViewViewController: UIViewController {
                         self?.tableView.reloadData()
                     }
                 }
-                let t = "<body style=\"font-size:16px;\">\(html)</body>"
-                cell?.html = t
+                cell?.html = html
                 return cell!
             }
     }

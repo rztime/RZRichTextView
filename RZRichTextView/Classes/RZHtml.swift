@@ -514,6 +514,10 @@ public extension String {
         }
         return temp
     }
+    /// 将html字符转换为html，包一层，这样可以设置默认字号，以支持rem，em，pt，%，px
+    func toHtml(size: CGFloat = 16) -> String {
+        return "<!DOCTYPE html><html style=\"font-size: \(size)px;\"><head><style>p{font-size: 1rem;}</style></head><body>\(self)</body></html>"
+    }
 }
 
 public class RZLabelInfo {

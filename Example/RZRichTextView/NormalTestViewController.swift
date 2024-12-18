@@ -35,7 +35,7 @@ class NormalTestViewController: UIViewController {
          
         ])
         let html = (try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html"))
-        let t = "<body style=\"font-size:16px;color:#110000;\">\(html ?? "")</body>"
+        let t = html?.toHtml()
         textView.rz.colorfulConfer { confer in
             confer.htmlString(t)
         }

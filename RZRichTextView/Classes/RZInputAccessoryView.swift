@@ -10,7 +10,7 @@ import QuicklySwift
 /// 工具栏视图
 open class RZInputAccessoryView: UIView {
     open var collectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: .init())
-
+        .qbackgroundColor(.clear)
     open var stackView = QStackView.qbody(.horizontal, 0, .fill, .equalSpacing, nil)
         .qshowType(.horizontal, type: .height)
         .qbackgroundColor(.white)

@@ -38,26 +38,7 @@ class NormalViewController: UIViewController {
             .qtitleColor(.red)
             .qtap { [weak self] view in
                 guard let self = self else { return }
-                let attachments = self.textView.attachments
-                if let _ = attachments.firstIndex(where: { info in
-                    if case .complete(let success, _) = info.uploadStatus.value {
-                        return !success
-                    }
-                    return true
-                }) {
-                    // 有未完成上传的
-                    print("有未完成上传的")
-                    return
-                }
-                let html = self.textView.code2html()
-                print("\(html)")
             }
-        /// 上传完成时，可以点击
-        textView.viewModel.uploadAttachmentsComplete.subscribe({ [weak btn] value in
-            btn?.isEnabled = value
-            btn?.alpha = value ? 1 : 0.3
-        }, disposebag: btn)
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: btn)
     }
 }

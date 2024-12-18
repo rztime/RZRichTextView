@@ -393,6 +393,7 @@ public extension RZRichTextView {
     }
     /// 插入附件
     func insetAttachment(_ attachmentinfo: RZAttachmentInfo) {
+        self.viewModel.uploadAttachmentsComplete.accept(false)
         let attachment = NSTextAttachment.createWithinfo(attachmentinfo)
         let attr = NSMutableAttributedString.init(attachment: attachment)
         attr.addAttributes(self.typingAttributes, range: .init(location: 0, length: attr.length))
