@@ -65,7 +65,5 @@ class TestViewController: UIViewController {
         
         let html = try? String.init(contentsOfFile: "/Users/rztime/Desktop/test1.html")
         textView.html2Attributedstring(html: html)
-//        label.html2AttributedString(html: html)
-
     }
 }

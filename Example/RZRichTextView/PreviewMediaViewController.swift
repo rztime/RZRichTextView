@@ -9,12 +9,14 @@
 import UIKit
 import WebKit
 // 预览
-class PreviewMediaViewController: UIViewController {
+class PreviewMediaViewController: UIViewController, WKNavigationDelegate {
     let webView = WKWebView.init(frame: .zero)
     var url : String?
-    init(url: String?) {
+    init(url: String? = nil) {
         super.init(nibName: nil, bundle: nil)
-        self.url = url
+        if let url = url {
+            self.url = url
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -29,6 +31,6 @@ class PreviewMediaViewController: UIViewController {
         ])
         if let url = self.url?.qtoURL {
             webView.load(URLRequest(url: url))
-        } 
+        }
     }
 }
