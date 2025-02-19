@@ -13,6 +13,8 @@ import TZImagePickerController
 import Kingfisher
 
 /// 使用时，直接将此代码复制到项目中，并完成相关FIXME的地方即可
+/// 添加这个 @MainActor，是为了适配高版本Kingfisher
+@MainActor
 public extension RZRichTextViewModel {
     /// 如果有需要自定义实现资源下载，可以放开代码，并实现sync_imageBy、async_imageBy方法
     static var configure: RZRichTextViewConfigure = {
@@ -36,23 +38,77 @@ public extension RZRichTextViewModel {
         tempConfigure.quoteColor = .qhex(0xcccccc)
         /// 转换为html时,blockquote的style
         tempConfigure.blockquoteStyle = #"border-left: 5px solid #eeeeee;"#
-        // 其他配置可查看并参照RZRichTextViewConfigure
-        /// 同步获取图片(参照内部默认配置方法)
-//        tempConfigure.sync_imageBy = { source in
-//        
-//        }
-        /// 异步获取图片(参照内部默认配置方法)
-//        tempConfigure.async_imageBy = { source, complete in
-//           
-//        }
+        /// 同步获取图片
+        tempConfigure.sync_imageBy = { source in
+            let imgView = AnimatedImageView()
+            imgView.kf.setImage(with: source?.qtoURL)
+            return imgView.image?.qfixOrientation
+        }
+        /// 异步获取图片(当图片获取失败时，则用默认的错误图片替代)
+        tempConfigure.async_imageBy = { [weak tempConfigure] source, complete in
+            let comp = complete
+            guard let s = source else {
+                comp?(source, tempConfigure?.loadErrorImage)
+                return
+            }
+            var imgView : AnimatedImageView? = .init()
+            imgView?.kf.setImage(with: source?.qtoURL) { result in
+                let image = try? result.get().image
+                if image == nil {
+                    /// 图片获取失败，当做视频去请求首帧，并缓存
+                    UIImage.qimageByVideoUrl(s) { _, image in
+                        if let image = image {
+                            ImageCache.default.store(image, forKey: s)
+                        }
+                        comp?(s, image ?? tempConfigure?.loadErrorImage)
+                        imgView = nil
+                    }
+                } else {
+                    comp?(s, image?.qfixOrientation ?? tempConfigure?.loadErrorImage)
+                    imgView = nil
+                }
+            }
+        }
+        /// 异步获取图片PHAsset(当图片获取失败时，则用默认的错误图片替代)
+        tempConfigure.async_imageByAsset = { [weak tempConfigure] asset, complete in
+            if let asset = asset {
+                let option = PHImageRequestOptions.init()
+                option.isNetworkAccessAllowed = true
+                option.resizeMode = .fast
+                option.deliveryMode = .highQualityFormat
+                PHImageManager.default().requestImageData(for: asset, options: option) { data, _, _, _ in
+                    if let imageData = data {
+                        var imgView : AnimatedImageView? = .init()
+                        imgView?.kf.setImage(with: .provider(RawImageDataProvider(data: imageData, cacheKey: asset.localIdentifier))) { res in
+                            if let image = try? res.get().image {
+                                if asset.qisGif {
+                                    complete?(asset, image)
+                                } else {
+                                    complete?(asset, image.qfixOrientation)
+                                }
+                            } else {
+                                complete?(asset, tempConfigure?.loadErrorImage)
+                            }
+                            imgView = nil
+                        }
+                    }
+                }
+            } else {
+                complete?(nil, tempConfigure?.loadErrorImage)
+            }
+        }
+        /// 加载中, 默认gif
+        let loading: URL? = RZRichImage.imagePathWith("loading.gif")
+        AnimatedImageView().kf.setImage(with: loading) { [weak tempConfigure] result in
+            tempConfigure?.loadingImage = try? result.get().image
+        }
         return tempConfigure
     }()
     class func shared(edit: Bool = true) -> RZRichTextViewModel {
         /// 自定义遮罩view 默认RZAttachmentInfoLayerView
 //        RZAttachmentOption.register(attachmentLayer: RZAttachmentInfoLayerView.self)
-        
         let configure = RZRichTextViewModel.configure
-        
+ 
         let viewModel = RZRichTextViewModel.init()
         viewModel.canEdit = edit
         /// 支持块时,插入块的入口

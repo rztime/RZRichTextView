@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Kingfisher
+import Photos
 /// 一些配置不方便写在viewModel里,所以加了一个configure,做一些额外的配置
 open class RZRichTextViewConfigure: NSObject {
     public static var shared: RZRichTextViewConfigure = .init()
@@ -20,10 +20,19 @@ open class RZRichTextViewConfigure: NSObject {
     public var loadErrorImage: UIImage?
     /// 加载中的图片，gif的话可以参照初始化方法设置
     public var loadingImage: UIImage?
+    
+    /*** 同步、异步获取图片，参考HowToUseDemo里进行配置，这里默认没有实现，因为kingfisher加了MainActor，会有一定的冲突，
+     解决办法：加 @MainActor
+     @MainActor
+     public extension RZRichTextViewModel {  }
+     https://github.com/rztime/RZRichTextView/blob/master/Example/RZRichTextView/HowToUseDemo.swift
+     ***/
     /// 同步获取图片，可以按需设置请求图片的方法，注意gif、视频首帧图
     public var sync_imageBy: ((_ source: String?) -> UIImage?)?
     /// 异步获取图片，complete里的source需要于图片对应，可以按需设置请求图片的方法，注意gif、视频首帧图
     public var async_imageBy: ((_ source: String?, _ complete: ((_ source: String?, _ image: UIImage?) -> Void)?) -> Void)?
+    /// 异步获取图片，complete里的source需要于图片对应，可以按需设置请求图片的方法，注意gif、视频首帧图
+    public var async_imageByAsset: ((_ asset: PHAsset?, _ complete: ((_ asset: PHAsset?, _ image: UIImage?) -> Void)?) -> Void)?
     
     /// 转换为html时,blockquote的style
     public var blockquoteStyle = #"border-left: 5px solid #eeeeee;"#
@@ -45,43 +54,26 @@ open class RZRichTextViewConfigure: NSObject {
     
     public override init() {
         super.init()
-        /// 同步获取图片
-        self.sync_imageBy = { source in
-            let imgView = AnimatedImageView()
-            imgView.kf.setImage(with: source?.qtoURL)
-            return imgView.image
-        }
-        /// 异步获取图片(当图片获取失败时，则用默认的错误图片替代)
-        self.async_imageBy = { [weak self] source, complete in
-            let comp = complete
-            guard let s = source else {
-                comp?(source, self?.loadErrorImage)
-                return
-            }
-            var imgView : AnimatedImageView? = .init()
-            imgView?.kf.setImage(with: source?.qtoURL) { result in
-                let image = try? result.get().image
-                if image == nil {
-                    /// 图片获取失败，当做视频去请求首帧，并缓存
-                    UIImage.qimageByVideoUrl(s) { _, image in
-                        if let image = image {
-                            ImageCache.default.store(image, forKey: s)
-                        }
-                        comp?(s, image ?? self?.loadErrorImage)
-                        imgView = nil
-                    }
-                } else {
-                    comp?(s, image ?? self?.loadErrorImage)
-                    imgView = nil
-                }
-            }
-        }
-        /// 加载中, 默认gif
-        let loading: URL? = RZRichImage.imagePathWith("loading.gif")
-        AnimatedImageView().kf.setImage(with: loading) { [weak self] result in
-            self?.loadingImage = try? result.get().image
-        }
         /// 加载失败
         self.loadErrorImage = RZRichImage.imageWith("loaderror")
+        
+#if DEBUG
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
+            if self?.async_imageBy == nil ||
+                self?.sync_imageBy == nil ||
+                self?.async_imageByAsset == nil {
+                let text = """
+------------ 请参考HowToUseDemo, 配置图片加载方法 ------------
+https://github.com/rztime/RZRichTextView/blob/master/Example/RZRichTextView/HowToUseDemo.swift
+
+如有必要，请加@MainActor 到
+    @MainActor
+    public extension RZRichTextViewModel {  }
+----------------------------------------------------------
+"""
+                print(text)
+            }
+        })
+#endif
     }
 }

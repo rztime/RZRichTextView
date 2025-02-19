@@ -1,3 +1,7 @@
+* v2.4.1
+    * . 新增 将PHAsset的图片加载方法抛出来，可以自行设置
+    * . 适配Kingfisher, 因为kingfisher加了@MainActor,导致低版本下会有冲突，所以将所有的图片获取方法，移动到HowToUseDemo进行配置，当需要适配高版本时，适当地方加@MainActor即可
+
 * v2.4.0
     * . 新增一个RZRichTextViewConfigure，用于配置一些全局设置
     

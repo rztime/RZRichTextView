@@ -44,19 +44,12 @@ open class RZAttachmentInfoLayerView: UIView, RZAttachmentInfoLayerProtocol {
             switch info.type {
             case .image, .video:
                 if let asset = info.asset {
-                    let option = PHImageRequestOptions.init()
-                    option.isNetworkAccessAllowed = true
-                    option.resizeMode = .fast
-                    option.deliveryMode = .highQualityFormat
-                    PHImageManager.default().requestImageData(for: asset, options: option) { [weak self] data, _, _, _ in
-                        if let imageData = data {
-                            self?.imageView.kf.setImage(with: .provider(RawImageDataProvider(data: imageData, cacheKey: asset.localIdentifier))) { res in
-                                if let image = try? res.get().image, !asset.qisGif {
-                                    self?.imageView.image = image.qfixOrientation   
-                                }
-                                self?.updateImageViewSize()
-                            }
+                    if let c = RZRichTextViewConfigure.shared.async_imageByAsset {
+                        let complete: ((PHAsset?, UIImage?) -> Void)? = { [weak self] source, image in
+                            self?.imageView.image = image
+                            self?.updateImageViewSize()
                         }
+                        c(asset, complete)
                     }
                 } else if let image = info.image {
                     self.imageView.image = image

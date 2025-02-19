@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RZRichTextView'
-  s.version          = '2.4.0'
+  s.version          = '2.4.1'
   s.summary          = 'RZRichTextView. 原生UITextView，支持富文本输入（图片，视频，列表序号，文本颜色大小各种样式等等）'
 
 # This description is used to generate tags and improve search results.

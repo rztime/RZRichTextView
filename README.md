@@ -89,6 +89,8 @@ let textView = RZRichTextView.init(frame: .init(x: 15, y: 0, width: qscreenwidth
     .qplaceholder("请输入正文")
 ```
 
+图片的加载方法，请参考HowToUseDemo，RZRichTextView项目里去掉了相关的图片加载方法，全部放在HowToUseDemo的configure里，是为了适配@MainActor，如果有必要，可以在外边添加@MainActor
+
 #### upload 上传
 
 需要通过设置info?.uploadStatus来绑定上传进度，上传完成后，需要写入src、poster
