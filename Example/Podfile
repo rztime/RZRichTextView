@@ -7,6 +7,7 @@ target 'RZRichTextView_Example' do
   pod 'TZImagePickerController', :git => "https://github.com/banchichen/TZImagePickerController"
   pod 'Kingfisher'
   pod 'QuicklySwift', :git => "https://github.com/rztime/QuicklySwift"
+  pod 'RZColorfulSwift', :git => "https://github.com/rztime/RZColorfulSwift"
   target 'RZRichTextView_Tests' do
     inherit! :search_paths
 

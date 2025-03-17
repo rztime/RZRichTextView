@@ -49,7 +49,7 @@ class HTML2AttrViewController: UIViewController {
         }, disposebag: btn)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: btn)
-        let html = (try? String.init(contentsOfFile: "/Users/rztime/Desktop/test.html")) ?? ""
+        let html = (try? String.init(contentsOfFile: "/Users/rztime/Desktop/1.html")) ?? ""
         let t = html.toHtml()
         textView.html2Attributedstring(html: t)
     }

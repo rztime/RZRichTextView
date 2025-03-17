@@ -44,6 +44,8 @@ RZRichTextView is available under the MIT license. See the LICENSE file for more
 
 RZRichTextView继承UITextView，实现富文本编辑功能。使用Swift完成，基本所有的方法和属性都是公开的，方便继承或自定义修改，如果OC项目使用，可以使用桥接。
 
+如果想要实现Swift markdown的编辑和解析，可以参考Demo
+
 另外，请参考[UpdataLog](UpdataLog.md),里边有更新信息说明，版本对应相应的tag
 
 示例图片在最下边

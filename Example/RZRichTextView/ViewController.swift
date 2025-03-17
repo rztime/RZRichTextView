@@ -30,7 +30,8 @@ class ViewController: UIViewController {
             (LabelLoadHtmlViewController.self, "UILabel加载html"),
             (TestViewController.self, "测试"),
             (TableViewViewController.self, "列表"),
-            (NormalTestViewController.self, "正常TextView")
+            (NormalTestViewController.self, "正常TextView"),
+            (MarkDownViewController.self, "MarkDown"),
         ]
         
         
