@@ -24,6 +24,7 @@
 		B2B1FD2D2A6E505000A6A3A2 /* NormalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B1FD2C2A6E505000A6A3A2 /* NormalViewController.swift */; };
 		B2B1FD3B2A70C2D700A6A3A2 /* HTML2AttrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B1FD3A2A70C2D700A6A3A2 /* HTML2AttrViewController.swift */; };
 		B2DBFBC12AD4ED38001AA5C9 /* TableViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DBFBC02AD4ED38001AA5C9 /* TableViewViewController.swift */; };
+		B2EFFAB32D8D3E04008D1F9C /* MarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EFFAB22D8D3E04008D1F9C /* MarkViewController.swift */; };
 		EB450A5FF93E023686C6282F /* Pods_RZRichTextView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8719C6C2F3EC0E118BBC233 /* Pods_RZRichTextView_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		B2B1FD2C2A6E505000A6A3A2 /* NormalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalViewController.swift; sourceTree = "<group>"; };
 		B2B1FD3A2A70C2D700A6A3A2 /* HTML2AttrViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTML2AttrViewController.swift; sourceTree = "<group>"; };
 		B2DBFBC02AD4ED38001AA5C9 /* TableViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewViewController.swift; sourceTree = "<group>"; };
+		B2EFFAB22D8D3E04008D1F9C /* MarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkViewController.swift; sourceTree = "<group>"; };
 		B8719C6C2F3EC0E118BBC233 /* Pods_RZRichTextView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RZRichTextView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF008A67C39722CA3E80D13D /* Pods-RZRichTextView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RZRichTextView_Tests.release.xcconfig"; path = "Target Support Files/Pods-RZRichTextView_Tests/Pods-RZRichTextView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -186,6 +188,7 @@
 				B2DBFBC02AD4ED38001AA5C9 /* TableViewViewController.swift */,
 				B2A5BF912CDDB7600031259E /* PreviewMediaViewController.swift */,
 				B293EC4B2D7AEF67003EACAC /* MarkDownViewController.swift */,
+				B2EFFAB22D8D3E04008D1F9C /* MarkViewController.swift */,
 			);
 			name = Demo;
 			sourceTree = "<group>";
@@ -393,6 +396,7 @@
 				B289C2182A78B0FB00D6CEC5 /* HowToUseDemo.swift in Sources */,
 				B2B1FD3B2A70C2D700A6A3A2 /* HTML2AttrViewController.swift in Sources */,
 				B2B1FD2D2A6E505000A6A3A2 /* NormalViewController.swift in Sources */,
+				B2EFFAB32D8D3E04008D1F9C /* MarkViewController.swift in Sources */,
 				B289C21A2A78B48D00D6CEC5 /* CustomRichTextViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);

@@ -312,8 +312,6 @@ open class RZHtmlOptions {
         return RZHtmlOptions.init(options: [.maxWith(maxWidth), .audioHeight(audioHeight), .triming(.removeEnd), .tabEnable(false), .quoteEnable(false), .quoteOrTab(true)])
     }
 }
-
-
 public extension String {
     ///  将html转换为NSAttributedString
     /// - Parameters:
@@ -379,7 +377,7 @@ public extension String {
         guard let attr = attr else {
             return nil
         }
-        let tempAttr = NSMutableAttributedString.init(attributedString: attr)
+        let tempAttr = NSMutableAttributedString.init(attributedString: attr).addcustomMarkIfNeed()
         /// 设置块
         if options.quoteEnable, let regexblockquoteStar = try? NSRegularExpression.init(pattern: "\(blockquoteStar)", options: .caseInsensitive), let regexblockquoteend = try? NSRegularExpression.init(pattern: "\(blockquoteEnd)", options: .caseInsensitive)  {
             let rangestars = regexblockquoteStar.matches(in: tempAttr.string, range: .init(location: 0, length: tempAttr.length)).compactMap({$0.range})

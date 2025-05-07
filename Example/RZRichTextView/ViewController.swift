@@ -32,6 +32,7 @@ class ViewController: UIViewController {
             (TableViewViewController.self, "列表"),
             (NormalTestViewController.self, "正常TextView"),
             (MarkDownViewController.self, "MarkDown"),
+            (MarkViewController.self, "标记文本"),
         ]
         
         

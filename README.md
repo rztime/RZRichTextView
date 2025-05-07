@@ -214,6 +214,9 @@ let attr = html?.html2Attributedstring(options: .defaultForLabel(200, 60), loadA
 })
 ```
 
+4.html转NSAttributedString时，添加自定义属性，用于标记颜色
+参考“MarkViewController”, 在html里，插入标签，最后会自动加上自定义属性
+
 ## 关于生成的HTML
 
 生成的内容，以行内样式生成，未使用系统原生方法，

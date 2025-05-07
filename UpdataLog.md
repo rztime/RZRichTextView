@@ -1,3 +1,8 @@
+* v2.5.0
+    * . html转NSAttributedString时，可以加自定义属性，可用于标记或存储额外的信息
+    * . 参考“MarkViewController”，String.rzcustomMark(key: "fix", id: id)，key可以与id相同，生成的NSAttributedString的属性里里将包含"fix" = id
+    * . 可以遍历所有的自定义属性，然后进行需要的操作
+
 * v2.4.1
     * . 新增 将PHAsset的图片加载方法抛出来，可以自行设置
     * . 适配Kingfisher, 因为kingfisher加了@MainActor,导致低版本下会有冲突，所以将所有的图片获取方法，移动到HowToUseDemo进行配置，当需要适配高版本时，适当地方加@MainActor即可

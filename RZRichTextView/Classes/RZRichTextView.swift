@@ -71,6 +71,12 @@ open class RZRichTextView: UITextView {
     private var isInit = true    
     /// 用于记录光标在末尾时的属性
     open var lastTexttypingAttributes: [NSAttributedString.Key: Any] = [:]
+    
+    /// 是否需要关闭inputView
+    /// 当触控textView，通常需要关闭自定义的inputeView键盘，返回输入法键盘
+    /// 若某些时候不需要关闭，返回false，默认返回true
+    open var canCloseInputView: ((_ inputView: UIView) -> Bool)?
+    
     private var lastCursorIsEnd = true
     /// viewModel可以自行设置使用一个单例，用于图片、视频、音频等附件输入时，统一处理，一定要设置frame的width
     public init(frame: CGRect, viewModel: RZRichTextViewModel) {
@@ -343,7 +349,7 @@ open class RZRichTextView: UITextView {
     open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let v = super.hitTest(point, with: event)
         if v == self {
-            if let _ = self.inputView {
+            if let v = self.inputView, (canCloseInputView?(v) ?? true) {
                 self.inputView = nil
                 self.reloadInputViews()
             }
