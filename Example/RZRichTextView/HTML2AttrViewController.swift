@@ -41,7 +41,6 @@ class HTML2AttrViewController: UIViewController {
                 let html = self.textView.code2html()
                 print("-----html:\n\(html)")
             }
-        
         /// 上传完成时，可以点击
         textView.viewModel.uploadAttachmentsComplete.subscribe({ [weak btn] value in
             btn?.isEnabled = value
@@ -49,7 +48,7 @@ class HTML2AttrViewController: UIViewController {
         }, disposebag: btn)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: btn)
-        let html = (try? String.init(contentsOfFile: "/Users/rztime/Desktop/1111111.html")) ?? ""
+        let html = (try? String.init(contentsOfFile: "/Users/rztime/Desktop/111.html")) ?? ""
         let t = html.toHtml()
         textView.html2Attributedstring(html: t)
     }

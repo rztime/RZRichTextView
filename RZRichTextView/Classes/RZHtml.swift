@@ -545,7 +545,7 @@ public class RZLabelInfo {
         
         if let match = srcresult.first {
             let src = text.substring(with: match.range)
-            self.src = src.replacingOccurrences(of: "src='", with: "").replacingOccurrences(of: #"src=""#, with: "").replacingOccurrences(of: #"""#, with: "")
+            self.src = src.replacingOccurrences(of: "src='", with: "").replacingOccurrences(of: #"src=""#, with: "").replacingOccurrences(of: #"""#, with: "").replacingOccurrences(of: #"'"#, with: "")
         }
         if self.type != .video { return }
         
@@ -555,7 +555,7 @@ public class RZLabelInfo {
         
         if let match = posterresult.first {
             let poster = text.substring(with: match.range)
-            self.poster = poster.replacingOccurrences(of: "poster='", with: "").replacingOccurrences(of: #"poster=""#, with: "").replacingOccurrences(of: #"""#, with: "")
+            self.poster = poster.replacingOccurrences(of: "poster='", with: "").replacingOccurrences(of: #"poster=""#, with: "").replacingOccurrences(of: #"""#, with: "").replacingOccurrences(of: #"'"#, with: "")
         }
     }
     var templabel: String {
