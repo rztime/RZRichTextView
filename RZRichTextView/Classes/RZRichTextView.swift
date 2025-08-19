@@ -452,7 +452,7 @@ public extension RZRichTextView {
         let max: Int = Int(self.viewModel.maxInputLenght)
         let text = self.textStorage.string
         let length = text.count
-        if length > max, self.isEditable {
+        if max > 0, length > max, self.isEditable {
             let newText = text.qsubstring(emoji: .count, to: max) as NSString
             if newText.length < self.textStorage.length {
                 self.textStorage.replaceCharacters(in: .init(location: newText.length, length: self.textStorage.length - newText.length), with: "")
