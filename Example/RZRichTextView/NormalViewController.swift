@@ -38,6 +38,8 @@ class NormalViewController: UIViewController {
             .qtitleColor(.red)
             .qtap { [weak self] view in
                 guard let self = self else { return }
+                let html = self.textView.code2html()
+                print("\(html)")
             }
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: btn)
     }

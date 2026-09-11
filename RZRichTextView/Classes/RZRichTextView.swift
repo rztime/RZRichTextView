@@ -644,8 +644,13 @@ extension RZRichTextView {
                     })
                     continue
                 }
+                var minx = 0.0
+                if let p = self.textStorage.attributes(at: range.upperBound, effectiveRange: nil)[.paragraphStyle] as? NSParagraphStyle {
+                    let prange = self.textStorage.rz.parapraghRange(for: range)
+                    minx = prange.location == range.location ? p.firstLineHeadIndent : p.headIndent
+                }
                 var size: CGSize?
-                let lineWidth = self.frame.size.width - frame.minX - (self.contentInset.right + self.textContainerInset.right) - 5  // 当前行附件可显示的最大宽度
+                let lineWidth = self.frame.size.width - minx - (self.contentInset.left + self.contentInset.right + self.textContainerInset.left + self.textContainerInset.right) - self.textContainer.lineFragmentPadding  // 当前行附件可显示的最大宽度
                 let c = RZRichTextViewConfigure.shared
                 /// 得到附件间距
                 let edgeinsets: UIEdgeInsets = (self.viewModel.canEdit ? c.imageViewEdgeInsets : c.imageViewEdgeInsetsNormal)

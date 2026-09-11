@@ -36,9 +36,9 @@ public extension UILabel {
         let attr = NSMutableAttributedString.init(attributedString: t)
         attr.enumerateAttribute(.link, in: .init(location: 0, length: attr.length)) { value, range, _ in
             if let value = value as? URL {
-                attr.addAttributes([.rztapLabel: value.absoluteString], range: range)
+                attr.addAttributes([.rztapAction: value.absoluteString], range: range)
             } else if let value = value as? String {
-                attr.addAttributes([.rztapLabel: value], range: range)
+                attr.addAttributes([.rztapAction: value], range: range)
             }
         }
         func fix(attachment: NSTextAttachment, range: NSRange) {
@@ -49,14 +49,14 @@ public extension UILabel {
             /// 此时富文本如果没有赋值到Label中，表示还在设置Attr
             guard let attr = self.attributedText else {
                 if needPreView {
-                    attr.addAttributes([.rztapLabel: "\(attachment)"], range: range)
+                    attr.addAttributes([.rztapAction: "\(attachment)"], range: range)
                 }
                 return
             }
             let temp = NSMutableAttributedString(attributedString: attr)
             temp.addAttribute(.attachment, value: attachment, range: range)
             if needPreView {
-                temp.addAttributes([.rztapLabel: "\(attachment)"], range: .init(location: 0, length: 1))
+                temp.addAttributes([.rztapAction: "\(attachment)"], range: .init(location: 0, length: 1))
             }
             self.attributedText = temp
             sizeChanged?()

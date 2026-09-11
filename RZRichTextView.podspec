@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RZRichTextView'
-  s.version          = '2.5.0'
+  s.version          = '2.5.1'
   s.summary          = 'RZRichTextView. 原生UITextView，支持富文本输入（图片，视频，列表序号，文本颜色大小各种样式等等）'
 
 # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/rztime/RZRichTextView.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '12.0'
 
   s.source_files = 'RZRichTextView/Classes/**/*'
   
