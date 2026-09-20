@@ -645,7 +645,7 @@ extension RZRichTextView {
                     continue
                 }
                 var minx = 0.0
-                if let p = self.textStorage.attributes(at: range.upperBound, effectiveRange: nil)[.paragraphStyle] as? NSParagraphStyle {
+                if range.location < self.textStorage.length, let p = self.textStorage.attributes(at: range.location, effectiveRange: nil)[.paragraphStyle] as? NSParagraphStyle {
                     let prange = self.textStorage.rz.parapraghRange(for: range)
                     minx = prange.location == range.location ? p.firstLineHeadIndent : p.headIndent
                 }
